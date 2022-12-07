@@ -37,6 +37,12 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
     unsigned targetM = tableau.getM();
     unsigned targetN = tableau.getN();
 
+    std::vector<double> lower(targetN), upper(targetN);
+    for (unsigned i = 0; i < targetN; ++ i) {
+        lower[i] = tableau.getLowerBound(i);
+        upper[i] = tableau.getUpperBound(i);
+    }
+
     Set<unsigned> shouldBeBasic = tableau.getBasicVariables();
 
     EngineState targetEngineState;
@@ -129,7 +135,10 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
             ASSERT( pair.second->constraintObsolete() ==
                     pair.first->constraintObsolete() );
         }
-
+       for (unsigned i = 0; i < targetN; ++ i) {
+           tableau.setLowerBound(i, lower[i]);
+           tableau.setUpperBound(i, upper[i]);
+       }
         EngineState currentEngineState;
         engine.storeState( currentEngineState,
                            TableauStateStorageLevel::STORE_NONE );
