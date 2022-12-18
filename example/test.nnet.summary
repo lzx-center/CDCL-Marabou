@@ -1,0 +1,15 @@
+Tree node id: 0, node type: path_node
+Constraint position is (1, 1), PLConstraint type: Relu
+left node: 1, right node: -1
+Time to perform next split 0.001627, Time to back to current node: 0.002246
+SubTree size: 1
+
+Tree node id: 1, node type: sat
+Previous node: 0
+Time to perform next split 0.000612, Time to back to current node: 0.000612
+SubTree size: 0
+
+
+Compare tree info:
+Tree info:
+	Search tree size: 2
