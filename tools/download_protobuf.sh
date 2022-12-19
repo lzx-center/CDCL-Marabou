@@ -16,7 +16,7 @@ fi
 
 cd $mydir
 echo "downloading protobuf"
-wget -q https://github.com/protocolbuffers/protobuf/releases/download/v3.19.2/protobuf-cpp-3.19.2.tar.gz -O protobuf-cpp-3.19.2.tar.gz
+# wget -q https://github.com/protocolbuffers/protobuf/releases/download/v3.19.2/protobuf-cpp-3.19.2.tar.gz -O protobuf-cpp-3.19.2.tar.gz
 echo "unzipping protobuf"
 tar -xzf protobuf-cpp-3.19.2.tar.gz # >> /dev/null
 echo "installing protobuf"

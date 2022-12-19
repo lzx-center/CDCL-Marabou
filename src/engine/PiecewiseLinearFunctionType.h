@@ -12,7 +12,7 @@
  ** [[ Add lengthier description here ]]
 
  **/
-
+#include "MStringf.h"
 #ifndef __PiecewiseLinearFunctionType_h__
 #define __PiecewiseLinearFunctionType_h__
 
@@ -24,6 +24,17 @@ enum PiecewiseLinearFunctionType {
     SIGN = 4,
 };
 
+struct Position {
+    int _layer, _node;
+    explicit Position(int layer=-1, int node=-1) : _layer(layer), _node(node) {}
+    void dump(String& s) const {
+        s += Stringf("Position: (%d, %d)", _layer, _node);
+    }
+
+    void dump() const {
+        printf("Position: (%d, %d)", _layer, _node);
+    }
+};
 #endif // __PiecewiseLinearFunctionType_h__
 
 //

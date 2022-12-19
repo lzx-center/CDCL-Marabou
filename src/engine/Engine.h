@@ -676,6 +676,7 @@ private:
     /*
       Pick the input variable with the largest interval
     */
+    PiecewiseLinearConstraint *getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithLargestInterval);
     PiecewiseLinearConstraint *pickSplitPLConstraintBasedOnIntervalWidth();
 
     /*

@@ -545,6 +545,7 @@ PiecewiseLinearCaseSplit ReluConstraint::getInactiveSplit() const
 {
     // Inactive phase: b <= 0, f = 0
     PiecewiseLinearCaseSplit inactivePhase;
+    inactivePhase.setInfo(_position, CaseSplitType::RELU_INACTIVE);
     inactivePhase.storeBoundTightening( Tightening( _b, 0.0, Tightening::UB ) );
     inactivePhase.storeBoundTightening( Tightening( _f, 0.0, Tightening::UB ) );
     return inactivePhase;
@@ -555,7 +556,7 @@ PiecewiseLinearCaseSplit ReluConstraint::getActiveSplit() const
     // Active phase: b >= 0, b - f = 0
     PiecewiseLinearCaseSplit activePhase;
     activePhase.storeBoundTightening( Tightening( _b, 0.0, Tightening::LB ) );
-
+    activePhase.setInfo(_position, CaseSplitType::RELU_ACTIVE);
     if ( _auxVarInUse )
     {
         // Special case: aux var in use.
@@ -617,6 +618,8 @@ void ReluConstraint::dump( String &output ) const
                            existsLowerBound( _aux ) ? Stringf( "%lf", getLowerBound( _aux ) ).ascii() : "-inf",
                            existsUpperBound( _aux ) ? Stringf( "%lf", getUpperBound( _aux ) ).ascii() : "inf" );
     }
+    _position.dump(output);
+    output += "\n";
 }
 
 void ReluConstraint::updateVariableIndex( unsigned oldIndex, unsigned newIndex )

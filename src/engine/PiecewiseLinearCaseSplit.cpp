@@ -51,8 +51,10 @@ void PiecewiseLinearCaseSplit::dump( String &output ) const
     for ( const auto &equation : _equations )
     {
         output += String( "\t\t" );
-        equation.dump();
+        equation.dump(output);
     }
+    output += "\t\t";
+    _info.dump(output);
 }
 
 void PiecewiseLinearCaseSplit::dump() const

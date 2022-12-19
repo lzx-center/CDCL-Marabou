@@ -21,6 +21,72 @@
 #include "MString.h"
 #include "Pair.h"
 #include "Tightening.h"
+#include "PiecewiseLinearFunctionType.h"
+
+enum CaseSplitType {
+    RELU_INACTIVE = 0,
+    RELU_ACTIVE,
+    DISJUNCTION_LOWER,
+    DISJUNCTION_UPPER,
+    UNKNOWN
+};
+
+struct CaseSplitTypeInfo {
+    Position _position;
+    CaseSplitType _type;
+    explicit CaseSplitTypeInfo(int layer=-1, int node=-1, CaseSplitType type=UNKNOWN) : _position(layer, node), _type(type) {}
+    explicit CaseSplitTypeInfo(Position position, CaseSplitType type) {
+        _position = position;
+        _type = type;
+    }
+
+    void inline setPosition(int layer, int node) {
+        _position = Position(layer, node);
+    }
+
+    void inline setPosition(Position& position) {
+        _position = position;
+    }
+
+    void inline setType(CaseSplitType type) {
+        _type = type;
+    }
+
+    void setInfo(int layer, int node, CaseSplitType type) {
+        setPosition(layer, node);
+        setType(type);
+    }
+
+    void setInfo(Position& position, CaseSplitType type) {
+        setPosition(position);
+        setType(type);
+    }
+
+    void dump(String& s) const {
+        _position.dump(s);
+        s += Stringf(", CaseSplit type: %s", getStringCaseSplitType(_type).ascii());
+    }
+
+    void dump() const {
+        _position.dump();
+        printf(", CaseSplit type: %s", getStringCaseSplitType(_type).ascii());
+    }
+
+    static Stringf getStringCaseSplitType(CaseSplitType type) {
+        switch (type) {
+            case RELU_ACTIVE:
+                return {"Relu active"};
+            case RELU_INACTIVE:
+                return {"Relu inactive"};
+            case DISJUNCTION_LOWER:
+                return {"Disjunction lower"};
+            case DISJUNCTION_UPPER:
+                return {"Disjunction upper"};
+            case UNKNOWN:
+                return {"Unknown"};
+        }
+    }
+};
 
 class PiecewiseLinearCaseSplit
 {
@@ -53,6 +119,14 @@ public:
     */
     void updateVariableIndex( unsigned oldIndex, unsigned newIndex );
 
+    void setInfo(int layer, int node, CaseSplitType type) {
+        _info = CaseSplitTypeInfo(layer, node, type);
+    }
+
+    void setInfo(Position position, CaseSplitType type) {
+        _info = CaseSplitTypeInfo(position, type);
+    }
+
 private:
     /*
       Bound tightening information.
@@ -63,6 +137,8 @@ private:
       The equation that needs to be added.
     */
     List<Equation> _equations;
+
+    CaseSplitTypeInfo _info;
 };
 
 #endif // __PiecewiseLinearCaseSplit_h__

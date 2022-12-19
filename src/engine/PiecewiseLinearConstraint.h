@@ -86,6 +86,7 @@ enum PhaseStatus : unsigned {
     CONSTRAINT_INFEASIBLE = 1000000,
 };
 
+
 class PiecewiseLinearConstraint : public ITableau::VariableWatcher
 {
 public:
@@ -453,7 +454,16 @@ public:
         return _cdInfeasibleCases;
     }
 
+    void setPosition(Position position) {
+        _position = position;
+    }
+
+    void setPosition(int layer, int node) {
+        _position = Position(layer, node);
+    }
+
 protected:
+    Position _position;
     unsigned _numCases; // Number of possible cases/phases for this constraint
                         // (e.g. 2 for ReLU, ABS, SIGN; >=2 for Max and Disjunction )
     bool _constraintActive;

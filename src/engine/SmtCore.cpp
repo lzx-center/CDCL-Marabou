@@ -558,3 +558,19 @@ bool SmtCore::pickSplitPLConstraint()
     }
     return _constraintForSplitting != NULL;
 }
+
+void SmtCore::printStackInfo() {
+    printf("Total stack depth: %d\n", getStackDepth());
+    int level = 0;
+    for (auto& stack : _stack) {
+        printf("==================================================\n");
+        printf("Stack level: %d\n", level ++);
+        printf("=======Active case split=======\n");
+        stack->_activeSplit.dump();
+        printf("\n=======Implied case splits=======\n");
+        for (auto& split : stack->_impliedValidSplits) {
+            split.dump();
+        }
+        printf("\n");
+    }
+}

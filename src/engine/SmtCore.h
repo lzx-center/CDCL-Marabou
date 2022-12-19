@@ -58,6 +58,8 @@ public:
     void initializeScoreTrackerIfNeeded( const List<PiecewiseLinearConstraint *>
                                          &plConstraints );
 
+    void printStackInfo();
+
     /*
       Inform the SMT core that a SoI phase pattern proposal is rejected.
     */

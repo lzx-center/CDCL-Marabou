@@ -135,7 +135,7 @@ endif()
 
 # We build a static library that is the core of the project, the link it to the
 # API's (executable and python at the moment)
-add_library(${MARABOU_LIB} ${DEPS_ONNX} ${DEPS_CVC4_CONTEXT} ${DEPS_CVC4_BASE} ${SRCS_COMMON_REAL} ${SRCS_ENGINE_REAL})
+add_library(${MARABOU_LIB} ${DEPS_ONNX} ${DEPS_CVC4_CONTEXT} ${DEPS_CVC4_BASE} ${SRCS_COMMON_REAL} ${SRCS_ENGINE_REAL} src/engine/SearchTree.cpp src/engine/SearchTree.h)
 target_include_directories(${MARABOU_LIB} PRIVATE SYSTEM)
 
 add_executable(${MARABOU_EXE} "${ENGINE_DIR}/main.cpp")
@@ -163,9 +163,9 @@ endif()
 
 if (NOT MSVC)
     if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-       set(COMPILE_FLAGS  -Wall -Wextra  -Werror -MMD -Qunused-arguments ) #-Wno-deprecated 
+       set(COMPILE_FLAGS  -Wall -Wextra   -MMD -Qunused-arguments ) #-Wno-deprecated 
      else()
-       set(COMPILE_FLAGS  -Wall -Wextra  -Werror -MMD ) #-Wno-deprecated 
+       set(COMPILE_FLAGS  -Wall -Wextra   -MMD ) #-Wno-deprecated 
     endif()
     set(RELEASE_FLAGS ${COMPILE_FLAGS} -O3) #-Wno-deprecated
 endif()
@@ -206,13 +206,13 @@ else()
     set(SCRIPT_EXTENSION sh)
 endif()
 
-find_package(Boost COMPONENTS program_options timer chrono thread)
+find_package(Boost COMPONENTS program_options timer chrono thread system serialization)
 # Find boost
 if (NOT ${Boost_FOUND})
     # bash file that downloads and install boost 1_68_0, the name need to match
     # BOOST_DIR variable
     execute_process(COMMAND ${TOOLS_DIR}/download_boost.${SCRIPT_EXTENSION})
-    find_package(Boost REQUIRED COMPONENTS program_options timer chrono thread)
+    find_package(Boost REQUIRED COMPONENTS program_options timer chrono thread system serialization)
 endif()
 set(LIBS_INCLUDES ${Boost_INCLUDE_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})
