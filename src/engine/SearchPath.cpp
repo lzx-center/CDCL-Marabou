@@ -2,6 +2,9 @@
 // Created by z8701 on 2022/12/19.
 //
 
+#include <fstream>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 #include "SearchPath.h"
 
 void SearchPath::appendPath(std::vector<PathElement>& path) {
@@ -11,14 +14,14 @@ void SearchPath::appendPath(std::vector<PathElement>& path) {
 void SearchPath::dump(String &output) {
     int pathNum = 1;
     for (auto& path : _paths) {
-        output += "**************************************************\n";
-        output += Stringf("Path [%d]\n", pathNum ++);
+        output += "***************************Start**************************\n";
+        output += Stringf("Path [%d], total depth: [%d]\n", pathNum ++, path.size());
         int level = 1;
         for (auto& element: path) {
             output += Stringf("Level %d\n", level ++);
             element.dump(output);
         }
-        output += "**************************************************\n";
+        output += "****************************End***************************\n";
     }
 }
 
@@ -26,6 +29,28 @@ void SearchPath::dump() {
     String output;
     dump(output);
     printf("%s\n", output.ascii());
+}
+
+void SearchPath::saveToFile(const String& filePath) const {
+    if (filePath.length()) {
+        std::ofstream ofs(filePath.ascii());
+        {
+            boost::archive::text_oarchive oa(ofs);
+            oa << *this;
+        }
+    } else {
+        printf("Empty file path!\n");
+    }
+}
+
+void SearchPath::loadFromFile(const String &filePath)  {
+    std::ifstream ifs(filePath.ascii());
+    {
+        boost::archive::text_iarchive ia(ifs);
+        // read class state from archive
+        ia >> (*this);
+        // archive and stream closed when destructors are called
+    }
 }
 
 void PathElement::setSplit(CaseSplitTypeInfo &info) {

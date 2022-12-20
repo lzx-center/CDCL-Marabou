@@ -586,5 +586,4 @@ void SmtCore::recordStackInfo() {
         path.push_back(std::move(element));
     }
     _searchPath.appendPath(path);
-    _searchPath.dump();
 }

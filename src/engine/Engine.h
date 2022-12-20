@@ -97,6 +97,9 @@ public:
 
     InputQuery prepareSnCInputQuery( );
     void exportInputQueryWithError( String errorMessage );
+    SearchPath& getSearchTreePath() {
+        return _smtCore._searchPath;
+    }
 
     /*
       If the query is feasiable and has been successfully solved, this

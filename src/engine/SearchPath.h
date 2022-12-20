@@ -50,6 +50,9 @@ public:
     void dump(String& output);
 
     void dump();
+
+    void saveToFile(const String& path) const;
+    void loadFromFile(const String& path);
 };
 
 
