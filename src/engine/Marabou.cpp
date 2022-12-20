@@ -201,6 +201,7 @@ void Marabou::solveQuery()
 
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );
+
 }
 
 void Marabou::displayResults( unsigned long long microSecondsElapsed ) const

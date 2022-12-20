@@ -86,6 +86,13 @@ struct CaseSplitTypeInfo {
                 return {"Unknown"};
         }
     }
+
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+        ar & _position & _type;
+    }
 };
 
 class PiecewiseLinearCaseSplit
@@ -125,6 +132,10 @@ public:
 
     void setInfo(Position position, CaseSplitType type) {
         _info = CaseSplitTypeInfo(position, type);
+    }
+
+    CaseSplitTypeInfo& getInfo() {
+        return _info;
     }
 
 private:

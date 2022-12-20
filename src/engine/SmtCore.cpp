@@ -574,3 +574,17 @@ void SmtCore::printStackInfo() {
         printf("\n");
     }
 }
+
+void SmtCore::recordStackInfo() {
+    std::vector<PathElement> path;
+    for (auto& stack : _stack) {
+        PathElement element;
+        element.setSplit(stack->_activeSplit.getInfo());
+        for (auto& split : stack->_impliedValidSplits) {
+            element.appendImpliedSplit(split.getInfo());
+        }
+        path.push_back(std::move(element));
+    }
+    _searchPath.appendPath(path);
+    _searchPath.dump();
+}

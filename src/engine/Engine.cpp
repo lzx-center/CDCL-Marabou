@@ -285,7 +285,7 @@ bool Engine::solve(unsigned timeoutInSeconds) {
             _tableau->toggleOptimization(false);
             // The current query is unsat, and we need to pop.
             // If we're at level 0, the whole query is unsat.
-            _smtCore.printStackInfo();
+            _smtCore.recordStackInfo();
             if (!_smtCore.popSplit()) {
                 struct timespec mainLoopEnd = TimeUtils::sampleMicro();
                 _statistics.incLongAttribute
@@ -2328,6 +2328,7 @@ bool Engine::restoreSmtState(SmtState &smtState) {
     catch (const InfeasibleQueryException &) {
         // The current query is unsat, and we need to pop.
         // If we're at level 0, the whole query is unsat.
+        _smtCore.recordStackInfo();
         if (!_smtCore.popSplit()) {
             if (_verbosity > 0) {
                 printf("\nEngine::solve: UNSAT query\n");

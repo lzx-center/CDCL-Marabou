@@ -25,6 +25,7 @@
 #include "SmtStackEntry.h"
 #include "Statistics.h"
 #include "context/context.h"
+#include "SearchPath.h"
 
 #include <memory>
 
@@ -58,7 +59,9 @@ public:
     void initializeScoreTrackerIfNeeded( const List<PiecewiseLinearConstraint *>
                                          &plConstraints );
 
+    SearchPath _searchPath;
     void printStackInfo();
+    void recordStackInfo();
 
     /*
       Inform the SMT core that a SoI phase pattern proposal is rejected.

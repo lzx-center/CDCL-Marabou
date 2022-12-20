@@ -13,6 +13,7 @@
 
  **/
 #include "MStringf.h"
+#include <boost/serialization/access.hpp>
 #ifndef __PiecewiseLinearFunctionType_h__
 #define __PiecewiseLinearFunctionType_h__
 
@@ -33,6 +34,13 @@ struct Position {
 
     void dump() const {
         printf("Position: (%d, %d)", _layer, _node);
+    }
+
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+            ar & _layer & _node;
     }
 };
 #endif // __PiecewiseLinearFunctionType_h__
