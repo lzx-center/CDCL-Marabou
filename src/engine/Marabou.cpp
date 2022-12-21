@@ -14,6 +14,7 @@
  ** [[ Add lengthier description here ]]
  **/
 
+#include <fstream>
 #include "AcasParser.h"
 #include "AutoFile.h"
 #include "GlobalConfiguration.h"
@@ -211,6 +212,11 @@ void Marabou::solveQuery()
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );
 
+    auto& searchPath = _engine.getSearchPath();
+    std::ofstream outPut("./test.pathOut", std::ios::out);
+    String out;
+    searchPath.simpleDump(out);
+    outPut << out.ascii();
 }
 
 void Marabou::displayResults( unsigned long long microSecondsElapsed ) const

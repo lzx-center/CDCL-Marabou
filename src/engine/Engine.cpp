@@ -2767,7 +2767,6 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
 
     applyAllValidConstraintCaseSplits();
 
-    bool splitJustPerformed = true;
     struct timespec mainLoopStart = TimeUtils::sampleMicro();
 
     auto getConstraintByPosition = [&](Position position) {
@@ -2778,13 +2777,11 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         }
     };
 
-    EngineState initial;
-    storeState(initial, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE);
-
     auto &preSearchPath = getPreSearchPath();
     int pathNum = 0;
     for (auto &path: preSearchPath._paths) {
         int currentPos = 0;
+        bool splitJustPerformed = true;
         while (true) {
             struct timespec mainLoopEnd = TimeUtils::sampleMicro();
             _statistics.incLongAttribute(Statistics::TIME_MAIN_LOOP_MICRO,
@@ -2972,7 +2969,6 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         printf("\nThis is pre search Path!!!!\n");
         preSearchPath.dumpPath(pathNum++);
         _smtCore.popToBottom();
-        restoreState(initial);
     }
 
     return false;
