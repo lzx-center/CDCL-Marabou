@@ -196,8 +196,17 @@ void Marabou::exportAssignment() const
 
 void Marabou::solveQuery()
 {
-    if ( _engine.processInputQuery( _inputQuery ) )
-        _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
+    auto& preSearchPath = _engine.getPreSearchPath();
+    preSearchPath.loadFromFile("test.searchPath");
+
+    bool check = true;
+    if ( _engine.processInputQuery( _inputQuery ) ) {
+        if (check) {
+            _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
+        } else {
+            _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
+        }
+    }
 
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );

@@ -133,7 +133,6 @@ bool SmtCore::needToSplit() const
 void SmtCore::performSplit()
 {
     ASSERT( _needToSplit );
-
     _numRejectedPhasePatternProposal = 0;
     // Maybe the constraint has already become inactive - if so, ignore
     if ( !_constraintForSplitting->isActive() )
@@ -586,4 +585,10 @@ void SmtCore::recordStackInfo() {
         path.push_back(std::move(element));
     }
     _searchPath.appendPath(path);
+}
+
+void SmtCore::setConstraintForSplit(PiecewiseLinearConstraint *constraint) {
+    assert(_needToSplit == false);
+    _needToSplit = true;
+    _constraintForSplitting = constraint;
 }

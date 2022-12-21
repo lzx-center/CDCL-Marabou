@@ -59,10 +59,10 @@ public:
     void initializeScoreTrackerIfNeeded( const List<PiecewiseLinearConstraint *>
                                          &plConstraints );
 
-    SearchPath _searchPath;
+    SearchPath _searchPath, _preSearchPath;
     void printStackInfo();
     void recordStackInfo();
-
+    void setConstraintForSplit(PiecewiseLinearConstraint* constraint);
     /*
       Inform the SMT core that a SoI phase pattern proposal is rejected.
     */

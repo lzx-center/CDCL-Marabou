@@ -53,6 +53,24 @@ void SearchPath::loadFromFile(const String &filePath)  {
     }
 }
 
+void SearchPath::simpleDump(String &out) {
+    int pathNum = 1;
+    for (auto& path : _paths) {
+        out += Stringf("Path [%d], total depth: [%d]\n", pathNum ++, path.size());
+        for (auto& element: path) {
+            element._caseSplit.dump(out);
+            out += "\n";
+        }
+        out += "\n";
+    }
+}
+
+void SearchPath::simpleDump() {
+    String output;
+    simpleDump(output);
+    printf("%s\n", output.ascii());
+}
+
 void PathElement::setSplit(CaseSplitTypeInfo &info) {
     _caseSplit = info;
 }

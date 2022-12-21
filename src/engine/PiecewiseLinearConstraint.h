@@ -462,6 +462,10 @@ public:
         _position = Position(layer, node);
     }
 
+    Position getPosition() {
+        return _position;
+    }
+
 protected:
     Position _position;
     unsigned _numCases; // Number of possible cases/phases for this constraint

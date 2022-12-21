@@ -42,6 +42,13 @@ struct Position {
     void serialize(Archive &ar, const unsigned int version) {
             ar & _layer & _node;
     }
+
+    bool operator < (const Position& pos) const {
+        if (_layer == pos._layer) {
+            return _node < pos._node;
+        }
+        return _layer < pos._layer;
+    }
 };
 #endif // __PiecewiseLinearFunctionType_h__
 

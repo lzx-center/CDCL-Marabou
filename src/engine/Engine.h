@@ -76,7 +76,7 @@ public:
       (a timeout of 0 means no time limit). Returns true if found, false if infeasible.
     */
     bool solve( unsigned timeoutInSeconds = 0 );
-
+    bool checkSolve(unsigned  timeoutInSeconds = 0);
     /*
       Minimize the cost function with respect to the current set of linear constraints.
     */
@@ -97,8 +97,11 @@ public:
 
     InputQuery prepareSnCInputQuery( );
     void exportInputQueryWithError( String errorMessage );
-    SearchPath& getSearchTreePath() {
+    SearchPath& getSearchPath() {
         return _smtCore._searchPath;
+    }
+    SearchPath& getPreSearchPath() {
+        return _smtCore._preSearchPath;
     }
 
     /*

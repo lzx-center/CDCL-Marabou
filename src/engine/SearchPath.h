@@ -49,6 +49,9 @@ public:
 
     void dump(String& output);
 
+    void simpleDump(String& out);
+    void simpleDump();
+
     void dump();
 
     void saveToFile(const String& path) const;
