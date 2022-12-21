@@ -138,6 +138,14 @@ public:
         return _info;
     }
 
+    CaseSplitType getType() {
+        return _info._type;
+    }
+
+    Position getPosition() {
+        return _info._position;
+    }
+
 private:
     /*
       Bound tightening information.

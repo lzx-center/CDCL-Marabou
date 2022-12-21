@@ -2780,15 +2780,18 @@ bool Engine::checkSolve(unsigned  timeoutInSeconds) {
     storeState(initial, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE);
 
     auto& preSearchPath = getPreSearchPath();
+    int pathNum = 0;
     for (auto& path : preSearchPath._paths) {
         for (auto& element : path) {
-            _smtCore.setConstraintForSplit(getConstraintByPosition(element.getPosition()));
-            _smtCore.performSplit();
+            _smtCore.setConstraintForSplit(getConstraintByPosition(element.getPosition()), element.getType());
+            _smtCore.performCheckSplit();
             performBoundTighteningAfterCaseSplit();
             informLPSolverOfBounds();
         }
         printf("This path is Done！！！！！！\n");
         _smtCore.printStackInfo();
+        printf("\nThis is pre search Path!!!!\n");
+        preSearchPath.dumpPath(pathNum ++);
         _smtCore.popToBottom();
         restoreState(initial);
     }

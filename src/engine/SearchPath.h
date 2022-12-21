@@ -36,6 +36,10 @@ public:
     Position getPosition() {
         return _caseSplit._position;
     }
+
+    CaseSplitType getType() {
+        return _caseSplit._type;
+    }
 };
 
 class SearchPath {
@@ -60,6 +64,8 @@ public:
 
     void saveToFile(const String& path) const;
     void loadFromFile(const String& path);
+
+    void dumpPath(int i);
 };
 
 

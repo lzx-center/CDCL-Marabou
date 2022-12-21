@@ -139,7 +139,7 @@ void SmtCore::performSplit()
     {
         _needToSplit = false;
         _constraintToViolationCount[_constraintForSplitting] = 0;
-        _constraintForSplitting = NULL;
+        _constraintForSplitting = nullptr;
         return;
     }
 
@@ -201,7 +201,7 @@ void SmtCore::performSplit()
         _statistics->incLongAttribute( Statistics::TOTAL_TIME_SMT_CORE_MICRO, TimeUtils::timePassed( start, end ) );
     }
 
-    _constraintForSplitting = NULL;
+    _constraintForSplitting = nullptr;
 }
 
 unsigned SmtCore::getStackDepth() const
@@ -587,10 +587,11 @@ void SmtCore::recordStackInfo() {
     _searchPath.appendPath(path);
 }
 
-void SmtCore::setConstraintForSplit(PiecewiseLinearConstraint *constraint) {
+void SmtCore::setConstraintForSplit(PiecewiseLinearConstraint *constraint, CaseSplitType splitType) {
     assert(_needToSplit == false);
     _needToSplit = true;
     _constraintForSplitting = constraint;
+    _splitType = splitType;
 }
 
 void SmtCore::popToBottom() {
@@ -652,4 +653,82 @@ void SmtCore::popToBottom() {
     }
 
     checkSkewFromDebuggingSolution();
+}
+
+void SmtCore::performCheckSplit() {
+    ASSERT( _needToSplit );
+    _numRejectedPhasePatternProposal = 0;
+    // Maybe the constraint has already become inactive - if so, ignore
+    if ( !_constraintForSplitting->isActive() )
+    {
+        _needToSplit = false;
+        _constraintToViolationCount[_constraintForSplitting] = 0;
+        _constraintForSplitting = nullptr;
+        return;
+    }
+
+    struct timespec start = TimeUtils::sampleMicro();
+
+    ASSERT( _constraintForSplitting->isActive() );
+    _needToSplit = false;
+
+    if ( _statistics )
+    {
+        _statistics->incUnsignedAttribute( Statistics::NUM_SPLITS );
+        _statistics->incUnsignedAttribute( Statistics::NUM_VISITED_TREE_STATES );
+    }
+
+    // Before storing the state of the engine, we:
+    //   1. Obtain the splits.
+    //   2. Disable the constraint, so that it is marked as disbaled in the EngineState.
+    List<PiecewiseLinearCaseSplit> oSplits = _constraintForSplitting->getCaseSplits(), splits;
+    for (auto& split : oSplits) {
+        if (split.getType() == _splitType) {
+            splits.append(split);
+            break;
+        }
+    }
+    assert(splits.size() == 1);
+    _constraintForSplitting->setActiveConstraint( false );
+
+    // Obtain the current state of the engine
+    EngineState *stateBeforeSplits = new EngineState;
+    stateBeforeSplits->_stateId = _stateId;
+    ++_stateId;
+    _engine->storeState( *stateBeforeSplits,
+                         TableauStateStorageLevel::STORE_BOUNDS_ONLY );
+    _engine->preContextPushHook();
+    pushContext();
+    SmtStackEntry *stackEntry = new SmtStackEntry;
+    // Perform the first split: add bounds and equations
+    List<PiecewiseLinearCaseSplit>::iterator split = splits.begin();
+    ASSERT( split->getEquations().size() == 0 );
+    _engine->applySplit( *split );
+    stackEntry->_activeSplit = *split;
+
+    // Store the remaining splits on the stack, for later
+    stackEntry->_engineState = stateBeforeSplits;
+    ++split;
+    while ( split != splits.end() )
+    {
+        stackEntry->_alternativeSplits.append( *split );
+        ++split;
+    }
+
+    _stack.append( stackEntry );
+
+    if ( _statistics )
+    {
+        unsigned level = getStackDepth();
+        _statistics->setUnsignedAttribute( Statistics::CURRENT_DECISION_LEVEL,
+                                           level );
+        if ( level > _statistics->getUnsignedAttribute
+                ( Statistics::MAX_DECISION_LEVEL ) )
+            _statistics->setUnsignedAttribute( Statistics::MAX_DECISION_LEVEL,
+                                               level );
+        struct timespec end = TimeUtils::sampleMicro();
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_SMT_CORE_MICRO, TimeUtils::timePassed( start, end ) );
+    }
+
+    _constraintForSplitting = nullptr;
 }

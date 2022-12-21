@@ -71,6 +71,15 @@ void SearchPath::simpleDump() {
     printf("%s\n", output.ascii());
 }
 
+void SearchPath::dumpPath(int i) {
+    String out;
+    for (auto& element: _paths[i]) {
+        element._caseSplit.dump(out);
+        out += "\n";
+    }
+    printf("%s\n", out.ascii());
+}
+
 void PathElement::setSplit(CaseSplitTypeInfo &info) {
     _caseSplit = info;
 }

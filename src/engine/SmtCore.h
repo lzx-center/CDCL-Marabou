@@ -40,6 +40,8 @@ using CVC4::context::Context;
 class SmtCore
 {
 public:
+    CaseSplitType _splitType;
+
     SmtCore( IEngine *engine );
     ~SmtCore();
 
@@ -62,7 +64,7 @@ public:
     SearchPath _searchPath, _preSearchPath;
     void printStackInfo();
     void recordStackInfo();
-    void setConstraintForSplit(PiecewiseLinearConstraint* constraint);
+    void setConstraintForSplit(PiecewiseLinearConstraint *constraint, CaseSplitType splitType);
     /*
       Inform the SMT core that a SoI phase pattern proposal is rejected.
     */
@@ -113,7 +115,7 @@ public:
       splitting. Update bounds, add equations and update the stack.
     */
     void performSplit();
-
+    void performCheckSplit();
     /*
       Pop an old split from the stack, and perform a new split as
       needed. Return true if successful, false if the stack is empty.
