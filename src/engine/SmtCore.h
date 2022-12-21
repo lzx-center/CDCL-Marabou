@@ -119,6 +119,7 @@ public:
       needed. Return true if successful, false if the stack is empty.
     */
     bool popSplit();
+    void popToBottom();
 
     /*
          Pop _context, record statistics

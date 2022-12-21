@@ -592,3 +592,64 @@ void SmtCore::setConstraintForSplit(PiecewiseLinearConstraint *constraint) {
     _needToSplit = true;
     _constraintForSplitting = constraint;
 }
+
+void SmtCore::popToBottom() {
+    SMT_LOG( "Performing a pop to Bottom" );
+
+    if ( _stack.empty() )
+        return;
+
+    struct timespec start = TimeUtils::sampleMicro();
+
+    if ( _statistics )
+    {
+        _statistics->incUnsignedAttribute( Statistics::NUM_POPS );
+        // A pop always sends us to a state that we haven't seen before - whether
+        // from a sibling split, or from a lower level of the tree.
+        _statistics->incUnsignedAttribute( Statistics::NUM_VISITED_TREE_STATES );
+    }
+
+    while ( !_stack.empty() )
+    {
+        // Remove any entries that have no alternatives
+        String error;
+
+        if ( checkSkewFromDebuggingSolution() )
+        {
+            // Pops should not occur from a compliant stack!
+            printf( "Error! Popping from a compliant stack\n" );
+            throw MarabouError( MarabouError::DEBUGGING_ERROR );
+        }
+
+        delete _stack.back()->_engineState;
+        delete _stack.back();
+        _stack.popBack();
+        popContext();
+
+
+        if ( _stack.empty() )
+            return;
+
+        if ( checkSkewFromDebuggingSolution() )
+        {
+            // Pops should not occur from a compliant stack!
+            printf( "Error! Popping from a compliant stack\n" );
+            throw MarabouError( MarabouError::DEBUGGING_ERROR );
+        }
+    }
+
+    if ( _statistics )
+    {
+        unsigned level = getStackDepth();
+        _statistics->setUnsignedAttribute( Statistics::CURRENT_DECISION_LEVEL,
+                                           level );
+        if ( level > _statistics->getUnsignedAttribute
+                ( Statistics::MAX_DECISION_LEVEL ) )
+            _statistics->setUnsignedAttribute( Statistics::MAX_DECISION_LEVEL,
+                                               level );
+        struct timespec end = TimeUtils::sampleMicro();
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_SMT_CORE_MICRO, TimeUtils::timePassed( start, end ) );
+    }
+
+    checkSkewFromDebuggingSolution();
+}

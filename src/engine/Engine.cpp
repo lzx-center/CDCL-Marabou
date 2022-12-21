@@ -2768,10 +2768,29 @@ bool Engine::checkSolve(unsigned  timeoutInSeconds) {
     bool splitJustPerformed = true;
     struct timespec mainLoopStart = TimeUtils::sampleMicro();
 
-    for (int i = 0; i < _preprocessedQuery->getNumInputVariables(); ++ i) {
-        auto plConstraint = getDisjunctionConstraintBasedOnIntervalWidth(i);
-        _smtCore.setConstraintForSplit(plConstraint);
-        _smtCore.performSplit();
+    auto getConstraintByPosition = [&] (Position position) {
+        if (position._layer) {
+            return positionToConstraint[position];
+        } else {
+            return getDisjunctionConstraintBasedOnIntervalWidth(position._node);
+        }
+    };
+
+    EngineState initial;
+    storeState(initial, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE);
+
+    auto& preSearchPath = getPreSearchPath();
+    for (auto& path : preSearchPath._paths) {
+        for (auto& element : path) {
+            _smtCore.setConstraintForSplit(getConstraintByPosition(element.getPosition()));
+            _smtCore.performSplit();
+            performBoundTighteningAfterCaseSplit();
+            informLPSolverOfBounds();
+        }
+        printf("This path is Done！！！！！！\n");
+        _smtCore.printStackInfo();
+        _smtCore.popToBottom();
+        restoreState(initial);
     }
 
     return false;

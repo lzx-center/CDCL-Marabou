@@ -32,6 +32,10 @@ public:
     void dump(String& output);
 
     void dump();
+
+    Position getPosition() {
+        return _caseSplit._position;
+    }
 };
 
 class SearchPath {
