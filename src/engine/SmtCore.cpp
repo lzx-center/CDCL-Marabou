@@ -627,10 +627,6 @@ void SmtCore::popToBottom() {
         _stack.popBack();
         popContext();
 
-
-        if ( _stack.empty() )
-            return;
-
         if ( checkSkewFromDebuggingSolution() )
         {
             // Pops should not occur from a compliant stack!
@@ -731,4 +727,14 @@ void SmtCore::performCheckSplit() {
     }
 
     _constraintForSplitting = nullptr;
+}
+
+void SmtCore::printSimpleStackInfo() {
+    printf("Total stack depth: %d\n", getStackDepth());
+    int level = 0;
+    for (auto& stack : _stack) {
+        printf("Stack level: %d, ", level ++);
+        stack->_activeSplit.getPosition().dump();
+        printf("\n");
+    }
 }

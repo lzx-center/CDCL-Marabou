@@ -2328,6 +2328,7 @@ bool Engine::restoreSmtState(SmtState &smtState) {
     catch (const InfeasibleQueryException &) {
         // The current query is unsat, and we need to pop.
         // If we're at level 0, the whole query is unsat.
+        printf("Restore failed!\n");
         _smtCore.recordStackInfo();
         if (!_smtCore.popSplit()) {
             if (_verbosity > 0) {
@@ -2712,7 +2713,8 @@ InputQuery Engine::buildQueryFromCurrentState() const {
     return query;
 }
 
-PiecewiseLinearConstraint *Engine::getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithLargestInterval) {
+PiecewiseLinearConstraint *
+Engine::getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithLargestInterval) {
     double mid = (_tableau->getLowerBound(inputVariableWithLargestInterval)
                   + _tableau->getUpperBound(inputVariableWithLargestInterval)
                  ) / 2;
@@ -2734,11 +2736,11 @@ PiecewiseLinearConstraint *Engine::getDisjunctionConstraintBasedOnIntervalWidth(
     return _disjunctionForSplitting.get();
 }
 
-bool Engine::checkSolve(unsigned  timeoutInSeconds) {
+bool Engine::checkSolve(unsigned timeoutInSeconds) {
     SignalHandler::getInstance()->initialize();
     SignalHandler::getInstance()->registerClient(this);
     // Register the boundManager with all the PL constraints
-    Map<Position, PiecewiseLinearConstraint* > positionToConstraint;
+    Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
     for (auto &plConstraint: _plConstraints) {
         plConstraint->registerBoundManager(&_boundManager);
         positionToConstraint[plConstraint->getPosition()] = plConstraint;
@@ -2768,7 +2770,7 @@ bool Engine::checkSolve(unsigned  timeoutInSeconds) {
     bool splitJustPerformed = true;
     struct timespec mainLoopStart = TimeUtils::sampleMicro();
 
-    auto getConstraintByPosition = [&] (Position position) {
+    auto getConstraintByPosition = [&](Position position) {
         if (position._layer) {
             return positionToConstraint[position];
         } else {
@@ -2779,193 +2781,199 @@ bool Engine::checkSolve(unsigned  timeoutInSeconds) {
     EngineState initial;
     storeState(initial, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE);
 
-    auto& preSearchPath = getPreSearchPath();
+    auto &preSearchPath = getPreSearchPath();
     int pathNum = 0;
-    for (auto& path : preSearchPath._paths) {
-        for (auto& element : path) {
-            _smtCore.setConstraintForSplit(getConstraintByPosition(element.getPosition()), element.getType());
-            _smtCore.performCheckSplit();
-            performBoundTighteningAfterCaseSplit();
-            informLPSolverOfBounds();
+    for (auto &path: preSearchPath._paths) {
+        int currentPos = 0;
+        while (true) {
+            struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+            _statistics.incLongAttribute(Statistics::TIME_MAIN_LOOP_MICRO,
+                                         TimeUtils::timePassed(mainLoopStart,
+                                                               mainLoopEnd));
+            mainLoopStart = mainLoopEnd;
+
+            if (shouldExitDueToTimeout(timeoutInSeconds)) {
+                if (_verbosity > 0) {
+                    printf("\n\nEngine: quitting due to timeout...\n\n");
+                    printf("Final statistics:\n");
+                    _statistics.print();
+                }
+
+                _exitCode = Engine::TIMEOUT;
+                _statistics.timeout();
+                return false;
+            }
+
+            if (_quitRequested) {
+                if (_verbosity > 0) {
+                    printf("\n\nEngine: quitting due to external request...\n\n");
+                    printf("Final statistics:\n");
+                    _statistics.print();
+                }
+
+                _exitCode = Engine::QUIT_REQUESTED;
+                return false;
+            }
+
+            try {
+                DEBUG(_tableau->verifyInvariants());
+
+                mainLoopStatistics();
+                if (_verbosity > 1 &&
+                    _statistics.getLongAttribute
+                            (Statistics::NUM_MAIN_LOOP_ITERATIONS) %
+                    _statisticsPrintingFrequency == 0)
+                    _statistics.print();
+
+                if (_lpSolverType == LPSolverType::NATIVE) {
+                    checkOverallProgress();
+                    // Check whether progress has been made recently
+
+                    if (performPrecisionRestorationIfNeeded())
+                        continue;
+
+                    if (_tableau->basisMatrixAvailable()) {
+                        explicitBasisBoundTightening();
+                        applyAllBoundTightenings();
+                        applyAllValidConstraintCaseSplits();
+                    }
+                }
+
+                // If true, we just entered a new subproblem
+                if (splitJustPerformed) {
+                    performBoundTighteningAfterCaseSplit();
+                    informLPSolverOfBounds();
+                    splitJustPerformed = false;
+                    if (currentPos < path.size()) {
+                        auto& element = path[currentPos];
+                        auto constraint = getConstraintByPosition(element.getPosition());
+                        printf("Set constriant: "); element.getPosition().dump();
+                        printf("\n");
+                        _smtCore.setConstraintForSplit(constraint, element.getType());
+                        currentPos ++;
+                    }
+                }
+
+                // Perform any SmtCore-initiated case splits
+                if (_smtCore.needToSplit()) {
+                    if (currentPos < path.size()) {
+                        _smtCore.performCheckSplit();
+                    } else {
+                        _smtCore.performSplit();
+                    }
+                    splitJustPerformed = true;
+                    continue;
+                }
+
+                if (!_tableau->allBoundsValid()) {
+                    // Some variable bounds are invalid, so the query is unsat
+                    printf("Inconsistent bound!!!\n");
+                    throw InfeasibleQueryException();
+                }
+
+                if (allVarsWithinBounds()) {
+                    // The linear portion of the problem has been solved.
+                    // Check the status of the PL constraints
+                    bool solutionFound =
+                            adjustAssignmentToSatisfyNonLinearConstraints();
+                    if (solutionFound) {
+                        struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                        _statistics.incLongAttribute
+                                (Statistics::TIME_MAIN_LOOP_MICRO,
+                                 TimeUtils::timePassed(mainLoopStart,
+                                                       mainLoopEnd));
+                        if (_verbosity > 0) {
+                            printf("\nEngine::solve: sat assignment found\n");
+                            _statistics.print();
+                        }
+                        _exitCode = Engine::SAT;
+
+                        return true;
+                    } else
+                        continue;
+                }
+
+                // We have out-of-bounds variables.
+                if (_lpSolverType == LPSolverType::NATIVE)
+                    performSimplexStep();
+                else {
+                    ENGINE_LOG("Checking LP feasibility with Gurobi...");
+                    DEBUG({ checkGurobiBoundConsistency(); });
+                    ASSERT(_lpSolverType == LPSolverType::GUROBI);
+                    LinearExpression dontCare;
+                    minimizeCostWithGurobi(dontCare);
+                }
+                continue;
+            }
+            catch (const MalformedBasisException &) {
+                _tableau->toggleOptimization(false);
+                if (!handleMalformedBasisException()) {
+                    ASSERT(_lpSolverType == LPSolverType::NATIVE);
+                    _exitCode = Engine::ERROR;
+                    exportInputQueryWithError("Cannot restore tableau");
+                    struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                    _statistics.incLongAttribute
+                            (Statistics::TIME_MAIN_LOOP_MICRO,
+                             TimeUtils::timePassed(mainLoopStart,
+                                                   mainLoopEnd));
+                    return false;
+                }
+            }
+            catch (const InfeasibleQueryException &) {
+                _tableau->toggleOptimization(false);
+                // The current query is unsat, and we need to pop.
+                // If we're at level 0, the whole query is unsat.
+                _smtCore.recordStackInfo();
+                if (!_smtCore.popSplit()) {
+                    printf("Verified unsat!\n");
+                    struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                    _statistics.incLongAttribute
+                            (Statistics::TIME_MAIN_LOOP_MICRO,
+                             TimeUtils::timePassed(mainLoopStart,
+                                                   mainLoopEnd));
+                    if (_verbosity > 0) {
+                        printf("\nEngine::solve: unsat query\n");
+                        _statistics.print();
+                    }
+                    break;
+                } else {
+                    splitJustPerformed = true;
+                }
+            }
+            catch (const VariableOutOfBoundDuringOptimizationException &) {
+                _tableau->toggleOptimization(false);
+                continue;
+            }
+            catch (MarabouError &e) {
+                String message =
+                        Stringf("Caught a MarabouError. Code: %u. Message: %s ",
+                                e.getCode(), e.getUserMessage());
+                _exitCode = Engine::ERROR;
+                exportInputQueryWithError(message);
+                struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                _statistics.incLongAttribute
+                        (Statistics::TIME_MAIN_LOOP_MICRO,
+                         TimeUtils::timePassed(mainLoopStart,
+                                               mainLoopEnd));
+                return false;
+            }
+            catch (...) {
+                _exitCode = Engine::ERROR;
+                exportInputQueryWithError("Unknown error");
+                struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                _statistics.incLongAttribute
+                        (Statistics::TIME_MAIN_LOOP_MICRO,
+                         TimeUtils::timePassed(mainLoopStart,
+                                               mainLoopEnd));
+                return false;
+            }
         }
-        printf("This path is Done！！！！！！\n");
-        _smtCore.printStackInfo();
+        assert(_smtCore.getStackDepth() == 0 && "stack depth is not 0!!");
         printf("\nThis is pre search Path!!!!\n");
-        preSearchPath.dumpPath(pathNum ++);
+        preSearchPath.dumpPath(pathNum++);
         _smtCore.popToBottom();
         restoreState(initial);
     }
 
-    return false;
-//    while (true) {
-//        struct timespec mainLoopEnd = TimeUtils::sampleMicro();
-//        _statistics.incLongAttribute(Statistics::TIME_MAIN_LOOP_MICRO,
-//                                     TimeUtils::timePassed(mainLoopStart,
-//                                                           mainLoopEnd));
-//        mainLoopStart = mainLoopEnd;
-//
-//        if (shouldExitDueToTimeout(timeoutInSeconds)) {
-//            if (_verbosity > 0) {
-//                printf("\n\nEngine: quitting due to timeout...\n\n");
-//                printf("Final statistics:\n");
-//                _statistics.print();
-//            }
-//
-//            _exitCode = Engine::TIMEOUT;
-//            _statistics.timeout();
-//            return false;
-//        }
-//
-//        if (_quitRequested) {
-//            if (_verbosity > 0) {
-//                printf("\n\nEngine: quitting due to external request...\n\n");
-//                printf("Final statistics:\n");
-//                _statistics.print();
-//            }
-//
-//            _exitCode = Engine::QUIT_REQUESTED;
-//            return false;
-//        }
-//
-//        try {
-//            DEBUG(_tableau->verifyInvariants());
-//
-//            mainLoopStatistics();
-//            if (_verbosity > 1 &&
-//                _statistics.getLongAttribute
-//                        (Statistics::NUM_MAIN_LOOP_ITERATIONS) %
-//                _statisticsPrintingFrequency == 0)
-//                _statistics.print();
-//
-//            if (_lpSolverType == LPSolverType::NATIVE) {
-//                checkOverallProgress();
-//                // Check whether progress has been made recently
-//
-//                if (performPrecisionRestorationIfNeeded())
-//                    continue;
-//
-//                if (_tableau->basisMatrixAvailable()) {
-//                    explicitBasisBoundTightening();
-//                    applyAllBoundTightenings();
-//                    applyAllValidConstraintCaseSplits();
-//                }
-//            }
-//
-//            // If true, we just entered a new subproblem
-//            if (splitJustPerformed) {
-//                performBoundTighteningAfterCaseSplit();
-//                informLPSolverOfBounds();
-//                splitJustPerformed = false;
-//            }
-//
-//            // Perform any SmtCore-initiated case splits
-//            if (_smtCore.needToSplit()) {
-//                _smtCore.performSplit();
-//                splitJustPerformed = true;
-//                continue;
-//            }
-//
-//            if (!_tableau->allBoundsValid()) {
-//                // Some variable bounds are invalid, so the query is unsat
-//                throw InfeasibleQueryException();
-//            }
-//
-//            if (allVarsWithinBounds()) {
-//                // The linear portion of the problem has been solved.
-//                // Check the status of the PL constraints
-//                bool solutionFound =
-//                        adjustAssignmentToSatisfyNonLinearConstraints();
-//                if (solutionFound) {
-//                    struct timespec mainLoopEnd = TimeUtils::sampleMicro();
-//                    _statistics.incLongAttribute
-//                            (Statistics::TIME_MAIN_LOOP_MICRO,
-//                             TimeUtils::timePassed(mainLoopStart,
-//                                                   mainLoopEnd));
-//                    if (_verbosity > 0) {
-//                        printf("\nEngine::solve: sat assignment found\n");
-//                        _statistics.print();
-//                    }
-//                    _exitCode = Engine::SAT;
-//
-//                    return true;
-//                } else
-//                    continue;
-//            }
-//
-//            // We have out-of-bounds variables.
-//            if (_lpSolverType == LPSolverType::NATIVE)
-//                performSimplexStep();
-//            else {
-//                ENGINE_LOG("Checking LP feasibility with Gurobi...");
-//                DEBUG({ checkGurobiBoundConsistency(); });
-//                ASSERT(_lpSolverType == LPSolverType::GUROBI);
-//                LinearExpression dontCare;
-//                minimizeCostWithGurobi(dontCare);
-//            }
-//            continue;
-//        }
-//        catch (const MalformedBasisException &) {
-//            _tableau->toggleOptimization(false);
-//            if (!handleMalformedBasisException()) {
-//                ASSERT(_lpSolverType == LPSolverType::NATIVE);
-//                _exitCode = Engine::ERROR;
-//                exportInputQueryWithError("Cannot restore tableau");
-//                struct timespec mainLoopEnd = TimeUtils::sampleMicro();
-//                _statistics.incLongAttribute
-//                        (Statistics::TIME_MAIN_LOOP_MICRO,
-//                         TimeUtils::timePassed(mainLoopStart,
-//                                               mainLoopEnd));
-//                return false;
-//            }
-//        }
-//        catch (const InfeasibleQueryException &) {
-//            _tableau->toggleOptimization(false);
-//            // The current query is unsat, and we need to pop.
-//            // If we're at level 0, the whole query is unsat.
-//            _smtCore.recordStackInfo();
-//            if (!_smtCore.popSplit()) {
-//                struct timespec mainLoopEnd = TimeUtils::sampleMicro();
-//                _statistics.incLongAttribute
-//                        (Statistics::TIME_MAIN_LOOP_MICRO,
-//                         TimeUtils::timePassed(mainLoopStart,
-//                                               mainLoopEnd));
-//                if (_verbosity > 0) {
-//                    printf("\nEngine::solve: unsat query\n");
-//                    _statistics.print();
-//                }
-//                _exitCode = Engine::UNSAT;
-//                return false;
-//            } else {
-//                splitJustPerformed = true;
-//            }
-//        }
-//        catch (const VariableOutOfBoundDuringOptimizationException &) {
-//            _tableau->toggleOptimization(false);
-//            continue;
-//        }
-//        catch (MarabouError &e) {
-//            String message =
-//                    Stringf("Caught a MarabouError. Code: %u. Message: %s ",
-//                            e.getCode(), e.getUserMessage());
-//            _exitCode = Engine::ERROR;
-//            exportInputQueryWithError(message);
-//            struct timespec mainLoopEnd = TimeUtils::sampleMicro();
-//            _statistics.incLongAttribute
-//                    (Statistics::TIME_MAIN_LOOP_MICRO,
-//                     TimeUtils::timePassed(mainLoopStart,
-//                                           mainLoopEnd));
-//            return false;
-//        }
-//        catch (...) {
-//            _exitCode = Engine::ERROR;
-//            exportInputQueryWithError("Unknown error");
-//            struct timespec mainLoopEnd = TimeUtils::sampleMicro();
-//            _statistics.incLongAttribute
-//                    (Statistics::TIME_MAIN_LOOP_MICRO,
-//                     TimeUtils::timePassed(mainLoopStart,
-//                                           mainLoopEnd));
-//            return false;
-//        }
-//    }
     return false;
 }

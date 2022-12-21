@@ -63,6 +63,7 @@ public:
 
     SearchPath _searchPath, _preSearchPath;
     void printStackInfo();
+    void printSimpleStackInfo();
     void recordStackInfo();
     void setConstraintForSplit(PiecewiseLinearConstraint *constraint, CaseSplitType splitType);
     /*
