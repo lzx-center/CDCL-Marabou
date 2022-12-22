@@ -109,6 +109,19 @@ void OptionParser::initialize()
         ( "prove-unsat",
         boost::program_options::bool_switch( &((*_boolOptions)[Options::PRODUCE_PROOFS]) )->default_value( (*_boolOptions)[Options::PRODUCE_PROOFS] ),
         "Produce proofs of UNSAT and check them" )
+        ( "path-json",
+          boost::program_options::value<std::string>( &((*_stringOptions)[Options::PATH_JSON]) )->default_value( (*_stringOptions)[Options::PATH_JSON] ),
+          "Path to generate path in json format" )
+        ( "search-path-save",
+          boost::program_options::value<std::string>( &((*_stringOptions)[Options::SEARCH_PATH_SAVE]) )->default_value( (*_stringOptions)[Options::SEARCH_PATH_SAVE] ),
+          "Path to generate path in json format" )
+        ( "search-path-load",
+          boost::program_options::value<std::string>( &((*_stringOptions)[Options::SEARCH_PATH_LOAD]) )->default_value( (*_stringOptions)[Options::SEARCH_PATH_LOAD] ),
+          "Path to generate path in json format" )
+        ( "check",
+                boost::program_options::bool_switch( &((*_boolOptions)[Options::CHECK]) )->default_value( (*_boolOptions)[Options::CHECK] ),
+                "Run check process" )
+
 #ifdef ENABLE_GUROBI
 #endif // ENABLE_GUROBI
         ;

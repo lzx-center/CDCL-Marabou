@@ -787,7 +787,6 @@ bool SmtCore::popCheckSplit() {
                 popContext();
                 _engine->postContextPopHook();
                 _engine->restoreState(*(_stack.back()->_engineState));
-                printf("Hello!\n");
                 delete _stack.back()->_engineState;
                 delete _stack.back();
                 _stack.popBack();

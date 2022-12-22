@@ -2865,7 +2865,6 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
 
                 if (!_tableau->allBoundsValid()) {
                     // Some variable bounds are invalid, so the query is unsat
-                    printf("Inconsistent bound!!!\n");
                     throw InfeasibleQueryException();
                 }
 

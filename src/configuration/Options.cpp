@@ -52,6 +52,7 @@ void Options::initializeDefaultValues()
     _boolOptions[EXPORT_ASSIGNMENT] = false;
     _boolOptions[DEBUG_ASSIGNMENT] = false;
     _boolOptions[PRODUCE_PROOFS] = false;
+    _boolOptions[CHECK] = false;
 
     /*
       Int options
@@ -94,6 +95,9 @@ void Options::initializeDefaultValues()
     _stringOptions[SOI_SEARCH_STRATEGY] = "mcmc";
     _stringOptions[SOI_INITIALIZATION_STRATEGY] = "input-assignment";
     _stringOptions[LP_SOLVER] = gurobiEnabled() ? "gurobi" : "native";
+    _stringOptions[PATH_JSON] = "";
+    _stringOptions[SEARCH_PATH_SAVE] = "";
+    _stringOptions[SEARCH_PATH_LOAD] = "";
 }
 
 void Options::parseOptions( int argc, char **argv )

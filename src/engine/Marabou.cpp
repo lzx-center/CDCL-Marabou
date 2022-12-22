@@ -197,10 +197,12 @@ void Marabou::exportAssignment() const
 
 void Marabou::solveQuery()
 {
-    auto& preSearchPath = _engine.getPreSearchPath();
-    preSearchPath.loadFromFile("test.searchPath");
-
-    bool check = true;
+    String searchPathLoad = Options::get()->getString(Options::SEARCH_PATH_LOAD);
+    if (searchPathLoad != "") {
+        auto& preSearchPath = _engine.getPreSearchPath();
+        preSearchPath.loadFromFile(searchPathLoad);
+    }
+    bool check = Options::get()->getBool(Options::CHECK);
     if ( _engine.processInputQuery( _inputQuery ) ) {
         if (check) {
             _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
@@ -212,11 +214,11 @@ void Marabou::solveQuery()
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );
 
-    auto& searchPath = _engine.getPreSearchPath();
-    std::ofstream outPut("./test.pathOut", std::ios::out);
-    String out;
-    searchPath.simpleDump(out);
-    outPut << out.ascii();
+    String searchPathSave = Options::get()->getString(Options::SEARCH_PATH_SAVE);
+    if (searchPathSave != "") {
+        auto& searchPath = _engine.getSearchPath();
+        searchPath.saveToFile(searchPathSave);
+    }
 }
 
 void Marabou::displayResults( unsigned long long microSecondsElapsed ) const

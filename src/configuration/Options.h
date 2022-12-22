@@ -72,7 +72,9 @@ public:
         DEBUG_ASSIGNMENT,
 
         // Produce proofs of unsatisfiability and check them
-        PRODUCE_PROOFS
+        PRODUCE_PROOFS,
+
+        CHECK
     };
 
     enum IntOptions {
@@ -138,7 +140,9 @@ public:
 
         // The procedure/solver for solving the LP
         LP_SOLVER,
-
+        PATH_JSON,
+        SEARCH_PATH_SAVE,
+        SEARCH_PATH_LOAD
     };
 
     /*
