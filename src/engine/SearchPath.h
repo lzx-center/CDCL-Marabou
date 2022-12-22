@@ -40,6 +40,10 @@ public:
     CaseSplitType getType() {
         return _caseSplit._type;
     }
+
+    String dumpJson() {
+        return Stringf("{\"split\": }");
+    }
 };
 
 class SearchPath {

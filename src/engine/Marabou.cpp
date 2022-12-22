@@ -214,11 +214,12 @@ void Marabou::solveQuery()
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );
 
+    auto& searchPath = _engine.getSearchPath();
     String searchPathSave = Options::get()->getString(Options::SEARCH_PATH_SAVE);
     if (searchPathSave != "") {
-        auto& searchPath = _engine.getSearchPath();
         searchPath.saveToFile(searchPathSave);
     }
+    searchPath.simpleDump();
 }
 
 void Marabou::displayResults( unsigned long long microSecondsElapsed ) const

@@ -63,13 +63,13 @@ struct CaseSplitTypeInfo {
     }
 
     void dump(String& s) const {
-        _position.dump(s);
-        s += Stringf(", CaseSplit type: %s", getStringCaseSplitType(_type).ascii());
+        s += Stringf("(%d, %d, %s)", _position._layer, _position._node, getStringCaseSplitType(_type).ascii());
     }
 
     void dump() const {
-        _position.dump();
-        printf(", CaseSplit type: %s", getStringCaseSplitType(_type).ascii());
+        String out;
+        dump(out);
+        printf(" %s", out.ascii());
     }
 
     static Stringf getStringCaseSplitType(CaseSplitType type) {
