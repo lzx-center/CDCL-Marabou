@@ -219,7 +219,10 @@ void Marabou::solveQuery()
     if (searchPathSave != "") {
         searchPath.saveToFile(searchPathSave);
     }
-    searchPath.simpleDump();
+    String json;
+    searchPath.dumpJson(json);
+    std::ofstream os("test.json", std::ios::out);
+    os << json.ascii();
 }
 
 void Marabou::displayResults( unsigned long long microSecondsElapsed ) const

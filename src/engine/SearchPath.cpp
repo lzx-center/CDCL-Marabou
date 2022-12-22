@@ -80,6 +80,28 @@ void SearchPath::dumpPath(int i) {
     printf("%s\n", out.ascii());
 }
 
+void SearchPath::dumpJson(String &output) {
+    output += "{\n\"data\":[";
+    for (size_t pathNum = 0; pathNum < _paths.size(); ++ pathNum) {
+        auto& path = _paths[pathNum];
+        output += "[";
+        for (size_t i = 0; i < path.size(); ++ i) {
+            String element;
+            path[i].dumpJson(element);
+            if (i == path.size() - 1) {
+                output += element;
+            } else {
+                output += element + ",";
+            }
+        }
+        output += "]";
+        if (pathNum < _paths.size() - 1) {
+            output += ",";
+        }
+    }
+    output += "]\n}";
+}
+
 void PathElement::setSplit(CaseSplitTypeInfo &info) {
     _caseSplit = info;
 }
@@ -111,4 +133,23 @@ void PathElement::dump() {
     String s;
     dump(s);
     printf("%s", s.ascii());
+}
+
+void PathElement::dumpJson(String &output) {
+    output = "{";
+    String type;
+    _caseSplit.dump(type);
+    output += Stringf(R"("split": "%s",)", type.ascii());
+    output += "\"implied\":[";
+    for (size_t i = 0; i < _impliedSplits.size(); ++ i) {
+        String out;
+        _impliedSplits[i].dump(out);
+        if (i == _impliedSplits.size() - 1) {
+            output += Stringf("\"%s\"", out.ascii());
+        } else {
+            output += Stringf("\"%s\",", out.ascii());
+        }
+    }
+    output += "]";
+    output += "}";
 }

@@ -2847,14 +2847,14 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                         printf("Set constriant: "); element.getPosition().dump();
                         printf("\n");
                         _smtCore.setConstraintForSplit(constraint, element.getType());
-                        currentPos ++;
                     }
                 }
 
                 // Perform any SmtCore-initiated case splits
                 if (_smtCore.needToSplit()) {
-                    if (currentPos <= path.size()) {
+                    if (currentPos < path.size()) {
                         _smtCore.performCheckSplit();
+                        currentPos ++;
                     } else {
                         _smtCore.performSplit();
                     }

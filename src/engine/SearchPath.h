@@ -41,9 +41,7 @@ public:
         return _caseSplit._type;
     }
 
-    String dumpJson() {
-        return Stringf("{\"split\": }");
-    }
+    void dumpJson(String& output);
 };
 
 class SearchPath {
@@ -70,6 +68,8 @@ public:
     void loadFromFile(const String& path);
 
     void dumpPath(int i);
+
+    void dumpJson(String& output);
 };
 
 
