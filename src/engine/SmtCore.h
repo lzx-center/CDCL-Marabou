@@ -122,6 +122,7 @@ public:
       needed. Return true if successful, false if the stack is empty.
     */
     bool popSplit();
+    bool popCheckSplit();
     void popToBottom();
 
     /*

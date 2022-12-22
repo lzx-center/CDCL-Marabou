@@ -2858,6 +2858,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                     } else {
                         _smtCore.performSplit();
                     }
+                    printf("Stack depth: %d\n", _smtCore.getStackDepth());
                     splitJustPerformed = true;
                     continue;
                 }
@@ -2921,7 +2922,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                 // The current query is unsat, and we need to pop.
                 // If we're at level 0, the whole query is unsat.
                 _smtCore.recordStackInfo();
-                if (!_smtCore.popSplit()) {
+                if (!_smtCore.popCheckSplit()) {
                     printf("Verified unsat!\n");
                     struct timespec mainLoopEnd = TimeUtils::sampleMicro();
                     _statistics.incLongAttribute
@@ -2968,7 +2969,6 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         assert(_smtCore.getStackDepth() == 0 && "stack depth is not 0!!");
         printf("\nThis is pre search Path!!!!\n");
         preSearchPath.dumpPath(pathNum++);
-        _smtCore.popToBottom();
     }
 
     return false;

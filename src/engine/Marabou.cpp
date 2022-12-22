@@ -212,7 +212,7 @@ void Marabou::solveQuery()
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );
 
-    auto& searchPath = _engine.getSearchPath();
+    auto& searchPath = _engine.getPreSearchPath();
     std::ofstream outPut("./test.pathOut", std::ios::out);
     String out;
     searchPath.simpleDump(out);
