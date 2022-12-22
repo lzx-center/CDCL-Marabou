@@ -2822,19 +2822,6 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                     _statisticsPrintingFrequency == 0)
                     _statistics.print();
 
-                if (_lpSolverType == LPSolverType::NATIVE) {
-                    checkOverallProgress();
-                    // Check whether progress has been made recently
-
-                    if (performPrecisionRestorationIfNeeded())
-                        continue;
-
-                    if (_tableau->basisMatrixAvailable()) {
-                        explicitBasisBoundTightening();
-                        applyAllBoundTightenings();
-                        applyAllValidConstraintCaseSplits();
-                    }
-                }
 
                 // If true, we just entered a new subproblem
                 if (splitJustPerformed) {
@@ -2853,7 +2840,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
 
                 // Perform any SmtCore-initiated case splits
                 if (_smtCore.needToSplit()) {
-                    if (currentPos < path.size()) {
+                    if (currentPos <= path.size()) {
                         _smtCore.performCheckSplit();
                     } else {
                         _smtCore.performSplit();
@@ -2891,16 +2878,12 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                         continue;
                 }
 
-                // We have out-of-bounds variables.
-                if (_lpSolverType == LPSolverType::NATIVE)
-                    performSimplexStep();
-                else {
-                    ENGINE_LOG("Checking LP feasibility with Gurobi...");
-                    DEBUG({ checkGurobiBoundConsistency(); });
-                    ASSERT(_lpSolverType == LPSolverType::GUROBI);
-                    LinearExpression dontCare;
-                    minimizeCostWithGurobi(dontCare);
-                }
+
+                ENGINE_LOG("Checking LP feasibility with Gurobi...");
+                DEBUG({ checkGurobiBoundConsistency(); });
+                ASSERT(_lpSolverType == LPSolverType::GUROBI);
+                LinearExpression dontCare;
+                minimizeCostWithGurobi(dontCare);
                 continue;
             }
             catch (const MalformedBasisException &) {

@@ -1,0 +1,332 @@
+Path [1], total depth: [8]
+Position: (0, 0), CaseSplit type: Disjunction upper
+Position: (4, 5), CaseSplit type: Relu inactive
+Position: (2, 22), CaseSplit type: Relu active
+Position: (0, 1), CaseSplit type: Disjunction upper
+Position: (4, 11), CaseSplit type: Relu inactive
+Position: (4, 3), CaseSplit type: Relu inactive
+Position: (0, 3), CaseSplit type: Disjunction upper
+Position: (4, 8), CaseSplit type: Relu inactive
+
+Path [2], total depth: [8]
+Position: (0, 0), CaseSplit type: Disjunction upper
+Position: (4, 5), CaseSplit type: Relu inactive
+Position: (2, 22), CaseSplit type: Relu active
+Position: (0, 1), CaseSplit type: Disjunction upper
+Position: (4, 11), CaseSplit type: Relu inactive
+Position: (4, 3), CaseSplit type: Relu inactive
+Position: (0, 3), CaseSplit type: Disjunction upper
+Position: (4, 8), CaseSplit type: Relu active
+
+Path [3], total depth: [0]
+
+Path [4], total depth: [0]
+
+Path [5], total depth: [0]
+
+Path [6], total depth: [0]
+
+Path [7], total depth: [0]
+
+Path [8], total depth: [0]
+
+Path [9], total depth: [0]
+
+Path [10], total depth: [0]
+
+Path [11], total depth: [0]
+
+Path [12], total depth: [0]
+
+Path [13], total depth: [0]
+
+Path [14], total depth: [0]
+
+Path [15], total depth: [0]
+
+Path [16], total depth: [0]
+
+Path [17], total depth: [0]
+
+Path [18], total depth: [0]
+
+Path [19], total depth: [0]
+
+Path [20], total depth: [0]
+
+Path [21], total depth: [0]
+
+Path [22], total depth: [0]
+
+Path [23], total depth: [0]
+
+Path [24], total depth: [0]
+
+Path [25], total depth: [0]
+
+Path [26], total depth: [0]
+
+Path [27], total depth: [0]
+
+Path [28], total depth: [0]
+
+Path [29], total depth: [0]
+
+Path [30], total depth: [0]
+
+Path [31], total depth: [0]
+
+Path [32], total depth: [0]
+
+Path [33], total depth: [0]
+
+Path [34], total depth: [0]
+
+Path [35], total depth: [0]
+
+Path [36], total depth: [0]
+
+Path [37], total depth: [0]
+
+Path [38], total depth: [0]
+
+Path [39], total depth: [0]
+
+Path [40], total depth: [0]
+
+Path [41], total depth: [0]
+
+Path [42], total depth: [0]
+
+Path [43], total depth: [0]
+
+Path [44], total depth: [0]
+
+Path [45], total depth: [0]
+
+Path [46], total depth: [0]
+
+Path [47], total depth: [0]
+
+Path [48], total depth: [0]
+
+Path [49], total depth: [0]
+
+Path [50], total depth: [0]
+
+Path [51], total depth: [0]
+
+Path [52], total depth: [0]
+
+Path [53], total depth: [0]
+
+Path [54], total depth: [0]
+
+Path [55], total depth: [0]
+
+Path [56], total depth: [0]
+
+Path [57], total depth: [0]
+
+Path [58], total depth: [0]
+
+Path [59], total depth: [0]
+
+Path [60], total depth: [0]
+
+Path [61], total depth: [0]
+
+Path [62], total depth: [0]
+
+Path [63], total depth: [0]
+
+Path [64], total depth: [0]
+
+Path [65], total depth: [0]
+
+Path [66], total depth: [0]
+
+Path [67], total depth: [0]
+
+Path [68], total depth: [0]
+
+Path [69], total depth: [0]
+
+Path [70], total depth: [0]
+
+Path [71], total depth: [0]
+
+Path [72], total depth: [0]
+
+Path [73], total depth: [0]
+
+Path [74], total depth: [0]
+
+Path [75], total depth: [0]
+
+Path [76], total depth: [0]
+
+Path [77], total depth: [0]
+
+Path [78], total depth: [0]
+
+Path [79], total depth: [0]
+
+Path [80], total depth: [0]
+
+Path [81], total depth: [0]
+
+Path [82], total depth: [0]
+
+Path [83], total depth: [0]
+
+Path [84], total depth: [0]
+
+Path [85], total depth: [0]
+
+Path [86], total depth: [0]
+
+Path [87], total depth: [0]
+
+Path [88], total depth: [0]
+
+Path [89], total depth: [0]
+
+Path [90], total depth: [0]
+
+Path [91], total depth: [0]
+
+Path [92], total depth: [0]
+
+Path [93], total depth: [0]
+
+Path [94], total depth: [0]
+
+Path [95], total depth: [0]
+
+Path [96], total depth: [0]
+
+Path [97], total depth: [0]
+
+Path [98], total depth: [0]
+
+Path [99], total depth: [0]
+
+Path [100], total depth: [0]
+
+Path [101], total depth: [0]
+
+Path [102], total depth: [0]
+
+Path [103], total depth: [0]
+
+Path [104], total depth: [0]
+
+Path [105], total depth: [0]
+
+Path [106], total depth: [0]
+
+Path [107], total depth: [0]
+
+Path [108], total depth: [0]
+
+Path [109], total depth: [0]
+
+Path [110], total depth: [0]
+
+Path [111], total depth: [0]
+
+Path [112], total depth: [0]
+
+Path [113], total depth: [0]
+
+Path [114], total depth: [0]
+
+Path [115], total depth: [0]
+
+Path [116], total depth: [0]
+
+Path [117], total depth: [0]
+
+Path [118], total depth: [0]
+
+Path [119], total depth: [0]
+
+Path [120], total depth: [0]
+
+Path [121], total depth: [0]
+
+Path [122], total depth: [0]
+
+Path [123], total depth: [0]
+
+Path [124], total depth: [0]
+
+Path [125], total depth: [0]
+
+Path [126], total depth: [0]
+
+Path [127], total depth: [0]
+
+Path [128], total depth: [0]
+
+Path [129], total depth: [0]
+
+Path [130], total depth: [0]
+
+Path [131], total depth: [0]
+
+Path [132], total depth: [0]
+
+Path [133], total depth: [0]
+
+Path [134], total depth: [0]
+
+Path [135], total depth: [0]
+
+Path [136], total depth: [0]
+
+Path [137], total depth: [0]
+
+Path [138], total depth: [0]
+
+Path [139], total depth: [0]
+
+Path [140], total depth: [0]
+
+Path [141], total depth: [0]
+
+Path [142], total depth: [0]
+
+Path [143], total depth: [0]
+
+Path [144], total depth: [0]
+
+Path [145], total depth: [0]
+
+Path [146], total depth: [0]
+
+Path [147], total depth: [0]
+
+Path [148], total depth: [0]
+
+Path [149], total depth: [0]
+
+Path [150], total depth: [0]
+
+Path [151], total depth: [0]
+
+Path [152], total depth: [0]
+
+Path [153], total depth: [0]
+
+Path [154], total depth: [0]
+
+Path [155], total depth: [0]
+
+Path [156], total depth: [0]
+
+Path [157], total depth: [0]
+
+Path [158], total depth: [0]
+

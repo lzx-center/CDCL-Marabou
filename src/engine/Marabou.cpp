@@ -198,7 +198,7 @@ void Marabou::exportAssignment() const
 void Marabou::solveQuery()
 {
     auto& preSearchPath = _engine.getPreSearchPath();
-    preSearchPath.loadFromFile("test.searchPath");
+    preSearchPath.loadFromFile("/home/center/CDCL-Marabou/build/test.searchPath");
 
     bool check = true;
     if ( _engine.processInputQuery( _inputQuery ) ) {
@@ -212,10 +212,11 @@ void Marabou::solveQuery()
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );
 
-    auto& searchPath = _engine.getPreSearchPath();
-    std::ofstream outPut("./test.pathOut", std::ios::out);
+    auto& searchPath = _engine.getSearchPath();
+    std::ofstream outPut("./acas.pathOut2", std::ios::out);
     String out;
     searchPath.simpleDump(out);
+//    searchPath.saveToFile("acas.searchPath");
     outPut << out.ascii();
 }
 
