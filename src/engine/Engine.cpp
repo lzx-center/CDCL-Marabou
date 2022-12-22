@@ -2853,7 +2853,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
 
                 // Perform any SmtCore-initiated case splits
                 if (_smtCore.needToSplit()) {
-                    if (currentPos < path.size()) {
+                    if (currentPos <= path.size()) {
                         _smtCore.performCheckSplit();
                     } else {
                         _smtCore.performSplit();
