@@ -198,8 +198,10 @@ void Marabou::exportAssignment() const
 void Marabou::solveQuery()
 {
     String searchPathLoad = Options::get()->getString(Options::SEARCH_PATH_LOAD);
+    auto& preSearchPath = _engine.getPreSearchPath();
+    preSearchPath.readJson("./test.json");
+    return;
     if (searchPathLoad != "") {
-        auto& preSearchPath = _engine.getPreSearchPath();
         preSearchPath.loadFromFile(searchPathLoad);
     }
     bool check = Options::get()->getBool(Options::CHECK);

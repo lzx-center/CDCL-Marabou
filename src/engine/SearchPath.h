@@ -6,7 +6,8 @@
 #define MARABOU_SEARCHPATH_H
 #include "PiecewiseLinearCaseSplit.h"
 #include "boost/serialization/vector.hpp"
-
+#include "boost/property_tree/ptree.hpp"
+#include "boost/property_tree/json_parser.hpp"
 class PathElement {
 public:
     enum ElementType {
@@ -33,11 +34,11 @@ public:
 
     void dump();
 
-    Position getPosition() {
+    Position getPosition() const {
         return _caseSplit._position;
     }
 
-    CaseSplitType getType() {
+    CaseSplitType getType() const {
         return _caseSplit._type;
     }
 
@@ -70,6 +71,8 @@ public:
     void dumpPath(int i);
 
     void dumpJson(String& output);
+
+    void readJson(const String& path);
 };
 
 

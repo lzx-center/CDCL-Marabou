@@ -102,6 +102,18 @@ void SearchPath::dumpJson(String &output) {
     output += "]\n}";
 }
 
+void SearchPath::readJson(const String &path) {
+    std::ifstream ifStream(path.ascii(), std::ios_base::in);
+    using namespace boost::property_tree;
+    ptree node;
+    read_json(ifStream, node);
+    ptree data = node.get_child("data");
+    for (auto asserts = data.begin(); asserts != data.end(); ++ asserts) {
+        for (auto assert = asserts->second.begin(); assert != asserts->second.end(); ++ assert) {
+            printf("Here! %s\n", assert->second.get<std::string>("split").c_str());
+        }
+    }
+}
 
 
 void PathElement::setSplit(CaseSplitTypeInfo &info) {
