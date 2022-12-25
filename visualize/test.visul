@@ -1,0 +1,9 @@
+// The Round Table
+digraph {
+	spam -> eggs
+	subgraph child {
+		node [shape=box]
+		foo -> bar
+	}
+	spam -> bar [constraint=true]
+}

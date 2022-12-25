@@ -102,6 +102,8 @@ void SearchPath::dumpJson(String &output) {
     output += "]\n}";
 }
 
+
+
 void PathElement::setSplit(CaseSplitTypeInfo &info) {
     _caseSplit = info;
 }
