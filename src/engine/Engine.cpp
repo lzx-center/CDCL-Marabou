@@ -248,6 +248,7 @@ bool Engine::solve(unsigned timeoutInSeconds) {
                         printf("\nEngine::solve: sat assignment found\n");
                         _statistics.print();
                     }
+                    _smtCore.recordStackInfo();
                     _exitCode = Engine::SAT;
 
                     return true;
@@ -2884,7 +2885,10 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                             _statistics.print();
                         }
                         _exitCode = Engine::SAT;
-
+                        assert(_smtCore.getStackDepth() == 0 && "stack depth is not 0!!");
+                        printf("\nPath [%d] verified sat,\n", pathNum);
+                        _smtCore.recordStackInfo();
+                        preSearchPath.dumpPath(pathNum++);
                         return true;
                     } else
                         continue;
@@ -2966,7 +2970,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
             }
         }
         assert(_smtCore.getStackDepth() == 0 && "stack depth is not 0!!");
-        printf("\nThis is pre search Path!!!!\n");
+        printf("\nPath [%d] verified unsat,\n", pathNum);
         preSearchPath.dumpPath(pathNum++);
     }
 
