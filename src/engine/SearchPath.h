@@ -72,7 +72,7 @@ public:
 
     void dumpJson(String& output);
 
-    void readJson(const String& path);
+    void loadJson(const String& jsonPath);
 };
 
 

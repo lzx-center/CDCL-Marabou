@@ -88,3 +88,16 @@ void PiecewiseLinearCaseSplit::updateVariableIndex( unsigned oldIndex, unsigned 
 // c-basic-offset: 4
 // End:
 //
+CaseSplitType CaseSplitTypeInfo::getCaseSplitTypeByString(String &s) {
+    if (s == "Relu active") {
+        return RELU_ACTIVE;
+    } else if (s == "Relu inactive") {
+        return RELU_INACTIVE;
+    } else if (s == "Disjunction lower") {
+        return DISJUNCTION_LOWER;
+    } else if (s == "Disjunction upper") {
+        return DISJUNCTION_UPPER;
+    } else {
+        return UNKNOWN;
+    }
+}

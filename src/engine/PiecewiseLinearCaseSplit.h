@@ -87,6 +87,8 @@ struct CaseSplitTypeInfo {
         }
     }
 
+    static CaseSplitType getCaseSplitTypeByString(String& s);
+
     friend class boost::serialization::access;
 
     template<class Archive>

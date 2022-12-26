@@ -102,16 +102,48 @@ void SearchPath::dumpJson(String &output) {
     output += "]\n}";
 }
 
-void SearchPath::readJson(const String &path) {
-    std::ifstream ifStream(path.ascii(), std::ios_base::in);
+void SearchPath::loadJson(const String &jsonPath) {
+    std::ifstream ifStream(jsonPath.ascii(), std::ios_base::in);
     using namespace boost::property_tree;
-    ptree node;
-    read_json(ifStream, node);
-    ptree data = node.get_child("data");
+    ptree root;
+    read_json(ifStream, root);
+    ptree data = root.get_child("data");
     for (auto asserts = data.begin(); asserts != data.end(); ++ asserts) {
+        std::vector<PathElement> path;
         for (auto assert = asserts->second.begin(); assert != asserts->second.end(); ++ assert) {
-            printf("Here! %s\n", assert->second.get<std::string>("split").c_str());
+            String str = assert->second.get<std::string>("split");
+
+            int layer = 0, node = 0;
+            String type;
+            int num = 0;
+            //parse string
+            for (int i = 0; i < str.length(); ++ i) {
+                if (str[i] == ')' or str[i] == '(')
+                    continue;
+                if (str[i] == ',') {
+                    num ++; i ++;
+                    continue;
+                }
+
+                if (num == 0) {
+                    assert('0' < str[i] and str[i] < '9');
+                    layer = layer * 10 + (str[i] - '0');
+                } else if (num == 1) {
+                    assert('0' < str[i] and str[i] < '9');
+                    node = node * 10 + (str[i] - '0');
+                } else {
+                    type = str.substring(i, str.length() - i - 1);
+                    break;
+                }
+            }
+
+            auto caseSplitType = CaseSplitTypeInfo::getCaseSplitTypeByString(type);
+            PathElement e;
+            e._caseSplit.setPosition(layer, node);
+            e._caseSplit.setType(caseSplitType);
+            path.push_back(std::move(e));
         }
+        _paths.push_back(std::move(path));
     }
 }
 
