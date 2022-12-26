@@ -121,7 +121,12 @@ void OptionParser::initialize()
         ( "check",
                 boost::program_options::bool_switch( &((*_boolOptions)[Options::CHECK]) )->default_value( (*_boolOptions)[Options::CHECK] ),
                 "Run check process" )
-
+        ( "json-load",
+          boost::program_options::value<std::string>( &((*_stringOptions)[Options::JSON_LOAD]) )->default_value( (*_stringOptions)[Options::JSON_LOAD] ),
+          "Path to load in json format" )
+        ( "json-save",
+          boost::program_options::value<std::string>( &((*_stringOptions)[Options::JSON_SAVE]) )->default_value( (*_stringOptions)[Options::JSON_SAVE] ),
+          "Path to save in json format" )
 #ifdef ENABLE_GUROBI
 #endif // ENABLE_GUROBI
         ;

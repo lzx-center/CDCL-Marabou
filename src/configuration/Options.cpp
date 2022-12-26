@@ -98,6 +98,8 @@ void Options::initializeDefaultValues()
     _stringOptions[PATH_JSON] = "";
     _stringOptions[SEARCH_PATH_SAVE] = "";
     _stringOptions[SEARCH_PATH_LOAD] = "";
+    _stringOptions[JSON_LOAD] = "";
+    _stringOptions[JSON_SAVE] = "";
 }
 
 void Options::parseOptions( int argc, char **argv )

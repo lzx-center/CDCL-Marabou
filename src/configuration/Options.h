@@ -142,7 +142,9 @@ public:
         LP_SOLVER,
         PATH_JSON,
         SEARCH_PATH_SAVE,
-        SEARCH_PATH_LOAD
+        SEARCH_PATH_LOAD,
+        JSON_SAVE,
+        JSON_LOAD
     };
 
     /*

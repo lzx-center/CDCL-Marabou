@@ -198,11 +198,12 @@ void Marabou::exportAssignment() const
 void Marabou::solveQuery()
 {
     String searchPathLoad = Options::get()->getString(Options::SEARCH_PATH_LOAD);
+    String jsonLoad = Options::get()->getString(Options::JSON_LOAD);
     auto& preSearchPath = _engine.getPreSearchPath();
-    preSearchPath.loadJson("./test.json");
-    return;
     if (searchPathLoad != "") {
         preSearchPath.loadFromFile(searchPathLoad);
+    } else if (jsonLoad != "") {
+        preSearchPath.loadJson(jsonLoad);
     }
     bool check = Options::get()->getBool(Options::CHECK);
     if ( _engine.processInputQuery( _inputQuery ) ) {
@@ -221,10 +222,13 @@ void Marabou::solveQuery()
     if (searchPathSave != "") {
         searchPath.saveToFile(searchPathSave);
     }
-    String json;
-    searchPath.dumpJson(json);
-    std::ofstream os("test.json", std::ios::out);
-    os << json.ascii();
+    String jsonSave = Options::get()->getString(Options::JSON_SAVE);
+    if (jsonSave != "") {
+        String json;
+        searchPath.dumpJson(json);
+        std::ofstream os(jsonSave.ascii(), std::ios::out);
+        os << json.ascii();
+    }
 }
 
 void Marabou::displayResults( unsigned long long microSecondsElapsed ) const
