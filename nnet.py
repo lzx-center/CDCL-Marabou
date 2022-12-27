@@ -96,7 +96,8 @@ class NNet():
             self.biases = biases
 
             self.splits_set = None
-            self.states = None
+            self.calc_states = []
+            self.eliminated_constraint = []
             
     def evaluate_network(self, inputs, normalize_input=False, undo_normalize_output=False):
         '''
@@ -194,21 +195,29 @@ class NNet():
         json_dict = json.load(f)
         json_data = json_dict['data']
 
-        def load_triple(triple, mark):
+        def load_triple(triple, mark, order=None):
             triple = triple.strip('(').strip(')').split(',')
             layer, node, type = int(triple[0].strip(' ')), int(triple[1].strip(' ')), triple[2].strip(" ")
-            return layer, node, type, mark
+            return layer, node, type, mark, order
 
         splits_set = []
         for path in json_data:
             splits = []
+            num = 1
             for element in path:
-                splits.append(load_triple(element['split'], "assersion"))
+                splits.append(load_triple(element['split'], "assertion", num))
                 for imply in element['implied']:
-                    splits.append(load_triple(imply, "implied"))
+                    splits.append(load_triple(imply, "implied", num))
+                num += 1
+            print(splits)
             splits_set.append(splits)
-            print(len(splits))
         
+                # parse eliminated
+        eliminated = json_dict['eliminated']
+        for constraint in eliminated:
+            self.eliminated_constraint.append(load_triple(constraint['split'], "eliminated", 0))
+
+
         self.splits_set = splits_set
 
     def evaluate_state(self, inputs, normalize_input=False, undo_normalize_output=False):
@@ -240,14 +249,15 @@ class NNet():
         if undo_normalize_output:
             for i in range(outputSize):
                 outputs[i] = outputs[i]*self.ranges[-1]+self.means[-1]
+        self.calc_states.append(state)
         return outputs
 
-    def visual(self):
+    def visual(self, pic_path="visualize/test.visul.jpg"):
         # input
         dot = Digraph(comment="nnet")
         dot.graph_attr['rankdir'] = 'LR'
         dot.graph_attr['splines'] = 'line'
-        dot.graph_attr['ranksep'] = '10'
+        dot.graph_attr['ranksep'] = '5'
 
         with dot.subgraph(name='input') as input:
             for i in range(self.num_inputs()):
@@ -264,7 +274,6 @@ class NNet():
                         if w:
                             pre_node_name = f'({layer},{pre_node})'
                             dot.edge(pre_node_name, node_name)
-                    print(layer, node, weight)
 
         with dot.subgraph(name='output') as output:
             for i in range(self.num_outputs()):
@@ -279,8 +288,104 @@ class NNet():
                             dot.edge(pre_node_name, node_name)
 
         # dot.draw('visualize/output.png', args='-Gsize=10 -Gratio=1.4', prog='dot')
-        dot.render('visualize/test.visul.jpg',format='jpg')  
+        dot.render(pic_path,format='jpg')  
 
+    def visualize_search_path(self):
+        step = len(self.splits_set) // 10
+        for i in range(0, len(self.splits_set), step):
+            pic_path = f"visualize/acas1_1_path{i}_{len(self.splits_set[i])}"
+            self.visualize_single_path(self.splits_set[i], pic_path)
+            
+            
+
+    def visualize_single_path(self, splits, pic_path="visualize/visual.jpg"):
+
+        type_param = {
+            "Relu active" : {
+                'assertion' : {'style' : 'filled', 'fillcolor' : '/greens7/6', 'fontsize' : '20'},
+                'implied'   : {'style' : 'filled', 'fillcolor' : '/greens7/4'},
+                'eliminated'   : {'style' : 'filled', 'fillcolor' : '/greens7/1'}
+            },
+            "Relu inactive" : {
+                'assertion' : {'style' : 'filled', 'fillcolor' : '/oranges7/6', 'fontsize' : '20'},
+                'implied'   : {'style' : 'filled', 'fillcolor' : '/oranges7/4'},
+                'eliminated'   : {'style' : 'filled', 'fillcolor' : '/oranges7/1'}
+            }
+        }
+
+
+        def get_node_name(layer, node):
+            return f'({layer},{node})'
+
+        node_state = {}
+        for layer, node, phase, _, _ in self.eliminated_constraint:
+            name = get_node_name(layer, node)
+            node_state[name] = {
+                'state' : 'eliminated',
+                'phase' : phase,
+                'order' : 0
+            }
+
+        for split in splits:
+            layer, node, phase, state, order = split
+            name = get_node_name(layer, node)
+            node_state[name] = {
+                'phase' : phase,
+                'state' : state,
+                'order' : order
+            }
+        
+        # input
+        dot = Digraph(comment="nnet")
+        dot.graph_attr['rankdir'] = 'LR'
+        dot.graph_attr['splines'] = 'line'
+        dot.graph_attr['ranksep'] = '15'
+
+
+        with dot.subgraph(name='input') as input:
+            for i in range(self.num_inputs()):
+                input.node(f'({0},{i})', shape='circle')
+
+        for layer in range(self.numLayers - 1):
+            with dot.subgraph(name=f'layer{layer + 1}') as layer_graph:
+                for node in range(self.layerSizes[layer + 1]):
+                    node_name = get_node_name(layer + 1, node)
+                    if node_name in node_state:
+                        state = node_state[node_name]
+                        label = f"Order: {state['order']}" if state['order'] != 0 else 'e'
+                        layer_graph.node(node_name, shape='circle', label=label, **type_param[state['phase']][state['state']])
+                    else:
+                        layer_graph.node(node_name, shape='circle')
+                    weight = self.weights[layer][node]
+                    for pre_node in range(self.layerSizes[layer]):
+                        w = weight[pre_node]
+                        if w != 0:
+                            pre_node_name = get_node_name(layer,pre_node)
+                            if pre_node_name in node_state and node_state[pre_node_name]['phase'] == 'Relu inactive':
+                                # dot.edge(pre_node_name, node_name, color='white')
+                                pass
+                            else:
+                                dot.edge(pre_node_name, node_name)
+                            # dot.edge(pre_node_name, node_name)
+
+        with dot.subgraph(name='output') as output:
+            for i in range(self.num_outputs()):
+                node_name = get_node_name(self.numLayers,i)
+                output.node(node_name, shape='circle')
+                for node in range(self.layerSizes[self.numLayers]):
+                    weight = self.weights[self.numLayers - 1][node]
+                    for pre_node in range(self.layerSizes[self.numLayers - 1]):
+                        w = weight[pre_node]
+                        if w:
+                            pre_node_name = get_node_name(self.numLayers - 1,pre_node)
+                            if pre_node_name in node_state and node_state[pre_node_name]['phase'] == 'Relu inactive':
+                                # dot.edge(pre_node_name, node_name, color='white')
+                                pass
+                            else:
+                                dot.edge(pre_node_name, node_name)
+
+        # dot.draw('visualize/output.png', args='-Gsize=10 -Gratio=1.4', prog='dot')
+        dot.render(pic_path,format='jpg')  
 
 class TestGenerator:
     def __init__(self) -> None:
@@ -352,8 +457,9 @@ class TestGenerator:
 
 
 if __name__ == "__main__":
-    nnet_path = "/home/center/CDCL-Marabou/example/ACASXU_experimental_v2a_1_1.nnet"
+    nnet_path = "example/ACASXU_experimental_v2a_1_1.nnet"
     nnet = NNet(nnet_path)
     # nnet.evaluate_state(inputs=[0.2])
-    # nnet.load_json("./build/test.json")
-    nnet.visual()
+    nnet.load_json("build/acus.json")
+    # nnet.visualize_search_path()
+    # nnet.visual()

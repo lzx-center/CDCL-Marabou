@@ -907,6 +907,12 @@ void Preprocessor::eliminateVariables()
             if ( _preprocessed->_networkLevelReasoner )
                 _preprocessed->_networkLevelReasoner->
                     removeConstraintFromTopologicalOrder( *constraint );
+
+            if ((*constraint)->getType() == RELU) {
+                auto copyConstraint = (*constraint)->duplicateConstraint();
+                _eliminateConstraints.append(copyConstraint);
+            }
+
             delete *constraint;
             *constraint = NULL;
             constraint = constraints.erase( constraint );

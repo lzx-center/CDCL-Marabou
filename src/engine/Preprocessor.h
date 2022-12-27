@@ -57,6 +57,10 @@ public:
     */
     unsigned getNewIndex( unsigned oldIndex ) const;
 
+    List<PiecewiseLinearConstraint* >& getEliminatedConstraintsList() {
+        return _eliminateConstraints;
+    }
+
 private:
 
     void freeMemoryIfNeeded();
@@ -171,6 +175,7 @@ private:
     */
     Map<unsigned, unsigned> _oldIndexToNewIndex;
 
+    List<PiecewiseLinearConstraint* > _eliminateConstraints;
     /*
       For debugging only
     */

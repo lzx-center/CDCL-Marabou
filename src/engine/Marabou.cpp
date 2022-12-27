@@ -224,10 +224,7 @@ void Marabou::solveQuery()
     }
     String jsonSave = Options::get()->getString(Options::JSON_SAVE);
     if (jsonSave != "") {
-        String json;
-        searchPath.dumpJson(json);
-        std::ofstream os(jsonSave.ascii(), std::ios::out);
-        os << json.ascii();
+        searchPath.saveJson(jsonSave);
     }
 }
 

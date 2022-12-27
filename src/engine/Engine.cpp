@@ -137,6 +137,19 @@ bool Engine::solve(unsigned timeoutInSeconds) {
     for (auto &plConstraint: _plConstraints)
         plConstraint->registerBoundManager(&_boundManager);
 
+    for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
+        auto pos = plConstraint->getPosition();
+        CaseSplitType type = CaseSplitType::UNKNOWN;
+        if (plConstraint->getPhaseStatus() == RELU_PHASE_ACTIVE) {
+            type = CaseSplitType::RELU_ACTIVE;
+        } else if (plConstraint->getPhaseStatus() == RELU_PHASE_INACTIVE) {
+            type = CaseSplitType::RELU_INACTIVE;
+        } else {
+            printf("Can not handle!\n");
+        }
+        _smtCore._searchPath.addEliminatedConstraint(pos._layer, pos._node, RELU_ACTIVE);
+    }
+
     if (_solveWithMILP)
         return solveWithMILPEncoding(timeoutInSeconds);
 
@@ -2746,7 +2759,18 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         plConstraint->registerBoundManager(&_boundManager);
         positionToConstraint[plConstraint->getPosition()] = plConstraint;
     }
-
+    for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
+        auto pos = plConstraint->getPosition();
+        CaseSplitType type = CaseSplitType::UNKNOWN;
+        if (plConstraint->getPhaseStatus() == RELU_PHASE_ACTIVE) {
+            type = CaseSplitType::RELU_ACTIVE;
+        } else if (plConstraint->getPhaseStatus() == RELU_PHASE_INACTIVE) {
+            type = CaseSplitType::RELU_INACTIVE;
+        } else {
+            printf("Can not handle!\n");
+        }
+        _smtCore._searchPath.addEliminatedConstraint(pos._layer, pos._node, RELU_ACTIVE);
+    }
     if (_solveWithMILP)
         return solveWithMILPEncoding(timeoutInSeconds);
 

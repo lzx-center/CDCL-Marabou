@@ -99,8 +99,23 @@ void SearchPath::dumpJson(String &output) {
             output += ",";
         }
     }
-    output += "]\n}";
+    output += "]\n";
+    output += ", \"eliminated\" : [";
+
+    for (size_t i = 0; i < _eliminatedConstraint.size(); ++ i) {
+        String element;
+        _eliminatedConstraint[i].dumpJson(element);
+        if (i == _eliminatedConstraint.size() - 1) {
+            output += element;
+        } else {
+            output += element + ",";
+        }
+    }
+
+    output += "]\n";
+    output += "}";
 }
+
 
 void SearchPath::loadJson(const String &jsonPath) {
     std::ifstream ifStream(jsonPath.ascii(), std::ios_base::in);
@@ -145,6 +160,52 @@ void SearchPath::loadJson(const String &jsonPath) {
         }
         _paths.push_back(std::move(path));
     }
+}
+
+void SearchPath::addEliminatedConstraint(int layer, int node, CaseSplitType type) {
+    PathElement element;
+    element._caseSplit.setPosition(layer, node);
+    element._caseSplit.setType(type);
+    _eliminatedConstraint.push_back(std::move(element));
+}
+
+void SearchPath::saveJson(const String &jsonPath) {
+    std::ofstream os(jsonPath.ascii(), std::ios::out);
+
+    os << "{\n\"data\":[";
+    for (size_t pathNum = 0; pathNum < _paths.size(); ++ pathNum) {
+        auto& path = _paths[pathNum];
+        os << "[";
+        for (size_t i = 0; i < path.size(); ++ i) {
+            String element;
+            path[i].dumpJson(element);
+            if (i == path.size() - 1) {
+                os << element.ascii();
+            } else {
+                os << element.ascii() << ",";
+            }
+        }
+        os << "]";
+        if (pathNum < _paths.size() - 1) {
+            os << ",";
+        }
+    }
+    os << "]\n";
+    os << ", \"eliminated\" : [";
+
+    for (size_t i = 0; i < _eliminatedConstraint.size(); ++ i) {
+        String element;
+        _eliminatedConstraint[i].dumpJson(element);
+        if (i == _eliminatedConstraint.size() - 1) {
+            os << element.ascii();
+        } else {
+            os << element.ascii() << ",";
+        }
+    }
+
+    os << "]\n";
+    os << "}";
+    os.close();
 }
 
 

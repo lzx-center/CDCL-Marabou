@@ -48,6 +48,7 @@ public:
 class SearchPath {
 public:
     std::vector<std::vector<PathElement>> _paths;
+    std::vector<PathElement> _eliminatedConstraint;
 
     friend class boost::serialization::access;
     template<class Archive>
@@ -60,6 +61,7 @@ public:
 
     void dump(String& output);
 
+    void addEliminatedConstraint(int layer, int node, CaseSplitType type);
     void simpleDump(String& out);
     void simpleDump();
 
@@ -73,6 +75,8 @@ public:
     void dumpJson(String& output);
 
     void loadJson(const String& jsonPath);
+
+    void saveJson(const String& path);
 };
 
 
