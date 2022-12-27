@@ -209,7 +209,6 @@ class NNet():
                 for imply in element['implied']:
                     splits.append(load_triple(imply, "implied", num))
                 num += 1
-            print(splits)
             splits_set.append(splits)
         
                 # parse eliminated
@@ -290,10 +289,10 @@ class NNet():
         # dot.draw('visualize/output.png', args='-Gsize=10 -Gratio=1.4', prog='dot')
         dot.render(pic_path,format='jpg')  
 
-    def visualize_search_path(self):
+    def visualize_search_path(self, name="test"):
         step = len(self.splits_set) // 10
         for i in range(0, len(self.splits_set), step):
-            pic_path = f"visualize/acas1_1_path{i}_{len(self.splits_set[i])}"
+            pic_path = f"visualize/{name}_{i}_{len(self.splits_set[i])}"
             self.visualize_single_path(self.splits_set[i], pic_path)
             
             
@@ -326,25 +325,45 @@ class NNet():
                 'order' : 0
             }
 
+        disjunction_set = set()
+
         for split in splits:
             layer, node, phase, state, order = split
             name = get_node_name(layer, node)
-            node_state[name] = {
-                'phase' : phase,
-                'state' : state,
-                'order' : order
-            }
+            if layer == 0:
+                if name not in node_state:
+                    node_state[name] = {
+                        'phase' : [f'{phase}-{order}'],
+                        'state' : state,
+                        'order' : [order]
+                    }
+                else:
+                    node_state[name]['phase'].append(f'{phase}-{order}')
+                    node_state[name]['order'].append(order)
+                disjunction_set.add(order)
+            else:
+                node_state[name] = {
+                    'phase' : phase,
+                    'state' : state,
+                    'order' : order
+                }
         
         # input
         dot = Digraph(comment="nnet")
         dot.graph_attr['rankdir'] = 'LR'
         dot.graph_attr['splines'] = 'line'
         dot.graph_attr['ranksep'] = '15'
+        dot.graph_attr['ordering'] = 'out'
 
 
         with dot.subgraph(name='input') as input:
             for i in range(self.num_inputs()):
-                input.node(f'({0},{i})', shape='circle')
+                node_name = get_node_name(0, i)
+                if node_name in node_state:
+                    label = "\n".join(node_state[node_name]['phase'])
+                    input.node(node_name, shape='circle', label=label, style='filled', fillcolor='yellow')
+                    continue
+                input.node(node_name, shape='circle')
 
         for layer in range(self.numLayers - 1):
             with dot.subgraph(name=f'layer{layer + 1}') as layer_graph:
@@ -353,6 +372,8 @@ class NNet():
                     if node_name in node_state:
                         state = node_state[node_name]
                         label = f"Order: {state['order']}" if state['order'] != 0 else 'e'
+                        if state['order'] in disjunction_set:
+                            label = str(state['order'])
                         layer_graph.node(node_name, shape='circle', label=label, **type_param[state['phase']][state['state']])
                     else:
                         layer_graph.node(node_name, shape='circle')
@@ -457,9 +478,9 @@ class TestGenerator:
 
 
 if __name__ == "__main__":
-    nnet_path = "example/ACASXU_experimental_v2a_1_1.nnet"
+    nnet_path = "example/ACASXU_experimental_v2a_1_2.nnet"
     nnet = NNet(nnet_path)
     # nnet.evaluate_state(inputs=[0.2])
-    nnet.load_json("build/acus.json")
-    # nnet.visualize_search_path()
+    nnet.load_json("build/acas1_2.json")
+    nnet.visualize_search_path('acas1_2')
     # nnet.visual()
