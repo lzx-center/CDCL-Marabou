@@ -267,10 +267,19 @@ bool SmtCore::popSplit()
                 throw MarabouError( MarabouError::DEBUGGING_ERROR );
             }
 
-            delete _stack.back()->_engineState;
-            delete _stack.back();
-            _stack.popBack();
-            popContext();
+            if (_stack.size() != 1) {
+                delete _stack.back()->_engineState;
+                delete _stack.back();
+                _stack.popBack();
+                popContext();
+            } else {
+                popContext();
+                _engine->postContextPopHook();
+                _engine->restoreState(*(_stack.back()->_engineState));
+                delete _stack.back()->_engineState;
+                delete _stack.back();
+                _stack.popBack();
+            }
 
 
             if ( _stack.empty() )

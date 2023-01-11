@@ -112,19 +112,19 @@ void OptionParser::initialize()
         ( "path-json",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::PATH_JSON]) )->default_value( (*_stringOptions)[Options::PATH_JSON] ),
           "Path to generate path in json format" )
-        ( "path-save",
+        ( "save-path",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::SEARCH_PATH_SAVE]) )->default_value( (*_stringOptions)[Options::SEARCH_PATH_SAVE] ),
           "Path to generate path in json format" )
-        ( "path-load",
+        ( "load-path",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::SEARCH_PATH_LOAD]) )->default_value( (*_stringOptions)[Options::SEARCH_PATH_LOAD] ),
           "Path to generate path in json format" )
         ( "check",
                 boost::program_options::bool_switch( &((*_boolOptions)[Options::CHECK]) )->default_value( (*_boolOptions)[Options::CHECK] ),
                 "Run check process" )
-        ( "json-load",
+        ( "load-json",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::JSON_LOAD]) )->default_value( (*_stringOptions)[Options::JSON_LOAD] ),
           "Path to load in json format" )
-        ( "json-save",
+        ( "save-json",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::JSON_SAVE]) )->default_value( (*_stringOptions)[Options::JSON_SAVE] ),
           "Path to save in json format" )
 #ifdef ENABLE_GUROBI

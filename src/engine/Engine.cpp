@@ -1434,9 +1434,9 @@ void Engine::storeState(EngineState &state, TableauStateStorageLevel level) cons
     _tableau->storeState(state._tableauState, level);
     state._tableauStateStorageLevel = level;
 
-    for (const auto &constraint: _plConstraints)
+    for (const auto &constraint: _plConstraints) {
         state._plConstraintToState[constraint] = constraint->duplicateConstraint();
-
+    }
     state._numPlConstraintsDisabledByValidSplits = _numPlConstraintsDisabledByValidSplits;
 }
 
@@ -2949,7 +2949,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                 // The current query is unsat, and we need to pop.
                 // If we're at level 0, the whole query is unsat.
                 _smtCore.recordStackInfo();
-                if (!_smtCore.popCheckSplit()) {
+                if (!_smtCore.popSplit()) {
                     printf("Verified unsat!\n");
                     struct timespec mainLoopEnd = TimeUtils::sampleMicro();
                     _statistics.incLongAttribute
@@ -2998,13 +2998,21 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         if (currentPos > preSearchPath._paths[pathNum].size()) {
             printf("Need extra verified info!\n");
             neetExtra ++;
-        } else if (currentPos < preSearchPath._paths.size()) {
+        } else if (currentPos < preSearchPath._paths[pathNum].size()) {
             printf("Need less verified info!\n");
             needLess ++;
         }
+        auto element = preSearchPath._paths[pathNum][0];
+        if (element.getPosition()._layer) {
+            auto constraint = getConstraintByPosition(element.getPosition());
+            if (!constraint->isActive()) {
+                printf("Enforce active "); constraint->getPosition().dump();
+                constraint->setActiveConstraint(true);
+            }
+        }
         preSearchPath.dumpPath(pathNum++);
     }
-    printf("Presearch tree path: [%d], current search tree path [%d]\n[%d] path need extra info, [%d] path need less\n",
-           preSearchPath._paths.size(), searchPath._paths.size(), neetExtra);
+    printf("Presearch tree path: [%zu], current search tree path [%zu]\n[%d] path need extra info, [%d] path need less\n",
+           preSearchPath._paths.size(), searchPath._paths.size(), neetExtra, needLess);
     return false;
 }
