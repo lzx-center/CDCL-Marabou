@@ -2753,12 +2753,14 @@ Engine::getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithL
 bool Engine::checkSolve(unsigned timeoutInSeconds) {
     SignalHandler::getInstance()->initialize();
     SignalHandler::getInstance()->registerClient(this);
+
     // Register the boundManager with all the PL constraints
     Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
     for (auto &plConstraint: _plConstraints) {
         plConstraint->registerBoundManager(&_boundManager);
         positionToConstraint[plConstraint->getPosition()] = plConstraint;
     }
+
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
         auto pos = plConstraint->getPosition();
         CaseSplitType type = CaseSplitType::UNKNOWN;
@@ -2773,6 +2775,11 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
     }
     if (_solveWithMILP)
         return solveWithMILPEncoding(timeoutInSeconds);
+
+    Vector<double> lowerBounds(_tableau->getN()), upperBounds(_tableau->getN());
+    for (size_t i = 0; i < _tableau->getN(); ++ i) {
+
+    }
 
     updateDirections();
     if (_lpSolverType == LPSolverType::NATIVE)
@@ -2806,6 +2813,8 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
     int neetExtra = 0, needLess = 0;
     for (auto &path: preSearchPath._paths) {
         int currentPos = 0;
+        std::sort(path.begin(), path.end());
+        unsigned int maxDepth = 0;
         bool splitJustPerformed = true;
         while (true) {
             struct timespec mainLoopEnd = TimeUtils::sampleMicro();
@@ -2866,6 +2875,10 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                     performBoundTighteningAfterCaseSplit();
                     informLPSolverOfBounds();
                     splitJustPerformed = false;
+                    if (_lpSolverType == LPSolverType::GUROBI) {
+                        LinearExpression dontCare;
+                        minimizeCostWithGurobi(dontCare);
+                    }
                     if (currentPos < path.size()) {
                         auto& element = path[currentPos];
                         auto constraint = getConstraintByPosition(element.getPosition());
@@ -2884,6 +2897,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                     }
                     currentPos ++;
                     printf("Stack depth: %d\n", _smtCore.getStackDepth());
+                    maxDepth = std::max(maxDepth, _smtCore.getStackDepth());
                     splitJustPerformed = true;
                     continue;
                 }
@@ -2995,11 +3009,11 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         }
         assert(_smtCore.getStackDepth() == 0 && "stack depth is not 0!!");
         printf("\nPath [%d] verified unsat,\n", pathNum);
-        if (currentPos > preSearchPath._paths[pathNum].size()) {
-            printf("Need extra verified info!\n");
+        if (maxDepth > preSearchPath._paths[pathNum].size()) {
+            printf("Need %zu extra verified info!\n", maxDepth - preSearchPath._paths[pathNum].size());
             neetExtra ++;
-        } else if (currentPos < preSearchPath._paths[pathNum].size()) {
-            printf("Need less verified info!\n");
+        } else if (maxDepth < preSearchPath._paths[pathNum].size()) {
+            printf("Need %zu less verified info!\n", preSearchPath._paths[pathNum].size() - maxDepth);
             needLess ++;
         }
         auto element = preSearchPath._paths[pathNum][0];
@@ -3015,4 +3029,62 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
     printf("Presearch tree path: [%zu], current search tree path [%zu]\n[%d] path need extra info, [%d] path need less\n",
            preSearchPath._paths.size(), searchPath._paths.size(), neetExtra, needLess);
     return false;
+}
+
+void Engine::LearnClause() {
+    auto gurobi = GurobiWrapper();
+    gurobi.reset();
+
+    // Encode relations
+    {
+        _milpEncoder->encodeInputQuery(gurobi, *_preprocessedQuery, true);
+    }
+    auto& searchPath = _smtCore._searchPath;
+    auto& lastPath = _smtCore._searchPath._paths.back();
+    Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
+
+    {
+        for (auto &plConstraint: _plConstraints) {
+            plConstraint->registerBoundManager(&_boundManager);
+            positionToConstraint[plConstraint->getPosition()] = plConstraint;
+        }
+    }
+
+    auto getConstraintByPosition = [&](Position position) {
+        if (position._layer) {
+            return positionToConstraint[position];
+        } else {
+            return getDisjunctionConstraintBasedOnIntervalWidth(position._node);
+        }
+    };
+
+    for (auto& element : lastPath) {
+        auto pos = element.getPosition();
+        auto type = element.getType();
+        auto constraint = getConstraintByPosition(pos);
+        switch (type) {
+            case CaseSplitType::RELU_ACTIVE: {
+                auto split = constraint->getCaseSplit(RELU_PHASE_ACTIVE);
+                break;
+            }
+            case CaseSplitType::RELU_INACTIVE: {
+                auto split = constraint->getCaseSplit(RELU_PHASE_INACTIVE);
+                break;
+            }
+            case CaseSplitType::DISJUNCTION_LOWER: {
+                auto splits = constraint->getCaseSplits();
+                break;
+            }
+            case CaseSplitType::DISJUNCTION_UPPER: {
+                auto splits = constraint->getCaseSplits();
+                break;
+            }
+            case CaseSplitType::UNKNOWN: {
+                printf("Unknown");
+                break;
+            }
+        }
+    }
+    gurobi.updateModel();
+
 }

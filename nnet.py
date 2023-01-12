@@ -3,6 +3,7 @@ import json
 import os
 import random
 from graphviz import Digraph, Graph
+
 """
 1: Header text. This can be any number of lines so long as they begin with "//"
 2: Four values: Number of layers, number of inputs, number of outputs, and maximum layer size
@@ -14,6 +15,7 @@ from graphviz import Digraph, Graph
 8: Range values of inputs and one value for all outputs (used for normalization)
 9+: Begin defining the weight matrix for the first layer, followed by the bias vector. The weights and biases for the second layer follow after, until the weights and biases for the output layer are defined.
 """
+
 
 class NNet():
     """
@@ -34,21 +36,22 @@ class NNet():
         weights (list of numpy arrays): Weight matrices in network
         biases (list of numpy arrays): Bias vectors in network
     """
-    def __init__ (self, filename):
+
+    def __init__(self, filename):
         with open(filename) as f:
             line = f.readline()
             cnt = 1
             while line[0:2] == "//":
-                line=f.readline() 
-                cnt+= 1
-            #numLayers does't include the input layer!
+                line = f.readline()
+                cnt += 1
+            # numLayers does't include the input layer!
             numLayers, inputSize, outputSize, _ = [int(x) for x in line.strip().split(",")[:-1]]
-            line=f.readline()
+            line = f.readline()
 
-            #input layer size, layer1size, layer2size...
+            # input layer size, layer1size, layer2size...
             layerSizes = [int(x) for x in line.strip().split(",")[:-1]]
 
-            line=f.readline()
+            line = f.readline()
             symmetric = int(line.strip().split(",")[0])
 
             line = f.readline()
@@ -63,24 +66,24 @@ class NNet():
             line = f.readline()
             inputRanges = [float(x) for x in line.strip().split(",")[:-1]]
 
-            weights=[]
+            weights = []
             biases = []
             for layernum in range(numLayers):
 
                 previousLayerSize = layerSizes[layernum]
-                currentLayerSize = layerSizes[layernum+1]
+                currentLayerSize = layerSizes[layernum + 1]
                 weights.append([])
                 biases.append([])
-                weights[layernum] = np.zeros((currentLayerSize,previousLayerSize))
+                weights[layernum] = np.zeros((currentLayerSize, previousLayerSize))
                 for i in range(currentLayerSize):
-                    line=f.readline()
+                    line = f.readline()
                     aux = [float(x) for x in line.strip().split(",")[:-1]]
                     for j in range(previousLayerSize):
-                        weights[layernum][i,j] = aux[j]
-                #biases
+                        weights[layernum][i, j] = aux[j]
+                # biases
                 biases[layernum] = np.zeros(currentLayerSize)
                 for i in range(currentLayerSize):
-                    line=f.readline()
+                    line = f.readline()
                     x = float(line.strip().split(",")[0])
                     biases[layernum][i] = x
 
@@ -98,7 +101,7 @@ class NNet():
             self.splits_set = None
             self.calc_states = []
             self.eliminated_constraint = []
-            
+
     def evaluate_network(self, inputs, normalize_input=False, undo_normalize_output=False):
         '''
         Evaluate network using given inputs
@@ -120,25 +123,25 @@ class NNet():
         for i in range(inputSize):
             inputsNorm[i] = inputs[i]
             if normalize_input:
-                if inputs[i]<self.mins[i]:
-                    inputsNorm[i] = (self.mins[i]-self.means[i])/self.ranges[i]
-                elif inputs[i]>self.maxes[i]:
-                    inputsNorm[i] = (self.maxes[i]-self.means[i])/self.ranges[i] 
+                if inputs[i] < self.mins[i]:
+                    inputsNorm[i] = (self.mins[i] - self.means[i]) / self.ranges[i]
+                elif inputs[i] > self.maxes[i]:
+                    inputsNorm[i] = (self.maxes[i] - self.means[i]) / self.ranges[i]
                 else:
-                    inputsNorm[i] = (inputs[i]-self.means[i])/self.ranges[i] 
+                    inputsNorm[i] = (inputs[i] - self.means[i]) / self.ranges[i]
 
-        # Evaluate the neural network
-        for layer in range(numLayers-1):
-            inputsNorm = np.maximum(np.dot(weights[layer],inputsNorm)+biases[layer],0)
-        outputs = np.dot(weights[-1],inputsNorm)+biases[-1]
+                    # Evaluate the neural network
+        for layer in range(numLayers - 1):
+            inputsNorm = np.maximum(np.dot(weights[layer], inputsNorm) + biases[layer], 0)
+        outputs = np.dot(weights[-1], inputsNorm) + biases[-1]
 
         # Undo output normalization
         if undo_normalize_output:
             for i in range(outputSize):
-                outputs[i] = outputs[i]*self.ranges[-1]+self.means[-1]
+                outputs[i] = outputs[i] * self.ranges[-1] + self.means[-1]
         return outputs
 
-    def evaluate_network_multiple(self,inputs):
+    def evaluate_network_multiple(self, inputs):
         '''
         Evaluate network using multiple sets of inputs
         
@@ -148,7 +151,7 @@ class NNet():
         Returns:
             (numpy array of floats): Network outputs for each set of inputs
         '''
-        
+
         numLayers = self.numLayers
         inputSize = self.inputSize
         outputSize = self.outputSize
@@ -158,25 +161,26 @@ class NNet():
 
         # Prepare the inputs to the neural network
         numInputs = inputs.shape[1]
-        inputsNorm = np.zeros((inputSize,numInputs))
+        inputsNorm = np.zeros((inputSize, numInputs))
         for i in range(inputSize):
             for j in range(numInputs):
-                if inputs[i,j]<self.mins[i]:
-                    inputsNorm[i,j] = (self.mins[i]-self.means[i])/self.ranges[i]
-                elif inputs[i,j] > self.maxes[i]:
-                    inputsNorm[i,j] = (self.maxes[i]-self.means[i])/self.ranges[i] 
+                if inputs[i, j] < self.mins[i]:
+                    inputsNorm[i, j] = (self.mins[i] - self.means[i]) / self.ranges[i]
+                elif inputs[i, j] > self.maxes[i]:
+                    inputsNorm[i, j] = (self.maxes[i] - self.means[i]) / self.ranges[i]
                 else:
-                    inputsNorm[i,j] = (inputs[i,j]-self.means[i])/self.ranges[i]
+                    inputsNorm[i, j] = (inputs[i, j] - self.means[i]) / self.ranges[i]
 
         # Evaluate the neural network
-        for layer in range(numLayers-1):
-            inputsNorm = np.maximum(np.dot(weights[layer],inputsNorm)+biases[layer].reshape((len(biases[layer]),1)),0)
-        outputs = np.dot(weights[-1],inputsNorm)+biases[-1].reshape((len(biases[-1]),1))
+        for layer in range(numLayers - 1):
+            inputsNorm = np.maximum(np.dot(weights[layer], inputsNorm) + biases[layer].reshape((len(biases[layer]), 1)),
+                                    0)
+        outputs = np.dot(weights[-1], inputsNorm) + biases[-1].reshape((len(biases[-1]), 1))
 
         # Undo output normalization
         for i in range(outputSize):
             for j in range(numInputs):
-                outputs[i,j] = outputs[i,j]*self.ranges[-1]+self.means[-1]
+                outputs[i, j] = outputs[i, j] * self.ranges[-1] + self.means[-1]
         return outputs.T
 
     def num_inputs(self):
@@ -186,9 +190,9 @@ class NNet():
     def num_outputs(self):
         ''' Get network output size'''
         return self.outputSize
- 
+
     def get_node_relation(self, layer, node):
-        return [self.weights[layer - 1][node, i] for i in range(self.layerSizes[layer-1])]
+        return [self.weights[layer - 1][node, i] for i in range(self.layerSizes[layer - 1])]
 
     def load_json(self, json_path):
         f = open(json_path)
@@ -210,12 +214,11 @@ class NNet():
                     splits.append(load_triple(imply, "implied", num))
                 num += 1
             splits_set.append(splits)
-        
-                # parse eliminated
+
+            # parse eliminated
         eliminated = json_dict['eliminated']
         for constraint in eliminated:
             self.eliminated_constraint.append(load_triple(constraint['split'], "eliminated", 0))
-
 
         self.splits_set = splits_set
 
@@ -231,23 +234,23 @@ class NNet():
         for i in range(inputSize):
             inputsNorm[i] = inputs[i]
             if normalize_input:
-                if inputs[i]<self.mins[i]:
-                    inputsNorm[i] = (self.mins[i]-self.means[i])/self.ranges[i]
-                elif inputs[i]>self.maxes[i]:
-                    inputsNorm[i] = (self.maxes[i]-self.means[i])/self.ranges[i] 
+                if inputs[i] < self.mins[i]:
+                    inputsNorm[i] = (self.mins[i] - self.means[i]) / self.ranges[i]
+                elif inputs[i] > self.maxes[i]:
+                    inputsNorm[i] = (self.maxes[i] - self.means[i]) / self.ranges[i]
                 else:
-                    inputsNorm[i] = (inputs[i]-self.means[i])/self.ranges[i] 
+                    inputsNorm[i] = (inputs[i] - self.means[i]) / self.ranges[i]
 
-        # Evaluate the neural network
+                    # Evaluate the neural network
         state = [[]]
-        for layer in range(numLayers-1):
-            inputsNorm = np.maximum(np.dot(weights[layer],inputsNorm)+biases[layer],0)
+        for layer in range(numLayers - 1):
+            inputsNorm = np.maximum(np.dot(weights[layer], inputsNorm) + biases[layer], 0)
             state.append((inputsNorm > 0).tolist())
-        outputs = np.dot(weights[-1],inputsNorm)+biases[-1]
+        outputs = np.dot(weights[-1], inputsNorm) + biases[-1]
         # Undo output normalization
         if undo_normalize_output:
             for i in range(outputSize):
-                outputs[i] = outputs[i]*self.ranges[-1]+self.means[-1]
+                outputs[i] = outputs[i] * self.ranges[-1] + self.means[-1]
         self.calc_states.append(state)
         return outputs
 
@@ -287,31 +290,28 @@ class NNet():
                             dot.edge(pre_node_name, node_name)
 
         # dot.draw('visualize/output.png', args='-Gsize=10 -Gratio=1.4', prog='dot')
-        dot.render(pic_path,format='jpg')  
+        dot.render(pic_path, format='jpg')
 
     def visualize_search_path(self, name="test"):
         step = len(self.splits_set) // 10
         for i in range(0, len(self.splits_set), step):
             pic_path = f"visualize/{name}_{i}_{len(self.splits_set[i])}"
             self.visualize_single_path(self.splits_set[i], pic_path)
-            
-            
 
     def visualize_single_path(self, splits, pic_path="visualize/visual.jpg"):
 
         type_param = {
-            "Relu active" : {
-                'assertion' : {'style' : 'filled', 'fillcolor' : '/greens7/6', 'fontsize' : '20'},
-                'implied'   : {'style' : 'filled', 'fillcolor' : '/greens7/4'},
-                'eliminated'   : {'style' : 'filled', 'fillcolor' : '/greens7/1'}
+            "Relu active": {
+                'assertion': {'style': 'filled', 'fillcolor': '/greens7/6', 'fontsize': '20'},
+                'implied': {'style': 'filled', 'fillcolor': '/greens7/4'},
+                'eliminated': {'style': 'filled', 'fillcolor': '/greens7/1'}
             },
-            "Relu inactive" : {
-                'assertion' : {'style' : 'filled', 'fillcolor' : '/oranges7/6', 'fontsize' : '20'},
-                'implied'   : {'style' : 'filled', 'fillcolor' : '/oranges7/4'},
-                'eliminated'   : {'style' : 'filled', 'fillcolor' : '/oranges7/1'}
+            "Relu inactive": {
+                'assertion': {'style': 'filled', 'fillcolor': '/oranges7/6', 'fontsize': '20'},
+                'implied': {'style': 'filled', 'fillcolor': '/oranges7/4'},
+                'eliminated': {'style': 'filled', 'fillcolor': '/oranges7/1'}
             }
         }
-
 
         def get_node_name(layer, node):
             return f'({layer},{node})'
@@ -320,9 +320,9 @@ class NNet():
         for layer, node, phase, _, _ in self.eliminated_constraint:
             name = get_node_name(layer, node)
             node_state[name] = {
-                'state' : 'eliminated',
-                'phase' : phase,
-                'order' : 0
+                'state': 'eliminated',
+                'phase': phase,
+                'order': 0
             }
 
         disjunction_set = set()
@@ -333,9 +333,9 @@ class NNet():
             if layer == 0:
                 if name not in node_state:
                     node_state[name] = {
-                        'phase' : [f'{phase}-{order}'],
-                        'state' : state,
-                        'order' : [order]
+                        'phase': [f'{phase}-{order}'],
+                        'state': state,
+                        'order': [order]
                     }
                 else:
                     node_state[name]['phase'].append(f'{phase}-{order}')
@@ -343,18 +343,17 @@ class NNet():
                 disjunction_set.add(order)
             else:
                 node_state[name] = {
-                    'phase' : phase,
-                    'state' : state,
-                    'order' : order
+                    'phase': phase,
+                    'state': state,
+                    'order': order
                 }
-        
+
         # input
         dot = Digraph(comment="nnet")
         dot.graph_attr['rankdir'] = 'LR'
         dot.graph_attr['splines'] = 'line'
         dot.graph_attr['ranksep'] = '15'
         dot.graph_attr['ordering'] = 'out'
-
 
         with dot.subgraph(name='input') as input:
             for i in range(self.num_inputs()):
@@ -374,14 +373,15 @@ class NNet():
                         label = f"Order: {state['order']}" if state['order'] != 0 else 'e'
                         if state['order'] in disjunction_set:
                             label = str(state['order'])
-                        layer_graph.node(node_name, shape='circle', label=label, **type_param[state['phase']][state['state']])
+                        layer_graph.node(node_name, shape='circle', label=label,
+                                         **type_param[state['phase']][state['state']])
                     else:
                         layer_graph.node(node_name, shape='circle')
                     weight = self.weights[layer][node]
                     for pre_node in range(self.layerSizes[layer]):
                         w = weight[pre_node]
                         if w != 0:
-                            pre_node_name = get_node_name(layer,pre_node)
+                            pre_node_name = get_node_name(layer, pre_node)
                             if pre_node_name in node_state and node_state[pre_node_name]['phase'] == 'Relu inactive':
                                 # dot.edge(pre_node_name, node_name, color='white')
                                 pass
@@ -391,14 +391,14 @@ class NNet():
 
         with dot.subgraph(name='output') as output:
             for i in range(self.num_outputs()):
-                node_name = get_node_name(self.numLayers,i)
+                node_name = get_node_name(self.numLayers, i)
                 output.node(node_name, shape='circle')
                 for node in range(self.layerSizes[self.numLayers]):
                     weight = self.weights[self.numLayers - 1][node]
                     for pre_node in range(self.layerSizes[self.numLayers - 1]):
                         w = weight[pre_node]
                         if w:
-                            pre_node_name = get_node_name(self.numLayers - 1,pre_node)
+                            pre_node_name = get_node_name(self.numLayers - 1, pre_node)
                             if pre_node_name in node_state and node_state[pre_node_name]['phase'] == 'Relu inactive':
                                 # dot.edge(pre_node_name, node_name, color='white')
                                 pass
@@ -406,7 +406,8 @@ class NNet():
                                 dot.edge(pre_node_name, node_name)
 
         # dot.draw('visualize/output.png', args='-Gsize=10 -Gratio=1.4', prog='dot')
-        dot.render(pic_path,format='jpg')  
+        dot.render(pic_path, format='jpg')
+
 
 class TestGenerator:
     def __init__(self) -> None:

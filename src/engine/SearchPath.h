@@ -43,6 +43,10 @@ public:
     }
 
     void dumpJson(String& output);
+
+    bool operator < (const PathElement& path) const {
+        return _caseSplit._position < path._caseSplit._position;
+    }
 };
 
 class SearchPath {

@@ -685,6 +685,7 @@ private:
     PiecewiseLinearConstraint *getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithLargestInterval);
     PiecewiseLinearConstraint *pickSplitPLConstraintBasedOnIntervalWidth();
 
+    void LearnClause();
     /*
       Solve the input query with a MILP solver (Gurobi)
     */

@@ -266,22 +266,26 @@ bool SmtCore::popSplit()
                 printf( "Error! Popping from a compliant stack\n" );
                 throw MarabouError( MarabouError::DEBUGGING_ERROR );
             }
-
-            if (_stack.size() != 1) {
-                delete _stack.back()->_engineState;
-                delete _stack.back();
-                _stack.popBack();
-                popContext();
+            if (Options::get()->getBool(Options::CHECK)) {
+                if (_stack.size() != 1) {
+                    delete _stack.back()->_engineState;
+                    delete _stack.back();
+                    _stack.popBack();
+                    popContext();
+                } else {
+                    popContext();
+                    _engine->postContextPopHook();
+                    _engine->restoreState(*(_stack.back()->_engineState));
+                    delete _stack.back()->_engineState;
+                    delete _stack.back();
+                    _stack.popBack();
+                }
             } else {
-                popContext();
-                _engine->postContextPopHook();
-                _engine->restoreState(*(_stack.back()->_engineState));
                 delete _stack.back()->_engineState;
                 delete _stack.back();
                 _stack.popBack();
+                popContext();
             }
-
-
             if ( _stack.empty() )
                 return false;
         }
