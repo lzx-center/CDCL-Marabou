@@ -1,0 +1,7 @@
+Network: /home/center/CDCL-Marabou/resources/nnet/coav/reluBenchmark0.00621390342712s_UNSAT.nnet
+Number of layers: 6. Input layer size: 6. Output layer size: 1. Number of ReLUs: 137
+Total number of variables: 281
+Property: /home/center/CDCL-Marabou/resources/properties/builtin_property.txt
+
+Engine::processInputQuery: Input query (before preprocessing): 138 equations, 281 variables
+unsat

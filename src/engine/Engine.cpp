@@ -161,7 +161,6 @@ bool Engine::solve(unsigned timeoutInSeconds) {
         _milpEncoder->encodeInputQuery(*_gurobi, *_preprocessedQuery, true);
         ENGINE_LOG("Encoding convex relaxation into Gurobi - done");
     }
-
     mainLoopStatistics();
     if (_verbosity > 0) {
         printf("\nEngine::solve: Initial statistics\n");
@@ -173,7 +172,9 @@ bool Engine::solve(unsigned timeoutInSeconds) {
 
     bool splitJustPerformed = true;
     struct timespec mainLoopStart = TimeUtils::sampleMicro();
+    int num = 0;
     while (true) {
+        printf("Stack depth: %d\n", _smtCore.getStackDepth());
         struct timespec mainLoopEnd = TimeUtils::sampleMicro();
         _statistics.incLongAttribute(Statistics::TIME_MAIN_LOOP_MICRO,
                                      TimeUtils::timePassed(mainLoopStart,
@@ -386,7 +387,7 @@ bool Engine::adjustAssignmentToSatisfyNonLinearConstraints() {
     ENGINE_LOG("Linear constraints satisfied. Now trying to satisfy non-linear"
                " constraints...");
     collectViolatedPlConstraints();
-
+    printf("adjustAssignmentToSatisfyNonLinearConstraints\n");
     // If all constraints are satisfied, we are possibly done
     if (allPlConstraintsHold()) {
         if (_lpSolverType == LPSolverType::NATIVE &&
@@ -2283,6 +2284,7 @@ PiecewiseLinearConstraint *Engine::pickSplitPLConstraint(DivideStrategy
              (_smtCore.getStackDepth() %
               GlobalConfiguration::INTERVAL_SPLITTING_FREQUENCY == 0)
             ) {
+        printf("Use largest interval!\n");
         // Conduct interval splitting periodically.
         candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
     }
@@ -2753,7 +2755,6 @@ Engine::getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithL
 bool Engine::checkSolve(unsigned timeoutInSeconds) {
     SignalHandler::getInstance()->initialize();
     SignalHandler::getInstance()->registerClient(this);
-
     // Register the boundManager with all the PL constraints
     Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
     for (auto &plConstraint: _plConstraints) {
@@ -2776,10 +2777,6 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
     if (_solveWithMILP)
         return solveWithMILPEncoding(timeoutInSeconds);
 
-    Vector<double> lowerBounds(_tableau->getN()), upperBounds(_tableau->getN());
-    for (size_t i = 0; i < _tableau->getN(); ++ i) {
-
-    }
 
     updateDirections();
     if (_lpSolverType == LPSolverType::NATIVE)
@@ -2811,11 +2808,12 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
     auto &preSearchPath = getPreSearchPath();
     int pathNum = 0;
     int neetExtra = 0, needLess = 0;
+    int canNotJudge = 0;
     for (auto &path: preSearchPath._paths) {
         int currentPos = 0;
-        std::sort(path.begin(), path.end());
         unsigned int maxDepth = 0;
         bool splitJustPerformed = true;
+        std::sort(path.begin(), path.end());
         while (true) {
             struct timespec mainLoopEnd = TimeUtils::sampleMicro();
             _statistics.incLongAttribute(Statistics::TIME_MAIN_LOOP_MICRO,
@@ -2872,7 +2870,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
 
                 // If true, we just entered a new subproblem
                 if (splitJustPerformed) {
-                    performBoundTighteningAfterCaseSplit();
+//                    performBoundTighteningAfterCaseSplit();
                     informLPSolverOfBounds();
                     splitJustPerformed = false;
                     if (_lpSolverType == LPSolverType::GUROBI) {
@@ -2894,6 +2892,8 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                         _smtCore.performCheckSplit();
                     } else {
                         _smtCore.performSplit();
+                        canNotJudge ++;
+                        throw InfeasibleQueryException();
                     }
                     currentPos ++;
                     printf("Stack depth: %d\n", _smtCore.getStackDepth());
@@ -3027,17 +3027,91 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         preSearchPath.dumpPath(pathNum++);
     }
     printf("Presearch tree path: [%zu], current search tree path [%zu]\n[%d] path need extra info, [%d] path need less\n",
-           preSearchPath._paths.size(), searchPath._paths.size(), neetExtra, needLess);
+           preSearchPath._paths.size(), searchPath._paths.size(), canNotJudge, needLess);
     return false;
 }
 
 void Engine::LearnClause() {
     auto gurobi = GurobiWrapper();
     gurobi.reset();
-
+    Map<unsigned, String> _variableToVariableName;
     // Encode relations
     {
-        _milpEncoder->encodeInputQuery(gurobi, *_preprocessedQuery, true);
+        auto inputQuery = *_preprocessedQuery;
+        // Add variables
+        for ( unsigned var = 0; var < inputQuery.getNumberOfVariables(); var++ )
+        {
+            double lb = _tableau->getLowerBound( var );
+            double ub = _tableau->getUpperBound( var );
+            String varName = Stringf( "x%u", var );
+            gurobi.addVariable( varName, lb, ub );
+            _variableToVariableName[var] = varName;
+//        printf("%s [%lf, %lf]\n", varName.ascii(), lb, ub);
+        }
+
+        // Add equations
+        for ( const auto &equation : inputQuery.getEquations() )
+        {
+            List<GurobiWrapper::Term> terms;
+            double scalar = equation._scalar;
+            for ( const auto &term : equation._addends )
+                terms.append( GurobiWrapper::Term
+                                      ( term._coefficient,
+                                        Stringf( "x%u", term._variable ) ) );
+            switch ( equation._type )
+            {
+                case Equation::EQ:
+                    gurobi.addEqConstraint( terms, scalar );
+                    break;
+                case Equation::LE:
+                    gurobi.addLeqConstraint( terms, scalar );
+                    break;
+                case Equation::GE:
+                    gurobi.addGeqConstraint( terms, scalar );
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        bool relax = true;
+        // Add Piecewise-linear Constraints
+//        for ( const auto &plConstraint : inputQuery.getPiecewiseLinearConstraints() )
+//        {
+//            if ( plConstraint->constraintObsolete() )
+//            {
+//                continue;
+//            }
+//            switch ( plConstraint->getType() )
+//            {
+//                case PiecewiseLinearFunctionType::RELU:
+//                    encodeReLUConstraint( gurobi, (ReluConstraint *)plConstraint,
+//                                          relax );
+//                    break;
+//                case PiecewiseLinearFunctionType::MAX:
+//                    encodeMaxConstraint( gurobi, (MaxConstraint *)plConstraint,
+//                                         relax );
+//                    break;
+//                case PiecewiseLinearFunctionType::SIGN:
+//                    encodeSignConstraint( gurobi, (SignConstraint *)plConstraint,
+//                                          relax );
+//                    break;
+//                case PiecewiseLinearFunctionType::ABSOLUTE_VALUE:
+//                    encodeAbsoluteValueConstraint( gurobi,
+//                                                   (AbsoluteValueConstraint *)plConstraint,
+//                                                   relax );
+//                    break;
+//                case PiecewiseLinearFunctionType::DISJUNCTION:
+//                    encodeDisjunctionConstraint( gurobi,
+//                                                 (DisjunctionConstraint *)plConstraint,
+//                                                 relax );
+//                    break;
+//                default:
+//                    throw MarabouError( MarabouError::UNSUPPORTED_PIECEWISE_LINEAR_CONSTRAINT,
+//                                        "GurobiWrapper::encodeInputQuery: "
+//                                        "Unsupported piecewise-linear constraints\n" );
+//            }
+//        }
     }
     auto& searchPath = _smtCore._searchPath;
     auto& lastPath = _smtCore._searchPath._paths.back();
@@ -3058,33 +3132,406 @@ void Engine::LearnClause() {
         }
     };
 
-    for (auto& element : lastPath) {
-        auto pos = element.getPosition();
-        auto type = element.getType();
-        auto constraint = getConstraintByPosition(pos);
-        switch (type) {
-            case CaseSplitType::RELU_ACTIVE: {
-                auto split = constraint->getCaseSplit(RELU_PHASE_ACTIVE);
-                break;
+    //apply splits
+    {
+        for (auto& element : lastPath) {
+            PiecewiseLinearCaseSplit split;
+            auto pos = element.getPosition();
+            auto type = element.getType();
+            auto constraint = getConstraintByPosition(pos);
+            switch (type) {
+                case CaseSplitType::RELU_ACTIVE: {
+                    split = constraint->getCaseSplit(RELU_PHASE_ACTIVE);
+                    break;
+                }
+                case CaseSplitType::RELU_INACTIVE: {
+                    split = constraint->getCaseSplit(RELU_PHASE_INACTIVE);
+                    break;
+                }
+                case CaseSplitType::DISJUNCTION_LOWER: {
+                    auto splits = constraint->getCaseSplits();
+                    for (auto& sp : splits) {
+                        if (sp.getInfo()._type == CaseSplitType::DISJUNCTION_LOWER) {
+                            split = sp;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case CaseSplitType::DISJUNCTION_UPPER: {
+                    auto splits = constraint->getCaseSplits();
+                    for (auto& sp : splits) {
+                        if (sp.getInfo()._type == CaseSplitType::DISJUNCTION_UPPER) {
+                            split = sp;
+                            break;
+                        }
+                    }
+                }
+                case CaseSplitType::UNKNOWN: {
+                    printf("Unknown");
+                    break;
+                }
             }
-            case CaseSplitType::RELU_INACTIVE: {
-                auto split = constraint->getCaseSplit(RELU_PHASE_INACTIVE);
-                break;
-            }
-            case CaseSplitType::DISJUNCTION_LOWER: {
-                auto splits = constraint->getCaseSplits();
-                break;
-            }
-            case CaseSplitType::DISJUNCTION_UPPER: {
-                auto splits = constraint->getCaseSplits();
-                break;
-            }
-            case CaseSplitType::UNKNOWN: {
-                printf("Unknown");
-                break;
+
+            List<Tightening> bounds = split.getBoundTightenings();
+            for (auto &bound: bounds) {
+                unsigned variable = _tableau->getVariableAfterMerging(bound._variable);
+
+                if (bound._type == Tightening::LB) {
+                    printf("%s\n", Stringf("x%u: lower bound set to %.3lf", variable, bound._value).ascii());
+                    gurobi.setLowerBound(_variableToVariableName[variable], bound._value);
+                } else {
+                    printf("%s\n",Stringf("x%u: upper bound set to %.3lf", variable, bound._value).ascii());
+                    gurobi.setUpperBound(_variableToVariableName[variable], bound._value);
+                }
             }
         }
     }
+
     gurobi.updateModel();
 
+}
+
+bool Engine::checkSolve2(unsigned int timeoutInSeconds) {
+    SignalHandler::getInstance()->initialize();
+    SignalHandler::getInstance()->registerClient(this);
+    // Register the boundManager with all the PL constraints
+    Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
+    for (auto &plConstraint: _plConstraints) {
+        plConstraint->registerBoundManager(&_boundManager);
+        positionToConstraint[plConstraint->getPosition()] = plConstraint;
+    }
+
+    for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
+        auto pos = plConstraint->getPosition();
+        CaseSplitType type = CaseSplitType::UNKNOWN;
+        if (plConstraint->getPhaseStatus() == RELU_PHASE_ACTIVE) {
+            type = CaseSplitType::RELU_ACTIVE;
+        } else if (plConstraint->getPhaseStatus() == RELU_PHASE_INACTIVE) {
+            type = CaseSplitType::RELU_INACTIVE;
+        } else {
+            printf("Can not handle!\n");
+        }
+        _smtCore._searchPath.addEliminatedConstraint(pos._layer, pos._node, RELU_ACTIVE);
+    }
+
+    updateDirections();
+
+    _milpEncoder->encodeInputQuery(*_gurobi, *_preprocessedQuery, true);
+
+    mainLoopStatistics();
+    if (_verbosity > 0) {
+        printf("\nEngine::solve: Initial statistics\n");
+        _statistics.print();
+        printf("\n---\n");
+    }
+
+    applyAllValidConstraintCaseSplits();
+    struct timespec mainLoopStart = TimeUtils::sampleMicro();
+
+    auto getConstraintByPosition = [&](Position position) {
+        if (position._layer) {
+            return positionToConstraint[position];
+        } else {
+            return getDisjunctionConstraintBasedOnIntervalWidth(position._node);
+        }
+    };
+    auto &searchPath = getSearchPath();
+    auto &preSearchPath = getPreSearchPath();
+    int pathNum = 0;
+    int canNotJudge = 0, needLess = 0;
+
+    for (auto &path: preSearchPath._paths) {
+
+        unsigned int maxDepth = 0;
+        bool splitJustPerformed = true;
+        std::sort(path.begin(), path.end());
+
+        for (auto& pathElement : path) {
+            try {
+                auto constraint = getConstraintByPosition(pathElement.getPosition());
+                printf("Set constriant: "); pathElement.getPosition().dump();
+                printf("\n");
+                _smtCore.setConstraintForSplit(constraint, pathElement.getType());
+                _smtCore.performCheckSplit();
+                maxDepth = std::max(maxDepth, _smtCore.getStackDepth());
+                if (pathElement.getType() == DISJUNCTION_UPPER or pathElement.getType() == DISJUNCTION_LOWER) {
+                    performBoundTighteningAfterCaseSplit();
+                }
+                informLPSolverOfBounds();
+
+                if (!_tableau->allBoundsValid()) {
+                    // Some variable bounds are invalid, so the query is unsat
+                    throw InfeasibleQueryException();
+                }
+                LinearExpression dontCare;
+                minimizeCostWithGurobi(dontCare);
+            } catch (const MalformedBasisException &) {
+                _tableau->toggleOptimization(false);
+                if (!handleMalformedBasisException()) {
+                    ASSERT(_lpSolverType == LPSolverType::NATIVE);
+                    _exitCode = Engine::ERROR;
+                    exportInputQueryWithError("Cannot restore tableau");
+                    struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                    _statistics.incLongAttribute
+                            (Statistics::TIME_MAIN_LOOP_MICRO,
+                             TimeUtils::timePassed(mainLoopStart,
+                                                   mainLoopEnd));
+                    return false;
+                }
+            }
+            catch (const InfeasibleQueryException &) {
+                _tableau->toggleOptimization(false);
+                // The current query is unsat, and we need to pop.
+                // If we're at level 0, the whole query is unsat.
+                _smtCore.recordStackInfo();
+                if (!_smtCore.popSplit()) {
+                    printf("Verified unsat!\n");
+                    struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                }
+                break;
+            }
+            catch (const VariableOutOfBoundDuringOptimizationException &) {
+                _tableau->toggleOptimization(false);
+                continue;
+            }
+            catch (MarabouError &e) {
+                String message =
+                        Stringf("Caught a MarabouError. Code: %u. Message: %s ",
+                                e.getCode(), e.getUserMessage());
+                _exitCode = Engine::ERROR;
+                exportInputQueryWithError(message);
+                struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                _statistics.incLongAttribute
+                        (Statistics::TIME_MAIN_LOOP_MICRO,
+                         TimeUtils::timePassed(mainLoopStart,
+                                               mainLoopEnd));
+                return false;
+            }
+            catch (...) {
+                _exitCode = Engine::ERROR;
+                exportInputQueryWithError("Unknown error");
+                struct timespec mainLoopEnd = TimeUtils::sampleMicro();
+                _statistics.incLongAttribute
+                        (Statistics::TIME_MAIN_LOOP_MICRO,
+                         TimeUtils::timePassed(mainLoopStart,
+                                               mainLoopEnd));
+                return false;
+            }
+        }
+
+        printf("\nPath [%d] verified unsat,\n", pathNum);
+        if (_smtCore.getStackDepth()) {
+            _smtCore.popSplit();
+            canNotJudge ++;
+        } else if (maxDepth < preSearchPath._paths[pathNum].size()) {
+            printf("Need %zu less verified info!\n", preSearchPath._paths[pathNum].size() - maxDepth);
+            needLess ++;
+        }
+        assert(_smtCore.getStackDepth() == 0 && "stack depth is not 0!!");
+        auto element = preSearchPath._paths[pathNum][0];
+        if (element.getPosition()._layer) {
+            auto constraint = getConstraintByPosition(element.getPosition());
+            if (!constraint->isActive()) {
+                printf("Enforce active "); constraint->getPosition().dump();
+                constraint->setActiveConstraint(true);
+            }
+        }
+        preSearchPath.dumpPath(pathNum++);
+    }
+    printf("Presearch tree path: [%zu], current search tree path [%zu]\n[%d] path need extra info, [%d] path need less\n",
+           preSearchPath._paths.size(), searchPath._paths.size(), canNotJudge, needLess);
+    return false;
+}
+
+bool Engine::ClauseLearning() {
+    SignalHandler::getInstance()->initialize();
+    SignalHandler::getInstance()->registerClient(this);
+    // Register the boundManager with all the PL constraints
+    Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
+    for (auto &plConstraint: _plConstraints) {
+        plConstraint->registerBoundManager(&_boundManager);
+        positionToConstraint[plConstraint->getPosition()] = plConstraint;
+    }
+    for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
+        auto pos = plConstraint->getPosition();
+        CaseSplitType type = CaseSplitType::UNKNOWN;
+        if (plConstraint->getPhaseStatus() == RELU_PHASE_ACTIVE) {
+            type = CaseSplitType::RELU_ACTIVE;
+        } else if (plConstraint->getPhaseStatus() == RELU_PHASE_INACTIVE) {
+            type = CaseSplitType::RELU_INACTIVE;
+        } else {
+            printf("Can not handle!\n");
+        }
+        _smtCore._searchPath.addEliminatedConstraint(pos._layer, pos._node, RELU_ACTIVE);
+    }
+    updateDirections();
+    applyAllValidConstraintCaseSplits();
+
+    auto getConstraintByPosition = [&](Position position) {
+        if (position._layer) {
+            return positionToConstraint[position];
+        } else {
+            return getDisjunctionConstraintBasedOnIntervalWidth(position._node);
+        }
+    };
+    auto &searchPath = getSearchPath();
+    auto &preSearchPath = getPreSearchPath();
+    int pathNum = 0;
+    for (auto &path: preSearchPath._paths) {
+
+        //trivial encode
+        {
+            _gurobi = std::unique_ptr<GurobiWrapper>(new GurobiWrapper());
+            auto& gurobi = *_gurobi;
+            _milpEncoder->encodeInputQuery(gurobi, *_preprocessedQuery, true);
+            for (auto& element: path) {
+                PiecewiseLinearCaseSplit split;
+                auto pos = element.getPosition();
+                auto type = element.getType();
+                auto constraint = getConstraintByPosition(pos);
+                auto splits = constraint->getCaseSplits();
+                for (auto& sp : splits) {
+                    if (sp.getType() == type) {
+                        split = sp;
+                        break;
+                    }
+                }
+                List<Tightening> bounds = split.getBoundTightenings();
+                for (auto &bound: bounds) {
+                    unsigned variable = _tableau->getVariableAfterMerging(bound._variable);
+                    String varName = Stringf( "x%u", variable );
+
+                    if (bound._type == Tightening::LB) {
+//                    printf("%s\n", Stringf("x%u: lower bound set to %.3lf", variable, bound._value).ascii());
+                        gurobi.setLowerBound(varName, bound._value);
+                    } else {
+//                    printf("%s\n",Stringf("x%u: upper bound set to %.3lf", variable, bound._value).ascii());
+                        gurobi.setUpperBound(varName, bound._value);
+                    }
+                }
+            }
+            gurobi.updateModel();
+            bool verified = false;
+            try {
+                LinearExpression dontCare;
+                minimizeCostWithGurobi(dontCare);
+            } catch (InfeasibleQueryException) {
+                verified = true;
+            }
+            if (verified) {
+                printf("Trivial: Path [%d] verified UNSat\n", pathNum);
+            } else {
+                printf("Trivial: Not verified! Path [%d] not verified UNSat\n", pathNum);
+            }
+        }
+
+        // slack
+        std::vector<PathElement> newPath;
+        {
+            _gurobi = std::unique_ptr<GurobiWrapper>(new GurobiWrapper());
+            auto& gurobi = *_gurobi;
+            Map<PiecewiseLinearConstraint*, String> slackNames;
+            Map<String, CaseSplitTypeInfo> slackNameToSplitInfo;
+            //Encode the problem
+            {
+                _milpEncoder->encodeInputQuery(gurobi, *_preprocessedQuery, true);
+                unsigned int slackNum = 0;
+                for (auto &element : path) {
+                    PiecewiseLinearCaseSplit split;
+                    auto pos = element.getPosition();
+                    auto type = element.getType();
+                    auto constraint = getConstraintByPosition(pos);
+                    auto splits = constraint->getCaseSplits();
+                    for (auto& sp : splits) {
+                        if (sp.getType() == type) {
+                            split = sp;
+                            break;
+                        }
+                    }
+                    if (type == RELU_ACTIVE or type == RELU_INACTIVE) {
+                        auto* relu = dynamic_cast<ReluConstraint *>(constraint);
+                        unsigned int b = _tableau->getVariableAfterMerging(relu->getB());
+                        unsigned int f = _tableau->getVariableAfterMerging(relu->getF());
+                        String bName = _milpEncoder->getVariableNameFromVariable(b);
+                        String fName = _milpEncoder->getVariableNameFromVariable(f);
+                        String slackName = Stringf("s%u", slackNum ++);
+                        if (type == RELU_INACTIVE) {
+                            {
+                                List<GurobiWrapper::Term> terms;
+                                gurobi.addVariable(slackName, 0, FloatUtils::infinity());
+                                terms.append(GurobiWrapper::Term(1, bName));
+                                terms.append(GurobiWrapper::Term(-1, slackName));
+                                gurobi.addLeqConstraint(terms, 0);
+                            }
+                            {
+                                List<GurobiWrapper::Term> terms;
+                                terms.append(GurobiWrapper::Term(1, fName));
+                                terms.append(GurobiWrapper::Term(-1, slackName));
+                                gurobi.addLeqConstraint(terms, 0);
+                            }
+                        } else {
+                            unsigned variable = _tableau->getVariableAfterMerging(relu->getAux());
+                            slackName = _milpEncoder->getVariableNameFromVariable(variable);
+                        }
+                        slackNames[constraint] = slackName;
+                        slackNameToSplitInfo[slackName] = split.getInfo();
+                    }
+                }
+                gurobi.updateModel();
+            }
+
+            //encode cost function
+            {
+                List<GurobiWrapper::Term> terms;
+                for (auto& item : slackNames) {
+                    terms.append(GurobiWrapper::Term(1, item.second));
+                }
+                gurobi.setCost(terms);
+            }
+            gurobi.updateModel();
+            int num = 0;
+            while(true) {
+                _gurobi->setTimeLimit(FloatUtils::infinity());
+                _gurobi->solve();
+                if (_gurobi->infeasible()) {
+                    printf("Slack: Path [%d] verified UNSat\n", pathNum);
+                    printf("Length from [%d] to [%d]\n", path.size(), num);
+                    break;
+                } else if (_gurobi->optimal()) {
+                    Map<String, double> assignment;
+                    double costOrObjective;
+                    _gurobi->extractSolution(assignment, costOrObjective);
+                    double maxScore = 0;
+                    String maxName = "";
+                    for (auto& item : slackNames) {
+                        auto name = item.second;
+                        if (assignment.exists(name)) {
+                            if (FloatUtils::lt(maxScore,assignment.at(name))) {
+                                maxScore = assignment.at(name);
+                                maxName = name;
+                            }
+                        }
+                    }
+                    if (FloatUtils::isZero(maxScore)) {
+                        printf("Slack: Can not judge!\n");
+                        break;
+                    }
+                    num ++;
+                    printf("Slack: Set %s from %lf to 0\n", maxName.ascii(), maxScore);
+                    gurobi.setLowerBound(maxName, 0);
+                    gurobi.setUpperBound(maxName, 0);
+                    gurobi.updateModel();
+                    {
+                        CaseSplitTypeInfo info = slackNameToSplitInfo.at(maxName);
+                        PathElement element;
+                        element.setSplit(info);
+                        newPath.push_back(std::move(element));
+                    }
+                }
+            }
+        }
+        searchPath._paths.push_back(newPath);
+        pathNum ++;
+    }
 }

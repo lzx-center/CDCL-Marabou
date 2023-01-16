@@ -680,7 +680,7 @@ void SmtCore::performCheckSplit() {
     // Maybe the constraint has already become inactive - if so, ignore
     if ( !_constraintForSplitting->isActive() )
     {
-        printf("Constraint beconme not valid!\n");
+        printf("Constraint become not valid!\n");
         _needToSplit = false;
         _constraintToViolationCount[_constraintForSplitting] = 0;
         _constraintForSplitting = nullptr;

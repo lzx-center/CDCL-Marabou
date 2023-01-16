@@ -39,11 +39,13 @@ void MILPEncoder::encodeInputQuery( GurobiWrapper &gurobi,
         String varName = Stringf( "x%u", var );
         gurobi.addVariable( varName, lb, ub );
         _variableToVariableName[var] = varName;
+//        printf("%s [%lf, %lf]\n", varName.ascii(), lb, ub);
     }
 
     // Add equations
     for ( const auto &equation : inputQuery.getEquations() )
     {
+//        equation.dump();
         encodeEquation( gurobi, equation );
     }
 

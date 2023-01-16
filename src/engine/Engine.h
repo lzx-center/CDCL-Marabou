@@ -76,7 +76,9 @@ public:
       (a timeout of 0 means no time limit). Returns true if found, false if infeasible.
     */
     bool solve( unsigned timeoutInSeconds = 0 );
+    bool checkSolve2(unsigned timeoutInSeconds = 0);
     bool checkSolve(unsigned  timeoutInSeconds = 0);
+    bool ClauseLearning();
     /*
       Minimize the cost function with respect to the current set of linear constraints.
     */

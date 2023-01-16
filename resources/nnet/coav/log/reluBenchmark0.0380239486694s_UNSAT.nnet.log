@@ -1,0 +1,18 @@
+Network: /home/center/CDCL-Marabou/resources/nnet/coav/reluBenchmark0.0380239486694s_UNSAT.nnet
+Number of layers: 6. Input layer size: 6. Output layer size: 1. Number of ReLUs: 137
+Total number of variables: 281
+Property: /home/center/CDCL-Marabou/resources/properties/builtin_property.txt
+
+Engine::processInputQuery: Input query (before preprocessing): 138 equations, 281 variables
+Engine::processInputQuery: Input query (after preprocessing): 260 equations, 279 variables
+
+Input bounds:
+	x0: [  0.7930,   0.8899] 
+	x1: [  0.5548,   0.6517] 
+	x2: [  0.2440,   0.3409] 
+	x3: [  0.3540,   0.4509] 
+	x4: [ -0.2330,  -0.1361] 
+	x5: [ -0.0624,   0.0345] 
+
+Using Gurobi to solve LP...
+unsat
