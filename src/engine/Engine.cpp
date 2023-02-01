@@ -2791,7 +2791,6 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
     }
 
     applyAllValidConstraintCaseSplits();
-
     struct timespec mainLoopStart = TimeUtils::sampleMicro();
 
     auto getConstraintByPosition = [&](Position position) {
@@ -2801,9 +2800,10 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
             return getDisjunctionConstraintBasedOnIntervalWidth(position._node);
         }
     };
-
+    auto &searchPath = getSearchPath();
     auto &preSearchPath = getPreSearchPath();
     int pathNum = 0;
+    int neetExtra = 0, needLess = 0;
     for (auto &path: preSearchPath._paths) {
         int currentPos = 0;
         bool splitJustPerformed = true;
@@ -2879,10 +2879,10 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
                 if (_smtCore.needToSplit()) {
                     if (currentPos < path.size()) {
                         _smtCore.performCheckSplit();
-                        currentPos ++;
                     } else {
                         _smtCore.performSplit();
                     }
+                    currentPos ++;
                     printf("Stack depth: %d\n", _smtCore.getStackDepth());
                     splitJustPerformed = true;
                     continue;
@@ -2995,8 +2995,16 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
         }
         assert(_smtCore.getStackDepth() == 0 && "stack depth is not 0!!");
         printf("\nPath [%d] verified unsat,\n", pathNum);
+        if (currentPos > preSearchPath._paths[pathNum].size()) {
+            printf("Need extra verified info!\n");
+            neetExtra ++;
+        } else if (currentPos < preSearchPath._paths.size()) {
+            printf("Need less verified info!\n");
+            needLess ++;
+        }
         preSearchPath.dumpPath(pathNum++);
     }
-
+    printf("Presearch tree path: [%d], current search tree path [%d]\n[%d] path need extra info, [%d] path need less\n",
+           preSearchPath._paths.size(), searchPath._paths.size(), neetExtra);
     return false;
 }

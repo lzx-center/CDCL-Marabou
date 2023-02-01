@@ -112,10 +112,10 @@ void OptionParser::initialize()
         ( "path-json",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::PATH_JSON]) )->default_value( (*_stringOptions)[Options::PATH_JSON] ),
           "Path to generate path in json format" )
-        ( "search-path-save",
+        ( "path-save",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::SEARCH_PATH_SAVE]) )->default_value( (*_stringOptions)[Options::SEARCH_PATH_SAVE] ),
           "Path to generate path in json format" )
-        ( "search-path-load",
+        ( "path-load",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::SEARCH_PATH_LOAD]) )->default_value( (*_stringOptions)[Options::SEARCH_PATH_LOAD] ),
           "Path to generate path in json format" )
         ( "check",
