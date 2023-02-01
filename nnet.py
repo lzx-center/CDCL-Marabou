@@ -15,6 +15,77 @@ from graphviz import Digraph, Graph
 9+: Begin defining the weight matrix for the first layer, followed by the bias vector. The weights and biases for the second layer follow after, until the weights and biases for the output layer are defined.
 """
 
+
+class TestGenerator:
+    def __init__(self) -> None:
+        pass
+
+    def generator(self, file_path, property_path=None):
+        layers, inputs, outputs, maximum_layer_size = 2, 2, 2, 2
+        layer_nums = [inputs, 2,outputs]
+
+        min_val_for_input, max_val_for_input = -1.0, 1.0
+        mean_val_for_input, one_val_for_output = 0.0, 0.0
+        range_val_for_input, range_for_output = 1.0, 1.0
+
+        with open(file_path, "w+") as f:
+
+            def printf(*arg, **kwargs):
+                print(*arg, **kwargs, file=f)
+
+            print("//auto generated", file=f)
+            print(f"{layers},{inputs},{outputs},{maximum_layer_size},", file=f)
+            for layer_num in layer_nums:
+                print(layer_num, end=",", file=f)
+            print(file=f)
+            print("0,", file=f)
+            # line 5
+            for i in range(inputs):
+                print(min_val_for_input, end=",", file=f)
+            print(file=f)
+            # line 6
+            for i in range(inputs):
+                printf(max_val_for_input, end=",")
+            printf()
+            # line 7
+            for i in range(inputs):
+                printf(mean_val_for_input, end=",")
+            printf(f"{one_val_for_output},")
+            # line 8
+            for i in range(inputs):
+                printf(range_val_for_input, end=",")
+            printf(f"{range_for_output},")
+            # matrix
+            for i in range(len(layer_nums) - 1):
+                for h in range(layer_nums[i + 1]):
+                    for l in range(layer_nums[i]):
+                        printf(random.uniform(-1, 1), end=",")
+                    printf()
+                for h in range(layer_nums[i + 1]):
+                    printf("0.0,")
+                if property_path is not None:
+                    bound = random.uniform(-2, 2)
+                    with open(property_path, "w+") as t:
+                        def printt(*arg, **kwargs):
+                            print(*arg, **kwargs, file=t)
+
+                        printt(f"y0 >= {bound}")
+        # command = f"/home/center/Delta-Marabou/Marabou {file_path} {property_path} > ./test.log"
+        # print(command)
+        # os.system(command)
+        # with open("./test.log") as f:
+        #     unsat = False
+        #     for line in f.readlines():
+        #         if "unsat" in line:
+        #             unsat = True
+        #         if "Search Tree" in line:
+        #             size = int(line.split(" ")[-1].strip("\n"))
+        #             print(size)
+        #             if unsat:
+        #                 return size
+        # return 0
+
+
 class NNet():
     """
     Class that represents a fully connected ReLU network from a .nnet file
@@ -249,7 +320,7 @@ class NNet():
             for i in range(outputSize):
                 outputs[i] = outputs[i]*self.ranges[-1]+self.means[-1]
         self.calc_states.append(state)
-        return outputs
+        return state
 
     def visual(self, pic_path="visualize/test.visul.jpg"):
         # input
@@ -295,8 +366,6 @@ class NNet():
             pic_path = f"visualize/{name}_{i}_{len(self.splits_set[i])}"
             self.visualize_single_path(self.splits_set[i], pic_path)
             
-            
-
     def visualize_single_path(self, splits, pic_path="visualize/visual.jpg"):
 
         type_param = {
@@ -408,79 +477,198 @@ class NNet():
         # dot.draw('visualize/output.png', args='-Gsize=10 -Gratio=1.4', prog='dot')
         dot.render(pic_path,format='jpg')  
 
-class TestGenerator:
-    def __init__(self) -> None:
-        pass
+    def deep_poly_analysis(self):
+        class NodeType:
+            input = "input"
+            output = 'output'
+            reluBack = 'relu back'
+            reluForward = 'relu forward'
 
-    def generator(file_path, property_path=None):
-        layers, inputs, outputs, maximum_layer_size = 3, 1, 1, 2
-        layer_nums = [inputs, 3, 2, outputs]
+        node_names = {}
 
-        min_val_for_input, max_val_for_input = -1.0, 1.0
-        mean_val_for_input, one_val_for_output = 0.0, 0.0
-        range_val_for_input, range_for_output = 1.0, 1.0
+        def get_node_name(layer, node, type):
+            query = (layer, node, type)
+            if query in node_names:
+                return node_names[query]
+            name = f'({layer}, {node}, {type})'
+            node_names[query] = name
+            return name
 
-        with open(file_path, "w+") as f:
+        # node name to coefficient
+        node_infos = {}
 
-            def printf(*arg, **kwargs):
-                print(*arg, **kwargs, file=f)
+        class NodeInfo:
+            def __init__(self, name) -> None:
+                self.name = name
+                self.lower_bound, self.upper_bound = None, None
+                self.symbolic_lower_bound, self.symbolic_upper_bound = {}, {}
+                self.symbolic_lower_bound_of_input = {}
+                self.symbolic_upper_bound_of_input = {}
+                self.bias = np.float64(0)
+            
+            def __str__(self) -> str:
+                ret = f"Node name: {self.name}\nLower bound: {self.lower_bound}\n" \
+                      f"Upper bound: {self.upper_bound}\n"
+                ret += "Symbolic lower: "
+                for name, coeff in self.symbolic_lower_bound.items():
+                    ret += f"{coeff} {name} "
+                ret += "\nSymbolic upper: "
+                for name, coeff in self.symbolic_upper_bound.items():
+                    ret += f"{coeff} {name} "
+                ret += "\n"
+                ret += "Symbolic lower to input: "
+                for name, coeff in self.symbolic_lower_bound_of_input.items():
+                    ret += f"{coeff} {name} "
+                ret += "\nSymbolic upper to input: "
+                for name, coeff in self.symbolic_upper_bound_of_input.items():
+                    ret += f"{coeff} {name} "
+                ret += f"\nBias: {self.bias}\n"
+                return ret
 
-            print("//auto generated", file=f)
-            print(f"{layers},{inputs},{outputs},{maximum_layer_size},", file=f)
-            for layer_num in layer_nums:
-                print(layer_num, end=",", file=f)
-            print(file=f)
-            print("0,", file=f)
-            # line 5
-            for i in range(inputs):
-                print(min_val_for_input, end=",", file=f)
-            print(file=f)
-            # line 6
-            for i in range(inputs):
-                printf(max_val_for_input, end=",")
-            printf()
-            # line 7
-            for i in range(inputs):
-                printf(mean_val_for_input, end=",")
-            printf(f"{one_val_for_output},")
-            # line 8
-            for i in range(inputs):
-                printf(range_val_for_input, end=",")
-            printf(f"{range_for_output},")
-            # matrix
-            for i in range(len(layer_nums) - 1):
-                for h in range(layer_nums[i + 1]):
-                    for l in range(layer_nums[i]):
-                        printf(random.uniform(-1, 1), end=",")
-                    printf()
-                for h in range(layer_nums[i + 1]):
-                    printf("0.0,")
-                bound = random.uniform(-2, 2)
-                with open(property_path, "w+") as t:
-                    def printt(*arg, **kwargs):
-                        print(*arg, **kwargs, file=t)
+            def back_propagate_to(self):
+                for name, coeff in self.symbolic_lower_bound.items():
+                    pre_info = node_infos[name]
+                    if coeff < 0:
+                        for input, input_coeff in pre_info.symbolic_upper_bound_of_input.items():
+                            if input not in self.symbolic_lower_bound_of_input:
+                                self.symbolic_lower_bound_of_input[input] = np.float64(0)
+                            self.symbolic_lower_bound_of_input[input] += input_coeff * coeff
+                        continue
+                    for input, input_coeff in pre_info.symbolic_lower_bound_of_input.items():
+                            if input not in self.symbolic_lower_bound_of_input:
+                                self.symbolic_lower_bound_of_input[input] = np.float64(0)
+                            self.symbolic_lower_bound_of_input[input] += input_coeff * coeff
 
-                    printt(f"y0 >= {bound}")
-        command = f"/home/center/Delta-Marabou/Marabou {file_path} {property_path} > ./test.log"
-        print(command)
-        os.system(command)
-        with open("./test.log") as f:
-            unsat = False
-            for line in f.readlines():
-                if "unsat" in line:
-                    unsat = True
-                if "Search Tree" in line:
-                    size = int(line.split(" ")[-1].strip("\n"))
-                    print(size)
-                    if unsat:
-                        return size
-        return 0
+                for name, coeff in self.symbolic_upper_bound.items():
+                    pre_info = node_infos[name]
+                    if coeff < 0:
+                        for input, input_coeff in pre_info.symbolic_lower_bound_of_input.items():
+                            if input not in self.symbolic_upper_bound_of_input:
+                                self.symbolic_upper_bound_of_input[input] = np.float64(0)
+                            self.symbolic_upper_bound_of_input[input] += input_coeff * coeff
+                        continue
+                    for input, input_coeff in pre_info.symbolic_upper_bound_of_input.items():
+                        if input not in self.symbolic_upper_bound_of_input:
+                            self.symbolic_upper_bound_of_input[input] = np.float64(0)
+                        self.symbolic_upper_bound_of_input[input] += input_coeff * coeff
 
+            def clac_bounds_via_symbol(self, back_to_input=True):
+                sym_lower, sym_upper = self.symbolic_lower_bound, self.symbolic_upper_bound
+                if back_to_input:
+                    if len(self.symbolic_lower_bound_of_input) == 0:
+                        self.back_propagate_to()
+                    sym_lower = self.symbolic_lower_bound_of_input
+                    sym_upper = self.symbolic_upper_bound_of_input
+                
+                self.lower_bound, self.upper_bound = self.bias, self.bias
+                if sym_lower is not None:
+                    for node, coeff in sym_lower.items():
+                        pre_node = node_infos[node]
+                        if coeff < 0:
+                            self.lower_bound += pre_node.upper_bound * coeff
+                            continue
+                        self.lower_bound += pre_node.lower_bound * coeff
+                if sym_upper is not None:
+                    for node, coeff in sym_upper.items():
+                        pre_node = node_infos[node]
+                        if coeff < 0:
+                            self.upper_bound += pre_node.lower_bound * coeff
+                            continue
+                        self.upper_bound += pre_node.upper_bound * coeff
+        # add scalar node
+        scalar_name = 'scalar'
+        sc = NodeInfo(scalar_name)
+        sc.lower_bound, sc.upper_bound = np.float64(1), np.float64(1)
+        sc.symbolic_lower_bound[scalar_name], sc.symbolic_upper_bound[scalar_name] = np.float64(1), np.float64(1)
+        sc.symbolic_lower_bound_of_input[scalar_name], sc.symbolic_upper_bound_of_input[scalar_name] = np.float64(1), np.float64(1)
+        node_infos[scalar_name] = sc
+
+        # process input
+        for node in range(self.layerSizes[0]):
+            node_name = get_node_name(0, node, NodeType.input)
+            info = NodeInfo(node_name)
+            info.lower_bound = np.float64(self.mins[node])
+            info.upper_bound = np.float64(self.maxes[node])
+            info.symbolic_lower_bound[node_name] = np.float64(1)
+            info.symbolic_upper_bound[node_name] = np.float64(1)
+            info.symbolic_lower_bound_of_input[node_name] = np.float64(1)
+            info.symbolic_upper_bound_of_input[node_name] = np.float64(1)
+            node_infos[node_name] = info            
+
+        # inital coefficient
+        for layer in range(1, self.numLayers):
+            for node in range(self.layerSizes[layer]):
+                # process back and pre forward
+                weight = self.weights[layer - 1][node]
+                node_name_back = get_node_name(layer, node, NodeType.reluBack)
+                back_info = NodeInfo(node_name_back)
+                for pre_node in range(self.layerSizes[layer - 1]):
+                    w = weight[pre_node]
+                    if w == 0:
+                        continue
+                    if layer == 1:
+                        pre_node_name = get_node_name(layer - 1, pre_node, NodeType.input)
+                    else:
+                        pre_node_name = get_node_name(layer - 1, pre_node, NodeType.reluForward)
+                    
+                    back_info.symbolic_lower_bound[pre_node_name] = w
+                    back_info.symbolic_upper_bound[pre_node_name] = w
+                back_info.bias = self.biases[layer - 1][node]
+                back_info.clac_bounds_via_symbol()
+                node_infos[node_name_back] = back_info
+            
+                # process back and forward
+                node_name_forward = get_node_name(layer, node, NodeType.reluForward)
+                forward_info = NodeInfo(node_name_forward)
+                if back_info.lower_bound > 0:
+                    forward_info.symbolic_lower_bound[node_name_back] = np.float64(1)
+                    forward_info.symbolic_upper_bound[node_name_back] = np.float64(1)
+                elif back_info.upper_bound <= 0:
+                    forward_info.symbolic_lower_bound[node_name_back] = np.float64(0)
+                    forward_info.symbolic_upper_bound[node_name_back] = np.float64(0)
+                else:
+                    forward_info.symbolic_lower_bound[node_name_back] = np.float64(0)
+                    l, u = back_info.lower_bound, back_info.upper_bound
+                    a = u / (u - l)
+                    forward_info.symbolic_upper_bound[node_name_back] = np.float64(a)
+                    forward_info.symbolic_upper_bound[scalar_name] = np.float64(-l) * np.float64(a)
+
+                forward_info.clac_bounds_via_symbol()
+                node_infos[node_name_forward] = forward_info
+
+                print(back_info)
+                print(forward_info)
+        # output foefficient
+        layer = self.numLayers
+        for node in range(self.layerSizes[layer]):
+            # process back and pre forward
+            weight = self.weights[layer - 1][node]
+            node_name_back = get_node_name(layer, node, NodeType.output)
+            back_info = NodeInfo(node_name_back)
+            for pre_node in range(self.layerSizes[layer - 1]):
+                w = weight[pre_node]
+                if w == 0:
+                    continue
+                if layer == 1:
+                    pre_node_name = get_node_name(layer - 1, pre_node, NodeType.input)
+                else:
+                    pre_node_name = get_node_name(layer - 1, pre_node, NodeType.reluForward)
+                
+                back_info.symbolic_lower_bound[pre_node_name] = w
+                back_info.symbolic_upper_bound[pre_node_name] = w
+            back_info.bias = self.biases[layer - 1][node]
+            back_info.clac_bounds_via_symbol()
+            node_infos[node_name_back] = back_info
+            print(back_info)
 
 if __name__ == "__main__":
-    nnet_path = "example/ACASXU_experimental_v2a_1_2.nnet"
+    nnet_path = "./example/reluBenchmark3.11155605316s_UNSAT.nnet"
+    # t = TestGenerator()
+    # t.generator(nnet_path)
+    json_path = ""
     nnet = NNet(nnet_path)
+    nnet.deep_poly_analysis()
     # nnet.evaluate_state(inputs=[0.2])
-    nnet.load_json("build/acas1_2.json")
-    nnet.visualize_search_path('acas1_2')
+    nnet.load_json("build/relu.json")
+    nnet.visualize_search_path('relu')
     # nnet.visual()
