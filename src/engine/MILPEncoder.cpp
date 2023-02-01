@@ -558,3 +558,135 @@ void MILPEncoder::encodeCostFunction( GurobiWrapper &gurobi,
     }
     gurobi.setCost( terms, cost._constant );
 }
+
+void MILPEncoder::encodeInitialInputQuery(GurobiWrapper &gurobi, const InputQuery &inputQuery, bool relax) {
+    struct timespec start = TimeUtils::sampleMicro();
+
+    gurobi.reset();
+    // Add variables
+    for ( unsigned var = 0; var < inputQuery.getNumberOfVariables(); var++ )
+    {
+        double lb = _lowerBounds[var];
+        double ub = _upperBounds[var];
+        String varName = Stringf( "x%u", var );
+        gurobi.addVariable( varName, lb, ub );
+        _variableToVariableName[var] = varName;
+    }
+
+    // Add equations
+    for ( const auto &equation : inputQuery.getEquations() )
+    {
+        encodeEquation( gurobi, equation );
+    }
+
+    // Add Piecewise-linear Constraints
+    for ( const auto &plConstraint : inputQuery.getPiecewiseLinearConstraints() )
+    {
+        if ( plConstraint->constraintObsolete() )
+        {
+            continue;
+        }
+        switch ( plConstraint->getType() )
+        {
+            case PiecewiseLinearFunctionType::RELU:
+                encodeInitialReLuConstraint( gurobi, (ReluConstraint *)plConstraint,
+                                      relax );
+                break;
+            case PiecewiseLinearFunctionType::MAX:
+                encodeMaxConstraint( gurobi, (MaxConstraint *)plConstraint,
+                                     relax );
+                break;
+            case PiecewiseLinearFunctionType::SIGN:
+                encodeSignConstraint( gurobi, (SignConstraint *)plConstraint,
+                                      relax );
+                break;
+            case PiecewiseLinearFunctionType::ABSOLUTE_VALUE:
+                encodeAbsoluteValueConstraint( gurobi,
+                                               (AbsoluteValueConstraint *)plConstraint,
+                                               relax );
+                break;
+            case PiecewiseLinearFunctionType::DISJUNCTION:
+                encodeDisjunctionConstraint( gurobi,
+                                             (DisjunctionConstraint *)plConstraint,
+                                             relax );
+                break;
+            default:
+                throw MarabouError( MarabouError::UNSUPPORTED_PIECEWISE_LINEAR_CONSTRAINT,
+                                    "GurobiWrapper::encodeInputQuery: "
+                                    "Unsupported piecewise-linear constraints\n" );
+        }
+    }
+
+    // Add Transcendental Constraints
+    for ( const auto &tsConstraint : inputQuery.getTranscendentalConstraints() )
+    {
+        switch ( tsConstraint->getType() )
+        {
+            case TranscendentalFunctionType::SIGMOID:
+                encodeSigmoidConstraint( gurobi, (SigmoidConstraint *)tsConstraint );
+                break;
+            default:
+                throw MarabouError( MarabouError::UNSUPPORTED_TRANSCENDENTAL_CONSTRAINT,
+                                    "GurobiWrapper::encodeInputQuery: "
+                                    "Only Sigmoid is supported\n" );
+        }
+    }
+
+    gurobi.updateModel();
+
+    if ( _statistics )
+    {
+        struct timespec end = TimeUtils::sampleMicro();
+        _statistics->incLongAttribute
+                ( Statistics::TIME_ADDING_CONSTRAINTS_TO_MILP_SOLVER_MICRO,
+                  TimeUtils::timePassed( start, end ) );
+    }
+
+}
+
+void MILPEncoder::storeInitialBounds() {
+    _lowerBounds.resize(_tableau.getN());
+    _upperBounds.resize(_tableau.getN());
+    for (unsigned int var = 0; var < _tableau.getN(); ++ var) {
+        _lowerBounds[var] = _tableau.getLowerBound(var);
+        _upperBounds[var] = _tableau.getUpperBound(var);
+    }
+}
+
+void MILPEncoder::encodeInitialReLuConstraint(GurobiWrapper &gurobi, ReluConstraint *relu, bool relax) {
+    if ( !relu->isActive() || relu->phaseFixed() )
+    {
+        return;
+    }
+
+    gurobi.addVariable( Stringf( "a%u", _binVarIndex ),
+                        0,
+                        1,
+                        relax ?
+                        GurobiWrapper::CONTINUOUS : GurobiWrapper::BINARY );
+
+    unsigned sourceVariable = relu->getB();
+    unsigned targetVariable = relu->getF();
+    double sourceLb = _lowerBounds[sourceVariable];
+    double targetUb = _upperBounds[targetVariable];
+
+    List<GurobiWrapper::Term> terms;
+    terms.append( GurobiWrapper::Term( 1, Stringf( "x%u", targetVariable ) ) );
+    terms.append( GurobiWrapper::Term( -1, Stringf( "x%u", sourceVariable ) ) );
+    terms.append( GurobiWrapper::Term( -sourceLb, Stringf( "a%u", _binVarIndex ) ) );
+    gurobi.addLeqConstraint( terms, -sourceLb );
+
+    terms.clear();
+    terms.append( GurobiWrapper::Term( 1, Stringf( "x%u", targetVariable ) ) );
+    terms.append( GurobiWrapper::Term( -targetUb, Stringf( "a%u", _binVarIndex++ ) ) );
+    gurobi.addLeqConstraint( terms, 0 );
+}
+
+void MILPEncoder::storeInitialBounds(std::vector<double>& lowerBounds, std::vector<double>& upperBounds) {
+    _lowerBounds.resize(_tableau.getN());
+    _upperBounds.resize(_tableau.getN());
+    for (unsigned int var = 0; var < _tableau.getN(); ++ var) {
+        _lowerBounds[var] = lowerBounds[var];
+        _upperBounds[var] = upperBounds[var];
+    }
+}

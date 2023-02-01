@@ -208,8 +208,8 @@ void Marabou::solveQuery()
     bool check = Options::get()->getBool(Options::CHECK);
     if ( _engine.processInputQuery( _inputQuery ) ) {
         if (check) {
-            _engine.ClauseLearning();
-//            _engine.checkSolve2(Options::get()->getInt( Options::TIMEOUT ));
+//            _engine.ClauseLearning();
+            _engine.checkSolve2(Options::get()->getInt( Options::TIMEOUT ));
         } else {
             _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
         }

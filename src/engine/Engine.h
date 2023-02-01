@@ -79,6 +79,8 @@ public:
     bool checkSolve2(unsigned timeoutInSeconds = 0);
     bool checkSolve(unsigned  timeoutInSeconds = 0);
     bool ClauseLearning();
+    bool conflictClauseLearning(std::vector<PathElement> &path, std::vector<double> lowerBounds,
+                                std::vector<double> upperBounds, std::vector<PathElement> &newPath);
     /*
       Minimize the cost function with respect to the current set of linear constraints.
     */

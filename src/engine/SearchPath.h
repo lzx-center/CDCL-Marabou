@@ -26,6 +26,8 @@ public:
         ar & _caseSplit & _impliedSplits & _type;
     }
 
+
+
     void setSplit(CaseSplitTypeInfo& info);
 
     void appendImpliedSplit(CaseSplitTypeInfo& info);
