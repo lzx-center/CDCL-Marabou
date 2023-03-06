@@ -1,3 +1,4 @@
+
 /*********************                                                        */
 /*! \file MILPEncoder.h
  ** \verbatim
@@ -31,12 +32,15 @@ class MILPEncoder
 public:
     MILPEncoder( const ITableau &tableau );
 
+    void storeInitialBounds();
+    void storeInitialBounds(std::vector<double>& lowerBounds, std::vector<double>& upperBounds);
     /*
       Encode the input query as a Gurobi query, variables and inequalities
       are from inputQuery, and latest variable bounds are from tableau
     */
     void encodeInputQuery( GurobiWrapper &gurobi, const InputQuery &inputQuery,
                            bool relax = false );
+    void encodeInitialInputQuery( GurobiWrapper &gurobi, const InputQuery &inputQuery, bool relax = false);
 
     /*
       get variable name from a variable in the encoded inputquery
@@ -55,7 +59,7 @@ public:
                              const LinearExpression &cost );
 
 private:
-
+    std::vector<double> _lowerBounds, _upperBounds;
     /*
       Tableau has the latest bound
     */
@@ -97,6 +101,8 @@ private:
     void encodeReLUConstraint( GurobiWrapper &gurobi, ReluConstraint *relu,
                                bool relax );
 
+    void encodeInitialReLuConstraint(GurobiWrapper &gurobi, ReluConstraint *relu,
+                                     bool relax);
     /*
       Encode a MAX constraint y = max(x_1, x_2, ... ,x_m) into Gurobi using the same encoding in
       https://arxiv.org/pdf/1711.07356.pdf
@@ -137,3 +143,5 @@ private:
 };
 
 #endif // __MILPEncoder_h__
+
+    

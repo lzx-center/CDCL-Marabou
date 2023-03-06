@@ -207,12 +207,12 @@ void Marabou::solveQuery()
     }
     bool check = Options::get()->getBool(Options::CHECK);
     if ( _engine.processInputQuery( _inputQuery ) ) {
-//        if (check) {
-//            // _engine.ClauseLearning();
-//           _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
-//        } else {
-//            _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
-//        }
+        if (check) {
+            // _engine.ClauseLearning();
+           _engine.checkSolve2(Options::get()->getInt( Options::TIMEOUT ));
+        } else {
+            _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
+        }
         bool learn_clause = Options::get()->getBool(Options::LEARN_CLAUSE);
         if (learn_clause) {
             _engine.ClauseLearning();

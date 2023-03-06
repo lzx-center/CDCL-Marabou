@@ -194,102 +194,102 @@ void DeepPolyWeightedSumElement::computeBoundWithBackSubstitution
                                  currentElement, deepPolyElementsBefore );
     }
     ASSERT( _residualLayerIndices.empty());
-
-    auto intra_depends = [&](unsigned i, unsigned j) {
-        unsigned pre_size = preSizeElement->getSize();
-        std::vector<double> w1(pre_size), w2(pre_size), wp(pre_size);
-        for (unsigned k = 0; k < pre_size; ++ k) {
-            w1[k] = _work1SymbolicLb[k * _size + i];
-            w2[k] = _work1SymbolicLb[k * _size + j];
-        }
-        double b1 = 0, b2 = 0;
-        if (_workSymbolicLowerBias) {
-            b1 = _workSymbolicLowerBias[i];
-            b2 = _workSymbolicUpperBias[j];
-        }
-
-        bool found = true;
-        unsigned nonzero_index = 0;
-        while (w1[nonzero_index] == 0 or w2[nonzero_index] == 0) {
-            nonzero_index += 1;
-            if (nonzero_index == pre_size) {
-                found = false;
-                break;
-            }
-        }
-
-        double _min = 0.0, _max = 0.0, bp = 0.0;
-//        String s1 = "lower: ", s2 = "upper: ", s3 = "wp: ";
-
-        if (found) {
-            double coefficient = w1[nonzero_index] / w2[nonzero_index];
-            for (unsigned index = nonzero_index; index < pre_size; ++ index) {
-                wp[index] = w1[index] - coefficient * w2[index];
-            }
-            bp = b1 - coefficient * b2;
-            _min = _max = bp;
-            for (unsigned k = 0; k < pre_size; ++ k) {
-                double lb = preSizeElement->getLowerBound(k);
-                double ub = preSizeElement->getUpperBound(k);
-                if (wp[k] < 0) {
-                    _min += wp[k] * ub;
-                    _max += wp[k] * lb;
-                } else if (wp[k] > 0) {
-                    _min += wp[k] * lb;
-                    _max += wp[k] * ub;
-                }
-//                s3 += Stringf("%.8f ", wp[k]);
-//                s1 += Stringf("%.8f ", lb);
-//                s2 += Stringf("%.8f ", ub);
-            }
-        }
-//        log(String("--------------------------------------------------------------"));
-//        log(s1);
-//        log(s3);
-//        log(s2);
-//        log(Stringf("min: %.8f, max: %.8f, bp: %.8f, b1: %.8f, b2: %.8f,", _min, _max, bp, b1, b2));
-        return std::pair<bool, std::pair<double, double>> {found, {_min, _max}};
-    };
-
-    for (unsigned i = 0; i < _size; ++ i) {
-        for (unsigned j = i + 1; j < _size; ++ j) {
-            auto res1 = intra_depends(i, j);
-            auto res2 = intra_depends(j, i);
-            if (res1.first and res2.first) {
-                String s = "Intra dependency: ";
-                double min1 = res1.second.first, max1 = res1.second.second;
-                double min2 = res2.second.first, max2 = res2.second.second;
-                bool flag = true;
-                if (max1 < 0 and max2 < 0) {
-                    s += Stringf("(%u, %u) active ==> (%u, %u) inactive",
-                                 getLayerIndex(), i, getLayerIndex(), j);
-                } else if (min1 > 0 and min2 > 0) {
-                    s += Stringf("(%u, %u) inactive ==> (%u, %u) active",
-                                 getLayerIndex(), i, getLayerIndex(), j);
-                } else if (max1 < 0 and 0 < min2) {
-                    s += Stringf("(%u, %u) active ==> (%u, %u) active",
-                                 getLayerIndex(), i, getLayerIndex(), j);
-                } else if (min1 > 0 and 0 > max2){
-                    s += Stringf("(%u, %u) inactive ==> (%u, %u) inactive",
-                                 getLayerIndex(), i, getLayerIndex(), j);
-                } else {
-                    s += "None";
-                    flag = false;
-                }
-                if (flag) {
-                    bool has_certain = true;
-                    if ( _lb[i] > 0 or _ub[i] < 0 )
-                        has_certain = false;
-                    if ( _lb[j] > 0 or _ub[j] < 0 )
-                        has_certain = false;
-                    s += Stringf("\n(%u, %u) : [%f, %f]", getLayerIndex(), i, _lb[i], _ub[i]);
-                    s += Stringf("\n(%u, %u) : [%f, %f]", getLayerIndex(), j, _lb[j], _ub[j]);
-                    if (has_certain)
-                        printf("%s\n", s.ascii());
-                }
-            }
-        }
-    }
+//
+//    auto intra_depends = [&](unsigned i, unsigned j) {
+//        unsigned pre_size = preSizeElement->getSize();
+//        std::vector<double> w1(pre_size), w2(pre_size), wp(pre_size);
+//        for (unsigned k = 0; k < pre_size; ++ k) {
+//            w1[k] = _work1SymbolicLb[k * _size + i];
+//            w2[k] = _work1SymbolicLb[k * _size + j];
+//        }
+//        double b1 = 0, b2 = 0;
+//        if (_workSymbolicLowerBias) {
+//            b1 = _workSymbolicLowerBias[i];
+//            b2 = _workSymbolicUpperBias[j];
+//        }
+//
+//        bool found = true;
+//        unsigned nonzero_index = 0;
+//        while (w1[nonzero_index] == 0 or w2[nonzero_index] == 0) {
+//            nonzero_index += 1;
+//            if (nonzero_index == pre_size) {
+//                found = false;
+//                break;
+//            }
+//        }
+//
+//        double _min = 0.0, _max = 0.0, bp = 0.0;
+////        String s1 = "lower: ", s2 = "upper: ", s3 = "wp: ";
+//
+//        if (found) {
+//            double coefficient = w1[nonzero_index] / w2[nonzero_index];
+//            for (unsigned index = nonzero_index; index < pre_size; ++ index) {
+//                wp[index] = w1[index] - coefficient * w2[index];
+//            }
+//            bp = b1 - coefficient * b2;
+//            _min = _max = bp;
+//            for (unsigned k = 0; k < pre_size; ++ k) {
+//                double lb = preSizeElement->getLowerBound(k);
+//                double ub = preSizeElement->getUpperBound(k);
+//                if (wp[k] < 0) {
+//                    _min += wp[k] * ub;
+//                    _max += wp[k] * lb;
+//                } else if (wp[k] > 0) {
+//                    _min += wp[k] * lb;
+//                    _max += wp[k] * ub;
+//                }
+////                s3 += Stringf("%.8f ", wp[k]);
+////                s1 += Stringf("%.8f ", lb);
+////                s2 += Stringf("%.8f ", ub);
+//            }
+//        }
+////        log(String("--------------------------------------------------------------"));
+////        log(s1);
+////        log(s3);
+////        log(s2);
+////        log(Stringf("min: %.8f, max: %.8f, bp: %.8f, b1: %.8f, b2: %.8f,", _min, _max, bp, b1, b2));
+//        return std::pair<bool, std::pair<double, double>> {found, {_min, _max}};
+//    };
+//
+//    for (unsigned i = 0; i < _size; ++ i) {
+//        for (unsigned j = i + 1; j < _size; ++ j) {
+//            auto res1 = intra_depends(i, j);
+//            auto res2 = intra_depends(j, i);
+//            if (res1.first and res2.first) {
+//                String s = "Intra dependency: ";
+//                double min1 = res1.second.first, max1 = res1.second.second;
+//                double min2 = res2.second.first, max2 = res2.second.second;
+//                bool flag = true;
+//                if (max1 < 0 and max2 < 0) {
+//                    s += Stringf("(%u, %u) active ==> (%u, %u) inactive",
+//                                 getLayerIndex(), i, getLayerIndex(), j);
+//                } else if (min1 > 0 and min2 > 0) {
+//                    s += Stringf("(%u, %u) inactive ==> (%u, %u) active",
+//                                 getLayerIndex(), i, getLayerIndex(), j);
+//                } else if (max1 < 0 and 0 < min2) {
+//                    s += Stringf("(%u, %u) active ==> (%u, %u) active",
+//                                 getLayerIndex(), i, getLayerIndex(), j);
+//                } else if (min1 > 0 and 0 > max2){
+//                    s += Stringf("(%u, %u) inactive ==> (%u, %u) inactive",
+//                                 getLayerIndex(), i, getLayerIndex(), j);
+//                } else {
+//                    s += "None";
+//                    flag = false;
+//                }
+//                if (flag) {
+//                    bool has_certain = true;
+//                    if ( _lb[i] > 0 or _ub[i] < 0 )
+//                        has_certain = false;
+//                    if ( _lb[j] > 0 or _ub[j] < 0 )
+//                        has_certain = false;
+//                    s += Stringf("\n(%u, %u) : [%f, %f]", getLayerIndex(), i, _lb[i], _ub[i]);
+//                    s += Stringf("\n(%u, %u) : [%f, %f]", getLayerIndex(), j, _lb[j], _ub[j]);
+//                    if (has_certain)
+//                        printf("%s\n", s.ascii());
+//                }
+//            }
+//        }
+//    }
 
     log( "Computing bounds with back substitution - done" );
 }

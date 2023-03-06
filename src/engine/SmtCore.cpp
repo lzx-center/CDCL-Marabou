@@ -1,3 +1,4 @@
+
 /*********************                                                        */
 /*! \file SmtCore.cpp
  ** \verbatim
@@ -27,17 +28,17 @@
 #include "SmtCore.h"
 
 SmtCore::SmtCore( IEngine *engine )
-    : _statistics( NULL )
-    , _engine( engine )
-    , _context( _engine->getContext() )
-    , _needToSplit( false )
-    , _constraintForSplitting( NULL )
-    , _stateId( 0 )
-    , _constraintViolationThreshold( Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ) )
-    , _deepSoIRejectionThreshold( Options::get()->getInt( Options::DEEP_SOI_REJECTION_THRESHOLD ) )
-    , _branchingHeuristic( Options::get()->getDivideStrategy() )
-    , _scoreTracker( nullptr )
-    , _numRejectedPhasePatternProposal( 0 )
+        : _statistics( NULL )
+        , _engine( engine )
+        , _context( _engine->getContext() )
+        , _needToSplit( false )
+        , _constraintForSplitting( NULL )
+        , _stateId( 0 )
+        , _constraintViolationThreshold( Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ) )
+        , _deepSoIRejectionThreshold( Options::get()->getInt( Options::DEEP_SOI_REJECTION_THRESHOLD ) )
+        , _branchingHeuristic( Options::get()->getDivideStrategy() )
+        , _scoreTracker( nullptr )
+        , _numRejectedPhasePatternProposal( 0 )
 {
 }
 
@@ -101,7 +102,7 @@ void SmtCore::initializeScoreTrackerIfNeeded( const
     if ( GlobalConfiguration::USE_DEEPSOI_LOCAL_SEARCH )
     {
         _scoreTracker = std::unique_ptr<PseudoImpactTracker>
-            ( new PseudoImpactTracker() );
+                ( new PseudoImpactTracker() );
         _scoreTracker->initialize( plConstraints );
 
         SMT_LOG( "\tTracking Pseudo Impact..." );
@@ -194,7 +195,7 @@ void SmtCore::performSplit()
         _statistics->setUnsignedAttribute( Statistics::CURRENT_DECISION_LEVEL,
                                            level );
         if ( level > _statistics->getUnsignedAttribute
-             ( Statistics::MAX_DECISION_LEVEL ) )
+                ( Statistics::MAX_DECISION_LEVEL ) )
             _statistics->setUnsignedAttribute( Statistics::MAX_DECISION_LEVEL,
                                                level );
         struct timespec end = TimeUtils::sampleMicro();
@@ -332,7 +333,7 @@ bool SmtCore::popSplit()
         _statistics->setUnsignedAttribute( Statistics::CURRENT_DECISION_LEVEL,
                                            level );
         if ( level > _statistics->getUnsignedAttribute
-             ( Statistics::MAX_DECISION_LEVEL ) )
+                ( Statistics::MAX_DECISION_LEVEL ) )
             _statistics->setUnsignedAttribute( Statistics::MAX_DECISION_LEVEL,
                                                level );
         struct timespec end = TimeUtils::sampleMicro();
@@ -543,7 +544,7 @@ void SmtCore::replaySmtStackEntry( SmtStackEntry *stackEntry )
         _statistics->setUnsignedAttribute( Statistics::CURRENT_DECISION_LEVEL,
                                            level );
         if ( level > _statistics->getUnsignedAttribute
-             ( Statistics::MAX_DECISION_LEVEL ) )
+                ( Statistics::MAX_DECISION_LEVEL ) )
             _statistics->setUnsignedAttribute( Statistics::MAX_DECISION_LEVEL,
                                                level );
         struct timespec end = TimeUtils::sampleMicro();
@@ -566,7 +567,7 @@ bool SmtCore::pickSplitPLConstraint()
     if ( _needToSplit )
     {
         _constraintForSplitting = _engine->pickSplitPLConstraint
-            ( _branchingHeuristic );
+                ( _branchingHeuristic );
     }
     return _constraintForSplitting != NULL;
 }
@@ -678,7 +679,7 @@ void SmtCore::performCheckSplit() {
     ASSERT( _needToSplit );
     _numRejectedPhasePatternProposal = 0;
     // Maybe the constraint has already become inactive - if so, ignore
-    if ( !_constraintForSplitting->isActive() or _constraintForSplitting->phaseFixed())
+    if ( !_constraintForSplitting->isActive() )
     {
         printf("Constraint become not valid!\n");
         _needToSplit = false;
@@ -863,3 +864,5 @@ bool SmtCore::popCheckSplit() {
 
     return true;
 }
+
+    

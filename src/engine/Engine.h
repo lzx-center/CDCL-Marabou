@@ -1,3 +1,4 @@
+
 /*********************                                                        */
 /*! \file Engine.h
  ** \verbatim
@@ -65,7 +66,7 @@ class Engine : public IEngine, public SignalHandler::Signalable
 {
 public:
     enum {
-          MICROSECONDS_TO_SECONDS = 1000000,
+        MICROSECONDS_TO_SECONDS = 1000000,
     };
 
     Engine();
@@ -75,10 +76,22 @@ public:
       Attempt to find a feasible solution for the input within a time limit
       (a timeout of 0 means no time limit). Returns true if found, false if infeasible.
     */
+    Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
+
     bool solve( unsigned timeoutInSeconds = 0 );
     bool checkSolve2(unsigned timeoutInSeconds = 0);
     bool checkSolve(unsigned  timeoutInSeconds = 0);
+    PiecewiseLinearConstraint* getConstraintByPosition(Position pos);
+
+    void dumpConstraintBoundInfo(PathElement& pathElement);
     bool ClauseLearning();
+
+    bool checkClauseOfLength(std::vector<PathElement> &path, size_t length,
+                             std::vector<std::vector<PathElement>> &learnedPaths, size_t startPos);
+    size_t minClauseLearning(std::vector<PathElement>& path);
+
+    bool conflictClauseLearning(std::vector<PathElement> &path, std::vector<double> lowerBounds,
+                                std::vector<double> upperBounds, std::vector<PathElement> &newPath);
     /*
       Minimize the cost function with respect to the current set of linear constraints.
     */
@@ -687,6 +700,7 @@ private:
     PiecewiseLinearConstraint *getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithLargestInterval);
     PiecewiseLinearConstraint *pickSplitPLConstraintBasedOnIntervalWidth();
 
+    bool verifyPath(std::vector<PathElement>& path);
     void LearnClause();
     /*
       Solve the input query with a MILP solver (Gurobi)
@@ -753,3 +767,5 @@ private:
 };
 
 #endif // __Engine_h__
+
+    
