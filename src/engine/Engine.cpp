@@ -3240,6 +3240,8 @@ bool Engine::checkSolve2(unsigned int timeoutInSeconds) {
         auto element = preSearchPath._paths[pathNum][0];
         if (element.getPosition()._layer) {
             auto constraint = getConstraintByPosition(element.getPosition());
+            if (!constraint)
+                continue;
             if (!constraint->isActive()) {
                 printf("Enforce active "); constraint->getPosition().dump();
                 constraint->setActiveConstraint(true);
@@ -3418,10 +3420,12 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &path, std::vector<
     {
         unsigned int slackNum = 0;
         for (auto &element : path) {
+
             PiecewiseLinearCaseSplit split;
             auto pos = element.getPosition();
             auto type = element.getType();
             auto constraint = getConstraintByPosition(pos);
+
             if (!constraint) {
                 printf("Position not exists!\n");
                 continue;
@@ -3467,7 +3471,6 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &path, std::vector<
         }
         gurobi.updateModel();
     }
-
     //encode cost function
     {
         List<GurobiWrapper::Term> terms;
