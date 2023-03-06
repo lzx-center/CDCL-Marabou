@@ -100,6 +100,7 @@ void DeepPolyWeightedSumElement::computeBoundWithBackSubstitution
     memcpy( _workSymbolicUpperBias, bias, _size * sizeof(double) );
 
     DeepPolyElement *currentElement = precedingElement;
+    DeepPolyElement *preSizeElement = precedingElement;
     concretizeSymbolicBound( _work1SymbolicLb, _work1SymbolicUb,
                              _workSymbolicLowerBias,
                              _workSymbolicUpperBias,
@@ -192,7 +193,104 @@ void DeepPolyWeightedSumElement::computeBoundWithBackSubstitution
                                  _workSymbolicLowerBias, _workSymbolicUpperBias,
                                  currentElement, deepPolyElementsBefore );
     }
-    ASSERT( _residualLayerIndices.empty() );
+    ASSERT( _residualLayerIndices.empty());
+
+    auto intra_depends = [&](unsigned i, unsigned j) {
+        unsigned pre_size = preSizeElement->getSize();
+        std::vector<double> w1(pre_size), w2(pre_size), wp(pre_size);
+        for (unsigned k = 0; k < pre_size; ++ k) {
+            w1[k] = _work1SymbolicLb[k * _size + i];
+            w2[k] = _work1SymbolicLb[k * _size + j];
+        }
+        double b1 = 0, b2 = 0;
+        if (_workSymbolicLowerBias) {
+            b1 = _workSymbolicLowerBias[i];
+            b2 = _workSymbolicUpperBias[j];
+        }
+
+        bool found = true;
+        unsigned nonzero_index = 0;
+        while (w1[nonzero_index] == 0 or w2[nonzero_index] == 0) {
+            nonzero_index += 1;
+            if (nonzero_index == pre_size) {
+                found = false;
+                break;
+            }
+        }
+
+        double _min = 0.0, _max = 0.0, bp = 0.0;
+//        String s1 = "lower: ", s2 = "upper: ", s3 = "wp: ";
+
+        if (found) {
+            double coefficient = w1[nonzero_index] / w2[nonzero_index];
+            for (unsigned index = nonzero_index; index < pre_size; ++ index) {
+                wp[index] = w1[index] - coefficient * w2[index];
+            }
+            bp = b1 - coefficient * b2;
+            _min = _max = bp;
+            for (unsigned k = 0; k < pre_size; ++ k) {
+                double lb = preSizeElement->getLowerBound(k);
+                double ub = preSizeElement->getUpperBound(k);
+                if (wp[k] < 0) {
+                    _min += wp[k] * ub;
+                    _max += wp[k] * lb;
+                } else if (wp[k] > 0) {
+                    _min += wp[k] * lb;
+                    _max += wp[k] * ub;
+                }
+//                s3 += Stringf("%.8f ", wp[k]);
+//                s1 += Stringf("%.8f ", lb);
+//                s2 += Stringf("%.8f ", ub);
+            }
+        }
+//        log(String("--------------------------------------------------------------"));
+//        log(s1);
+//        log(s3);
+//        log(s2);
+//        log(Stringf("min: %.8f, max: %.8f, bp: %.8f, b1: %.8f, b2: %.8f,", _min, _max, bp, b1, b2));
+        return std::pair<bool, std::pair<double, double>> {found, {_min, _max}};
+    };
+
+    for (unsigned i = 0; i < _size; ++ i) {
+        for (unsigned j = i + 1; j < _size; ++ j) {
+            auto res1 = intra_depends(i, j);
+            auto res2 = intra_depends(j, i);
+            if (res1.first and res2.first) {
+                String s = "Intra dependency: ";
+                double min1 = res1.second.first, max1 = res1.second.second;
+                double min2 = res2.second.first, max2 = res2.second.second;
+                bool flag = true;
+                if (max1 < 0 and max2 < 0) {
+                    s += Stringf("(%u, %u) active ==> (%u, %u) inactive",
+                                 getLayerIndex(), i, getLayerIndex(), j);
+                } else if (min1 > 0 and min2 > 0) {
+                    s += Stringf("(%u, %u) inactive ==> (%u, %u) active",
+                                 getLayerIndex(), i, getLayerIndex(), j);
+                } else if (max1 < 0 and 0 < min2) {
+                    s += Stringf("(%u, %u) active ==> (%u, %u) active",
+                                 getLayerIndex(), i, getLayerIndex(), j);
+                } else if (min1 > 0 and 0 > max2){
+                    s += Stringf("(%u, %u) inactive ==> (%u, %u) inactive",
+                                 getLayerIndex(), i, getLayerIndex(), j);
+                } else {
+                    s += "None";
+                    flag = false;
+                }
+                if (flag) {
+                    bool has_certain = true;
+                    if ( _lb[i] > 0 or _ub[i] < 0 )
+                        has_certain = false;
+                    if ( _lb[j] > 0 or _ub[j] < 0 )
+                        has_certain = false;
+                    s += Stringf("\n(%u, %u) : [%f, %f]", getLayerIndex(), i, _lb[i], _ub[i]);
+                    s += Stringf("\n(%u, %u) : [%f, %f]", getLayerIndex(), j, _lb[j], _ub[j]);
+                    if (has_certain)
+                        printf("%s\n", s.ascii());
+                }
+            }
+        }
+    }
+
     log( "Computing bounds with back substitution - done" );
 }
 
@@ -227,63 +325,19 @@ void DeepPolyWeightedSumElement::concretizeSymbolicBound
             _lb[i] = _workLb[i];
         if ( _ub[i] > _workUb[i] )
             _ub[i] = _workUb[i];
-        log( Stringf( "Neuron%u working LB: %f, UB: %f", i, _workLb[i], _workUb[i] ) );
-        log( Stringf( "Neuron%u LB: %f, UB: %f", i, _lb[i], _ub[i] ) );
+
+        log( Stringf( "concretizeSymbolicBound: Neuron%u_%u working LB: %f, UB: %f", getLayerIndex(), i, _workLb[i], _workUb[i] ) );
+        log( Stringf( "concretizeSymbolicBound: Neuron%u_%u LB: %f, UB: %f", getLayerIndex(), i, _lb[i], _ub[i] ) );
     }
 
     log( "Concretizing bound - done" );
 }
 
-void DeepPolyWeightedSumElement::concretizeSymbolicBoundForSourceLayer
+void DeepPolyWeightedSumElement:: concretizeSymbolicBoundForSourceLayer
 ( const double *symbolicLb, const double*symbolicUb, const double
   *symbolicLowerBias, const double *symbolicUpperBias, DeepPolyElement
   *sourceElement )
 {
-    /*
-    DEBUG({
-            log( Stringf( "Source layer: %u", sourceElement->getLayerIndex() ) );
-            String s = Stringf( "Symbolic lowerbounds w.r.t. layer %u: \n ", sourceElement->getLayerIndex() );
-            for ( unsigned i = 0; i <_size; ++i )
-            {
-                for ( unsigned j = 0; j < sourceElement->getSize(); ++j )
-                {
-                    s += Stringf( "%f ", symbolicLb[j * _size + i] );
-                }
-                s += "\n";
-            }
-            s += "\n";
-            if ( symbolicLowerBias )
-            {
-                s += Stringf( "Symbolic lower bias w.r.t. layer %u: \n ", sourceElement->getLayerIndex() );
-                for ( unsigned i = 0; i <_size; ++i )
-                {
-                    s += Stringf( "%f ", symbolicLowerBias[i] );
-                }
-                s += "\n";
-            }
-            s += Stringf( "Symbolic upperbounds w.r.t. layer %u: \n ", sourceElement->getLayerIndex() );
-            for ( unsigned i = 0; i <_size; ++i )
-            {
-                for ( unsigned j = 0; j < sourceElement->getSize(); ++j )
-                {
-                    s += Stringf( "%f ", symbolicUb[j * _size + i] );
-                }
-                s += "\n";
-            }
-            s += "\n";
-            if ( symbolicUpperBias )
-            {
-                s += Stringf( "Symbolic upper bias w.r.t. layer %u: \n ", sourceElement->getLayerIndex() );
-                for ( unsigned i = 0; i <_size; ++i )
-                {
-                    s += Stringf( "%f ", symbolicUpperBias[i] );
-                }
-                s += "\n";
-            }
-            log( s );
-        });
-    */
-
     // Get concrete bounds
     for ( unsigned i = 0; i < sourceElement->getSize(); ++i )
     {

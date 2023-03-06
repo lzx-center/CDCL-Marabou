@@ -30,7 +30,7 @@ public:
 
     DeepPolyAnalysis( LayerOwner *layerOwner );
     ~DeepPolyAnalysis();
-
+    unsigned _intra_dependency = 0;
     void run();
 
 private:

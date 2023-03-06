@@ -74,7 +74,9 @@ public:
         // Produce proofs of unsatisfiability and check them
         PRODUCE_PROOFS,
 
-        CHECK
+        CHECK,
+
+        LEARN_CLAUSE,
     };
 
     enum IntOptions {

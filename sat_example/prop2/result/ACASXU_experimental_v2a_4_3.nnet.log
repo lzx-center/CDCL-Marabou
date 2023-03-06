@@ -1,0 +1,598 @@
+Network: /home/center/CDCL-Marabou/sat_example/prop2/ACASXU_experimental_v2a_4_3.nnet
+Number of layers: 8. Input layer size: 5. Output layer size: 5. Number of ReLUs: 300
+Total number of variables: 610
+Property: /home/center/CDCL-Marabou/sat_example/prop2/acas_property_2.txt
+
+Engine::processInputQuery: Input query (before preprocessing): 309 equations, 610 variables
+Engine::processInputQuery: Input query (after preprocessing): 609 equations, 885 variables
+
+Input bounds:
+	x0: [  0.6000,   0.6799] 
+	x1: [ -0.5000,   0.5000] 
+	x2: [ -0.5000,   0.5000] 
+	x3: [  0.4500,   0.5000] 
+	x4: [ -0.5000,  -0.4500] 
+
+Running deeppoly!Branching heuristics set to LargestInterval
+
+Engine::solve: Initial statistics
+
+21:59:10 Statistics update:
+	--- Time Statistics ---
+	Total time elapsed: 143 milli (00:00:00)
+		Main loop: 0 milli (00:00:00)
+		Preprocessing time: 100 milli (00:00:00)
+		Unknown: 42 milli (00:00:00)
+	Breakdown for main loop:
+		[0.00%] Simplex steps: 0 milli
+		[0.00%] Explicit-basis bound tightening: 0 milli
+		[0.00%] Constraint-matrix bound tightening: 0 milli
+		[0.00%] Degradation checking: 0 milli
+		[0.00%] Precision restoration: 0 milli
+		[0.00%] Statistics handling: 0 milli
+		[0.00%] Constraint-fixing steps: 0 milli
+		[0.00%] Valid case splits: 0 milli. Average per split: 0.00 milli
+		[0.00%] Applying stored bound-tightening: 0 milli
+		[0.00%] SMT core: 0 milli
+		[0.00%] Symbolic Bound Tightening: 8 milli
+		[0.00%] SoI-based local search: 0 milli
+		[0.00%] SoI-based local search: 0 milli
+		[0.00%] Unaccounted for: 0 milli
+	--- Preprocessor Statistics ---
+	Number of preprocessor bound-tightening loop iterations: 8
+	Number of eliminated variables: 29
+	Number of constraints removed due to variable elimination: 29
+	Number of equations removed due to variable elimination: 0
+	--- Engine Statistics ---
+	Number of main loop iterations: 1
+		0 iterations were simplex steps. Total time: 0 milli. Average: 0.00 milli.
+		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
+	Number of active piecewise-linear constraints: 271 / 271
+		Constraints disabled by valid splits: 0. By SMT-originated splits: 0
+	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
+	Number of simplex pivots we attempted to skip because of instability: 0.
+	Unstable pivots performed anyway: 0
+	--- Tableau Statistics ---
+	Total number of pivots performed: 0
+		Real pivots: 0. Degenerate: 0 (0.00%)
+		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
+		Average time per pivot: 0.00 milli
+	Total number of fake pivots performed: 0
+	Total number of rows added: 0. Number of merged columns: 0
+	Current tableau dimensions: M = 609, N = 1494
+	--- SMT Core Statistics ---
+	Total depth is 0. Total visited states: 1. Number of splits: 0. Number of pops: 0
+	Max stack depth: 0
+	--- Bound Tightening Statistics ---
+	Number of tightened bounds: 0.
+		Number of rows examined by row tightener: 0. Consequent tightenings: 0
+		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
+		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
+		Number of bound notifications sent to PL constraints: 1626. Tightenings proposed: 0
+	--- Basis Factorization statistics ---
+	Number of basis refactorizations: 2
+	--- Projected Steepest Edge Statistics ---
+	Number of iterations: 0.
+	Number of resets to reference space: 1. Avg. iterations per reset: 0
+	--- SBT ---
+	Number of tightened bounds: 757
+	--- SoI-based local search ---
+	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
+	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
+	Total time obtaining current assignment: 0 milli [0.00%]
+	Total time getting SoI phase pattern : 0 milli [0.00%]
+	--- Context dependent statistics ---
+	Number of pushes / pops: 0 / 0
+		[0.00%] Pre-Push hook: 0 milli
+		[0.00%] Push : 0 milli
+		[0.00%] Post-Pop hook: 0 milli
+		[0.00%] Pop : 0 milli
+		[0.00%] Total context-switching time: 0 milli
+	--- Proof Certificate ---
+	Number of certified leaves: 0
+	Number of leaves to delegate: 0
+
+---
+Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!
+21:59:15 Statistics update:
+	--- Time Statistics ---
+	Total time elapsed: 5161 milli (00:00:05)
+		Main loop: 5015 milli (00:00:05)
+		Preprocessing time: 100 milli (00:00:00)
+		Unknown: 45 milli (00:00:00)
+	Breakdown for main loop:
+		[55.10%] Simplex steps: 2763 milli
+		[28.09%] Explicit-basis bound tightening: 1408 milli
+		[0.00%] Constraint-matrix bound tightening: 0 milli
+		[0.51%] Degradation checking: 25 milli
+		[0.00%] Precision restoration: 0 milli
+		[0.76%] Statistics handling: 37 milli
+		[0.00%] Constraint-fixing steps: 0 milli
+		[0.17%] Valid case splits: 8 milli. Average per split: 0.00 milli
+		[0.07%] Applying stored bound-tightening: 3 milli
+		[0.96%] SMT core: 48 milli
+		[12.41%] Symbolic Bound Tightening: 622 milli
+		[26.63%] SoI-based local search: 1335 milli
+		[0.00%] SoI-based local search: 0 milli
+		[1.94%] Unaccounted for: 97 milli
+	--- Preprocessor Statistics ---
+	Number of preprocessor bound-tightening loop iterations: 8
+	Number of eliminated variables: 29
+	Number of constraints removed due to variable elimination: 29
+	Number of equations removed due to variable elimination: 0
+	--- Engine Statistics ---
+	Number of main loop iterations: 10000
+		9891 iterations were simplex steps. Total time: 2763 milli. Average: 0.28 milli.
+		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
+	Number of active piecewise-linear constraints: 130 / 271
+		Constraints disabled by valid splits: 135. By SMT-originated splits: 6
+	Last reported degradation: 0.0000000002. Max degradation so far: 0.0000027410. Restorations so far: 0
+	Number of simplex pivots we attempted to skip because of instability: 1.
+	Unstable pivots performed anyway: 0
+	--- Tableau Statistics ---
+	Total number of pivots performed: 9143
+		Real pivots: 9106. Degenerate: 37 (0.40%)
+		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
+		Average time per pivot: 0.08 milli
+	Total number of fake pivots performed: 232
+	Total number of rows added: 0. Number of merged columns: 0
+	Current tableau dimensions: M = 609, N = 1494
+	--- SMT Core Statistics ---
+	Total depth is 10. Total visited states: 77. Number of splits: 42. Number of pops: 34
+	Max stack depth: 16
+	--- Bound Tightening Statistics ---
+	Number of tightened bounds: 26170.
+		Number of rows examined by row tightener: 9143. Consequent tightenings: 260
+		Number of explicit basis matrices examined by row tightener: 50. Consequent tightenings: 1557
+		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
+		Number of bound notifications sent to PL constraints: 25253. Tightenings proposed: 0
+	--- Basis Factorization statistics ---
+	Number of basis refactorizations: 86
+	--- Projected Steepest Edge Statistics ---
+	Number of iterations: 9376.
+	Number of resets to reference space: 36. Avg. iterations per reset: 260
+	--- SBT ---
+	Number of tightened bounds: 26808
+	--- SoI-based local search ---
+	Number of proposed phase pattern update: 205. Number of accepted update: 163 [79.51%]
+	Total time (% of local search time) updating SoI phase pattern : 7785 milli [0.58%]
+	Total time obtaining current assignment: 44492 milli [3.33%]
+	Total time getting SoI phase pattern : 10624 milli [0.21%]
+	--- Context dependent statistics ---
+	Number of pushes / pops: 76 / 66
+		[0.05%] Pre-Push hook: 2 milli
+		[0.00%] Push : 0 milli
+		[0.08%] Post-Pop hook: 4 milli
+		[0.04%] Pop : 2 milli
+		[0.18%] Total context-switching time: 8 milli
+	--- Proof Certificate ---
+	Number of certified leaves: 0
+	Number of leaves to delegate: 0
+Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!
+21:59:21 Statistics update:
+	--- Time Statistics ---
+	Total time elapsed: 10762 milli (00:00:10)
+		Main loop: 10614 milli (00:00:10)
+		Preprocessing time: 100 milli (00:00:00)
+		Unknown: 47 milli (00:00:00)
+	Breakdown for main loop:
+		[52.17%] Simplex steps: 5537 milli
+		[27.04%] Explicit-basis bound tightening: 2869 milli
+		[0.00%] Constraint-matrix bound tightening: 0 milli
+		[0.49%] Degradation checking: 51 milli
+		[0.00%] Precision restoration: 0 milli
+		[0.73%] Statistics handling: 77 milli
+		[0.00%] Constraint-fixing steps: 0 milli
+		[0.21%] Valid case splits: 22 milli. Average per split: 0.00 milli
+		[0.07%] Applying stored bound-tightening: 7 milli
+		[1.29%] SMT core: 137 milli
+		[15.28%] Symbolic Bound Tightening: 1622 milli
+		[24.33%] SoI-based local search: 2582 milli
+		[0.00%] SoI-based local search: 0 milli
+		[2.72%] Unaccounted for: 288 milli
+	--- Preprocessor Statistics ---
+	Number of preprocessor bound-tightening loop iterations: 8
+	Number of eliminated variables: 29
+	Number of constraints removed due to variable elimination: 29
+	Number of equations removed due to variable elimination: 0
+	--- Engine Statistics ---
+	Number of main loop iterations: 20000
+		19720 iterations were simplex steps. Total time: 5537 milli. Average: 0.28 milli.
+		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
+	Number of active piecewise-linear constraints: 84 / 271
+		Constraints disabled by valid splits: 179. By SMT-originated splits: 8
+	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000027410. Restorations so far: 0
+	Number of simplex pivots we attempted to skip because of instability: 3.
+	Unstable pivots performed anyway: 0
+	--- Tableau Statistics ---
+	Total number of pivots performed: 17917
+		Real pivots: 17850. Degenerate: 67 (0.37%)
+		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
+		Average time per pivot: 0.08 milli
+	Total number of fake pivots performed: 577
+	Total number of rows added: 0. Number of merged columns: 0
+	Current tableau dimensions: M = 609, N = 1494
+	--- SMT Core Statistics ---
+	Total depth is 13. Total visited states: 195. Number of splits: 102. Number of pops: 92
+	Max stack depth: 16
+	--- Bound Tightening Statistics ---
+	Number of tightened bounds: 70463.
+		Number of rows examined by row tightener: 17917. Consequent tightenings: 541
+		Number of explicit basis matrices examined by row tightener: 101. Consequent tightenings: 2889
+		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
+		Number of bound notifications sent to PL constraints: 65487. Tightenings proposed: 0
+	--- Basis Factorization statistics ---
+	Number of basis refactorizations: 166
+	--- Projected Steepest Edge Statistics ---
+	Number of iterations: 18497.
+	Number of resets to reference space: 94. Avg. iterations per reset: 196
+	--- SBT ---
+	Number of tightened bounds: 70926
+	--- SoI-based local search ---
+	Number of proposed phase pattern update: 499. Number of accepted update: 397 [79.56%]
+	Total time (% of local search time) updating SoI phase pattern : 18586 milli [0.72%]
+	Total time obtaining current assignment: 114402 milli [4.43%]
+	Total time getting SoI phase pattern : 23195 milli [0.22%]
+	--- Context dependent statistics ---
+	Number of pushes / pops: 194 / 181
+		[0.06%] Pre-Push hook: 5 milli
+		[0.00%] Push : 0 milli
+		[0.12%] Post-Pop hook: 12 milli
+		[0.06%] Pop : 6 milli
+		[0.24%] Total context-switching time: 25 milli
+	--- Proof Certificate ---
+	Number of certified leaves: 0
+	Number of leaves to delegate: 0
+Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!
+21:59:26 Statistics update:
+	--- Time Statistics ---
+	Total time elapsed: 15892 milli (00:00:15)
+		Main loop: 15741 milli (00:00:15)
+		Preprocessing time: 100 milli (00:00:00)
+		Unknown: 50 milli (00:00:00)
+	Breakdown for main loop:
+		[52.14%] Simplex steps: 8207 milli
+		[25.52%] Explicit-basis bound tightening: 4017 milli
+		[0.00%] Constraint-matrix bound tightening: 0 milli
+		[0.49%] Degradation checking: 77 milli
+		[0.00%] Precision restoration: 0 milli
+		[0.73%] Statistics handling: 115 milli
+		[0.00%] Constraint-fixing steps: 0 milli
+		[0.21%] Valid case splits: 32 milli. Average per split: 0.00 milli
+		[0.08%] Applying stored bound-tightening: 12 milli
+		[1.44%] SMT core: 227 milli
+		[16.46%] Symbolic Bound Tightening: 2591 milli
+		[25.00%] SoI-based local search: 3935 milli
+		[0.00%] SoI-based local search: 0 milli
+		[2.93%] Unaccounted for: 460 milli
+	--- Preprocessor Statistics ---
+	Number of preprocessor bound-tightening loop iterations: 8
+	Number of eliminated variables: 29
+	Number of constraints removed due to variable elimination: 29
+	Number of equations removed due to variable elimination: 0
+	--- Engine Statistics ---
+	Number of main loop iterations: 30000
+		29538 iterations were simplex steps. Total time: 8207 milli. Average: 0.28 milli.
+		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
+	Number of active piecewise-linear constraints: 57 / 271
+		Constraints disabled by valid splits: 198. By SMT-originated splits: 16
+	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000027410. Restorations so far: 0
+	Number of simplex pivots we attempted to skip because of instability: 3.
+	Unstable pivots performed anyway: 0
+	--- Tableau Statistics ---
+	Total number of pivots performed: 26602
+		Real pivots: 26504. Degenerate: 98 (0.37%)
+		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
+		Average time per pivot: 0.08 milli
+	Total number of fake pivots performed: 919
+	Total number of rows added: 0. Number of merged columns: 0
+	Current tableau dimensions: M = 609, N = 1494
+	--- SMT Core Statistics ---
+	Total depth is 25. Total visited states: 322. Number of splits: 170. Number of pops: 151
+	Max stack depth: 28
+	--- Bound Tightening Statistics ---
+	Number of tightened bounds: 110555.
+		Number of rows examined by row tightener: 26602. Consequent tightenings: 869
+		Number of explicit basis matrices examined by row tightener: 144. Consequent tightenings: 4708
+		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
+		Number of bound notifications sent to PL constraints: 101769. Tightenings proposed: 0
+	--- Basis Factorization statistics ---
+	Number of basis refactorizations: 244
+	--- Projected Steepest Edge Statistics ---
+	Number of iterations: 27524.
+	Number of resets to reference space: 154. Avg. iterations per reset: 178
+	--- SBT ---
+	Number of tightened bounds: 110818
+	--- SoI-based local search ---
+	Number of proposed phase pattern update: 819. Number of accepted update: 649 [79.24%]
+	Total time (% of local search time) updating SoI phase pattern : 30385 milli [0.77%]
+	Total time obtaining current assignment: 194931 milli [4.95%]
+	Total time getting SoI phase pattern : 35956 milli [0.23%]
+	--- Context dependent statistics ---
+	Number of pushes / pops: 321 / 296
+		[0.06%] Pre-Push hook: 9 milli
+		[0.00%] Push : 0 milli
+		[0.13%] Post-Pop hook: 20 milli
+		[0.07%] Pop : 10 milli
+		[0.26%] Total context-switching time: 40 milli
+	--- Proof Certificate ---
+	Number of certified leaves: 0
+	Number of leaves to delegate: 0
+Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!
+21:59:31 Statistics update:
+	--- Time Statistics ---
+	Total time elapsed: 21511 milli (00:00:21)
+		Main loop: 21358 milli (00:00:21)
+		Preprocessing time: 100 milli (00:00:00)
+		Unknown: 52 milli (00:00:00)
+	Breakdown for main loop:
+		[53.17%] Simplex steps: 11355 milli
+		[24.81%] Explicit-basis bound tightening: 5298 milli
+		[0.00%] Constraint-matrix bound tightening: 0 milli
+		[0.49%] Degradation checking: 103 milli
+		[0.00%] Precision restoration: 0 milli
+		[0.74%] Statistics handling: 158 milli
+		[0.00%] Constraint-fixing steps: 0 milli
+		[0.19%] Valid case splits: 40 milli. Average per split: 0.00 milli
+		[0.08%] Applying stored bound-tightening: 16 milli
+		[1.43%] SMT core: 304 milli
+		[16.00%] Symbolic Bound Tightening: 3416 milli
+		[25.86%] SoI-based local search: 5524 milli
+		[0.00%] SoI-based local search: 0 milli
+		[3.11%] Unaccounted for: 664 milli
+	--- Preprocessor Statistics ---
+	Number of preprocessor bound-tightening loop iterations: 8
+	Number of eliminated variables: 29
+	Number of constraints removed due to variable elimination: 29
+	Number of equations removed due to variable elimination: 0
+	--- Engine Statistics ---
+	Number of main loop iterations: 40000
+		39390 iterations were simplex steps. Total time: 11355 milli. Average: 0.29 milli.
+		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
+	Number of active piecewise-linear constraints: 39 / 271
+		Constraints disabled by valid splits: 210. By SMT-originated splits: 22
+	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000027410. Restorations so far: 0
+	Number of simplex pivots we attempted to skip because of instability: 4.
+	Unstable pivots performed anyway: 0
+	--- Tableau Statistics ---
+	Total number of pivots performed: 35371
+		Real pivots: 35234. Degenerate: 137 (0.39%)
+		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
+		Average time per pivot: 0.08 milli
+	Total number of fake pivots performed: 1127
+	Total number of rows added: 0. Number of merged columns: 0
+	Current tableau dimensions: M = 609, N = 1494
+	--- SMT Core Statistics ---
+	Total depth is 34. Total visited states: 427. Number of splits: 226. Number of pops: 200
+	Max stack depth: 37
+	--- Bound Tightening Statistics ---
+	Number of tightened bounds: 147621.
+		Number of rows examined by row tightener: 35371. Consequent tightenings: 1144
+		Number of explicit basis matrices examined by row tightener: 192. Consequent tightenings: 6209
+		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
+		Number of bound notifications sent to PL constraints: 135359. Tightenings proposed: 0
+	--- Basis Factorization statistics ---
+	Number of basis refactorizations: 324
+	--- Projected Steepest Edge Statistics ---
+	Number of iterations: 36502.
+	Number of resets to reference space: 204. Avg. iterations per reset: 178
+	--- SBT ---
+	Number of tightened bounds: 147725
+	--- SoI-based local search ---
+	Number of proposed phase pattern update: 1191. Number of accepted update: 965 [81.02%]
+	Total time (% of local search time) updating SoI phase pattern : 41236 milli [0.75%]
+	Total time obtaining current assignment: 290784 milli [5.26%]
+	Total time getting SoI phase pattern : 49750 milli [0.23%]
+	--- Context dependent statistics ---
+	Number of pushes / pops: 426 / 392
+		[0.06%] Pre-Push hook: 13 milli
+		[0.00%] Push : 0 milli
+		[0.14%] Post-Pop hook: 28 milli
+		[0.06%] Pop : 13 milli
+		[0.26%] Total context-switching time: 55 milli
+	--- Proof Certificate ---
+	Number of certified leaves: 0
+	Number of leaves to delegate: 0
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Running deeppoly!Use largest interval!
+Running deeppoly!Running deeppoly!Running deeppoly!
+Engine::solve: sat assignment found
+
+21:59:33 Statistics update:
+	--- Time Statistics ---
+	Total time elapsed: 23213 milli (00:00:23)
+		Main loop: 23059 milli (00:00:23)
+		Preprocessing time: 100 milli (00:00:00)
+		Unknown: 53 milli (00:00:00)
+	Breakdown for main loop:
+		[53.07%] Simplex steps: 12236 milli
+		[24.37%] Explicit-basis bound tightening: 5618 milli
+		[0.00%] Constraint-matrix bound tightening: 0 milli
+		[0.48%] Degradation checking: 111 milli
+		[0.00%] Precision restoration: 0 milli
+		[0.74%] Statistics handling: 171 milli
+		[0.00%] Constraint-fixing steps: 0 milli
+		[0.19%] Valid case splits: 43 milli. Average per split: 0.00 milli
+		[0.08%] Applying stored bound-tightening: 18 milli
+		[1.48%] SMT core: 341 milli
+		[16.42%] Symbolic Bound Tightening: 3785 milli
+		[26.19%] SoI-based local search: 6039 milli
+		[0.00%] SoI-based local search: 0 milli
+		[3.17%] Unaccounted for: 731 milli
+	--- Preprocessor Statistics ---
+	Number of preprocessor bound-tightening loop iterations: 8
+	Number of eliminated variables: 29
+	Number of constraints removed due to variable elimination: 29
+	Number of equations removed due to variable elimination: 0
+	--- Engine Statistics ---
+	Number of main loop iterations: 42969
+		42299 iterations were simplex steps. Total time: 12236 milli. Average: 0.29 milli.
+		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
+	Number of active piecewise-linear constraints: 44 / 271
+		Constraints disabled by valid splits: 206. By SMT-originated splits: 21
+	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000027410. Restorations so far: 0
+	Number of simplex pivots we attempted to skip because of instability: 4.
+	Unstable pivots performed anyway: 0
+	--- Tableau Statistics ---
+	Total number of pivots performed: 37732
+		Real pivots: 37574. Degenerate: 158 (0.42%)
+		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
+		Average time per pivot: 0.08 milli
+	Total number of fake pivots performed: 1256
+	Total number of rows added: 0. Number of merged columns: 0
+	Current tableau dimensions: M = 609, N = 1494
+	--- SMT Core Statistics ---
+	Total depth is 32. Total visited states: 471. Number of splits: 248. Number of pops: 222
+	Max stack depth: 40
+	--- Bound Tightening Statistics ---
+	Number of tightened bounds: 164793.
+		Number of rows examined by row tightener: 37732. Consequent tightenings: 1305
+		Number of explicit basis matrices examined by row tightener: 203. Consequent tightenings: 7426
+		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
+		Number of bound notifications sent to PL constraints: 150951. Tightenings proposed: 0
+	--- Basis Factorization statistics ---
+	Number of basis refactorizations: 345
+	--- Projected Steepest Edge Statistics ---
+	Number of iterations: 38992.
+	Number of resets to reference space: 227. Avg. iterations per reset: 171
+	--- SBT ---
+	Number of tightened bounds: 164822
+	--- SoI-based local search ---
+	Number of proposed phase pattern update: 1373. Number of accepted update: 1126 [82.01%]
+	Total time (% of local search time) updating SoI phase pattern : 44857 milli [0.74%]
+	Total time obtaining current assignment: 335586 milli [5.56%]
+	Total time getting SoI phase pattern : 52991 milli [0.23%]
+	--- Context dependent statistics ---
+	Number of pushes / pops: 471 / 439
+		[0.06%] Pre-Push hook: 14 milli
+		[0.00%] Push : 0 milli
+		[0.14%] Post-Pop hook: 32 milli
+		[0.07%] Pop : 15 milli
+		[0.27%] Total context-switching time: 62 milli
+	--- Proof Certificate ---
+	Number of certified leaves: 0
+	Number of leaves to delegate: 0
+sat
+Input assignment:
+	x0 = 0.639929
+	x1 = -0.005402
+	x2 = -0.482744
+	x3 = 0.500000
+	x4 = -0.456815
+
+Output:
+	y0 = 0.043293
+	y1 = -0.021759
+	y2 = 0.022175
+	y3 = -0.017987
+	y4 = 0.021886
+

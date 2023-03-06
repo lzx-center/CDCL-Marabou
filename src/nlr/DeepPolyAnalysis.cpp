@@ -122,7 +122,6 @@ void DeepPolyAnalysis::run()
         */
         unsigned index = pair.first;
         Layer *layer = pair.second;
-
         ASSERT( _deepPolyElements.exists( index ) );
         log( Stringf( "Running deeppoly analysis for layer %u...", index ) );
         DeepPolyElement *deepPolyElement = _deepPolyElements[index];

@@ -207,11 +207,15 @@ void Marabou::solveQuery()
     }
     bool check = Options::get()->getBool(Options::CHECK);
     if ( _engine.processInputQuery( _inputQuery ) ) {
-        if (check) {
+//        if (check) {
+//            // _engine.ClauseLearning();
+//           _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
+//        } else {
+//            _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
+//        }
+        bool learn_clause = Options::get()->getBool(Options::LEARN_CLAUSE);
+        if (learn_clause) {
             _engine.ClauseLearning();
-//            _engine.checkSolve2(Options::get()->getInt( Options::TIMEOUT ));
-        } else {
-            _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
         }
     }
 
@@ -250,13 +254,13 @@ void Marabou::displayResults( unsigned long long microSecondsElapsed ) const
 
         if ( _inputQuery._networkLevelReasoner )
         {
-            double *input = new double[_inputQuery.getNumInputVariables()];
+            auto *input = new double[_inputQuery.getNumInputVariables()];
             for ( unsigned i = 0; i < _inputQuery.getNumInputVariables(); ++i )
                 input[i] = _inputQuery.getSolutionValue( _inputQuery.inputVariableByIndex( i ) );
 
             NLR::NetworkLevelReasoner *nlr = _inputQuery._networkLevelReasoner;
             NLR::Layer *lastLayer = nlr->getLayer( nlr->getNumberOfLayers() - 1 );
-            double *output = new double[lastLayer->getSize()];
+            auto *output = new double[lastLayer->getSize()];
 
             nlr->evaluate( input, output );
 

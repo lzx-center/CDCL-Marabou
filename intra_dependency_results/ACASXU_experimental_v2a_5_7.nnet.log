@@ -1,0 +1,99 @@
+Network: /home/center/CDCL-Marabou/resources/nnet/acasxu/ACASXU_experimental_v2a_5_7.nnet
+Number of layers: 8. Input layer size: 5. Output layer size: 5. Number of ReLUs: 300
+Total number of variables: 610
+Property: /home/center/CDCL-Marabou/example/acas_property_1.txt
+
+Engine::processInputQuery: Input query (before preprocessing): 305 equations, 610 variables
+Engine::processInputQuery: Input query (after preprocessing): 605 equations, 897 variables
+
+Input bounds:
+	x0: [  0.6000,   0.6799] 
+	x1: [ -0.5000,   0.5000] 
+	x2: [ -0.5000,   0.5000] 
+	x3: [  0.4500,   0.5000] 
+	x4: [ -0.5000,  -0.4500] 
+
+Running deeppoly!Intra dependency: (1, 1) inactive ==> (1, 14) inactive
+(1, 1) : [-0.996823, 1.571652]
+(1, 14) : [-0.511253, 0.528569]
+Intra dependency: (1, 1) inactive ==> (1, 20) inactive
+(1, 1) : [-0.996823, 1.571652]
+(1, 20) : [-0.625669, 0.129055]
+Intra dependency: (1, 2) inactive ==> (1, 30) active
+(1, 2) : [-1.091020, 1.000249]
+(1, 30) : [-0.745307, 1.109745]
+Intra dependency: (1, 5) inactive ==> (1, 20) inactive
+(1, 5) : [-0.840045, 1.135365]
+(1, 20) : [-0.625669, 0.129055]
+Intra dependency: (1, 5) inactive ==> (1, 44) active
+(1, 5) : [-0.840045, 1.135365]
+(1, 44) : [-0.452037, 0.863528]
+Intra dependency: (1, 7) active ==> (1, 45) active
+(1, 7) : [-0.067686, 0.301526]
+(1, 45) : [-0.132913, 0.567275]
+Intra dependency: (1, 13) inactive ==> (1, 20) inactive
+(1, 13) : [-1.119373, 0.807527]
+(1, 20) : [-0.625669, 0.129055]
+Intra dependency: (1, 20) active ==> (1, 23) inactive
+(1, 20) : [-0.625669, 0.129055]
+(1, 23) : [-2.571790, 0.587214]
+Intra dependency: (1, 20) active ==> (1, 25) active
+(1, 20) : [-0.625669, 0.129055]
+(1, 25) : [-1.223485, 1.149345]
+Intra dependency: (1, 20) active ==> (1, 26) active
+(1, 20) : [-0.625669, 0.129055]
+(1, 26) : [-1.918272, 0.274924]
+Intra dependency: (1, 20) active ==> (1, 29) active
+(1, 20) : [-0.625669, 0.129055]
+(1, 29) : [-1.560621, 0.336325]
+Intra dependency: (1, 20) active ==> (1, 38) inactive
+(1, 20) : [-0.625669, 0.129055]
+(1, 38) : [-2.570904, 0.513707]
+Intra dependency: (1, 20) active ==> (1, 41) active
+(1, 20) : [-0.625669, 0.129055]
+(1, 41) : [-1.744658, 0.540174]
+Intra dependency: (1, 20) active ==> (1, 43) inactive
+(1, 20) : [-0.625669, 0.129055]
+(1, 43) : [-1.403716, 1.540419]
+Intra dependency: (1, 20) active ==> (1, 47) active
+(1, 20) : [-0.625669, 0.129055]
+(1, 47) : [-0.204051, 1.103637]
+Intra dependency: (1, 20) active ==> (1, 49) active
+(1, 20) : [-0.625669, 0.129055]
+(1, 49) : [-0.615108, 1.556638]
+Intra dependency: (1, 25) inactive ==> (1, 26) inactive
+(1, 25) : [-1.223485, 1.149345]
+(1, 26) : [-1.918272, 0.274924]
+Intra dependency: (1, 25) inactive ==> (1, 29) inactive
+(1, 25) : [-1.223485, 1.149345]
+(1, 29) : [-1.560621, 0.336325]
+Intra dependency: (1, 25) inactive ==> (1, 41) inactive
+(1, 25) : [-1.223485, 1.149345]
+(1, 41) : [-1.744658, 0.540174]
+Intra dependency: (1, 33) inactive ==> (1, 37) active
+(1, 33) : [-0.327750, 0.882912]
+(1, 37) : [-0.304674, 0.337949]
+Intra dependency: (1, 33) active ==> (1, 47) active
+(1, 33) : [-0.327750, 0.882912]
+(1, 47) : [-0.204051, 1.103637]
+Intra dependency: (1, 37) inactive ==> (1, 47) active
+(1, 37) : [-0.304674, 0.337949]
+(1, 47) : [-0.204051, 1.103637]
+Intra dependency: (1, 38) active ==> (1, 43) active
+(1, 38) : [-2.570904, 0.513707]
+(1, 43) : [-1.403716, 1.540419]
+Intra dependency: (1, 38) active ==> (1, 44) active
+(1, 38) : [-2.570904, 0.513707]
+(1, 44) : [-0.452037, 0.863528]
+Intra dependency: (1, 40) active ==> (1, 47) active
+(1, 40) : [-0.160290, 0.571217]
+(1, 47) : [-0.204051, 1.103637]
+Intra dependency: (1, 43) inactive ==> (1, 47) active
+(1, 43) : [-1.403716, 1.540419]
+(1, 47) : [-0.204051, 1.103637]
+Intra dependency: (1, 44) inactive ==> (1, 47) active
+(1, 44) : [-0.452037, 0.863528]
+(1, 47) : [-0.204051, 1.103637]
+Using Gurobi to solve LP...
+Branching heuristics set to LargestInterval
+UNKNOWN EXIT CODE! (this should not happen)

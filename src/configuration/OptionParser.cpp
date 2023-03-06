@@ -121,6 +121,9 @@ void OptionParser::initialize()
         ( "check",
                 boost::program_options::bool_switch( &((*_boolOptions)[Options::CHECK]) )->default_value( (*_boolOptions)[Options::CHECK] ),
                 "Run check process" )
+        ( "learn-clause",
+          boost::program_options::bool_switch( &((*_boolOptions)[Options::LEARN_CLAUSE]) )->default_value((*_boolOptions)[Options::CHECK] ),
+          "learn clause" )
         ( "load-json",
           boost::program_options::value<std::string>( &((*_stringOptions)[Options::JSON_LOAD]) )->default_value( (*_stringOptions)[Options::JSON_LOAD] ),
           "Path to load in json format" )

@@ -1,0 +1,264 @@
+Network: /home/center/CDCL-Marabou/resources/nnet/acasxu/ACASXU_experimental_v2a_4_9.nnet
+Number of layers: 8. Input layer size: 5. Output layer size: 5. Number of ReLUs: 300
+Total number of variables: 610
+Property: /home/center/CDCL-Marabou/example/acas_property_1.txt
+
+Engine::processInputQuery: Input query (before preprocessing): 305 equations, 610 variables
+Engine::processInputQuery: Input query (after preprocessing): 605 equations, 895 variables
+
+Input bounds:
+	x0: [  0.6000,   0.6799] 
+	x1: [ -0.5000,   0.5000] 
+	x2: [ -0.5000,   0.5000] 
+	x3: [  0.4500,   0.5000] 
+	x4: [ -0.5000,  -0.4500] 
+
+Running deeppoly!Intra dependency: (1, 1) active ==> (1, 17) inactive
+(1, 1) : [-3.088167, 0.112273]
+(1, 17) : [-1.328035, 0.013865]
+Intra dependency: (1, 1) active ==> (1, 18) active
+(1, 1) : [-3.088167, 0.112273]
+(1, 18) : [-2.417917, 1.067597]
+Intra dependency: (1, 1) inactive ==> (1, 24) active
+(1, 1) : [-3.088167, 0.112273]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 2) inactive ==> (1, 17) inactive
+(1, 2) : [-0.509099, 1.290906]
+(1, 17) : [-1.328035, 0.013865]
+Intra dependency: (1, 2) active ==> (1, 24) active
+(1, 2) : [-0.509099, 1.290906]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 6) active ==> (1, 24) active
+(1, 6) : [-1.550315, 1.103724]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 6) inactive ==> (1, 32) inactive
+(1, 6) : [-1.550315, 1.103724]
+(1, 32) : [-1.107855, 0.223447]
+Intra dependency: (1, 7) inactive ==> (1, 14) active
+(1, 7) : [-1.129536, 1.240506]
+(1, 14) : [-0.709778, 1.610179]
+Intra dependency: (1, 7) inactive ==> (1, 24) active
+(1, 7) : [-1.129536, 1.240506]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 7) active ==> (1, 32) inactive
+(1, 7) : [-1.129536, 1.240506]
+(1, 32) : [-1.107855, 0.223447]
+Intra dependency: (1, 7) inactive ==> (1, 33) active
+(1, 7) : [-1.129536, 1.240506]
+(1, 33) : [-0.924936, 2.129844]
+Intra dependency: (1, 7) inactive ==> (1, 43) inactive
+(1, 7) : [-1.129536, 1.240506]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 8) inactive ==> (1, 17) inactive
+(1, 8) : [-1.290122, 0.849687]
+(1, 17) : [-1.328035, 0.013865]
+Intra dependency: (1, 8) active ==> (1, 24) active
+(1, 8) : [-1.290122, 0.849687]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 8) active ==> (1, 43) inactive
+(1, 8) : [-1.290122, 0.849687]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 9) inactive ==> (1, 17) inactive
+(1, 9) : [-0.258800, 1.359174]
+(1, 17) : [-1.328035, 0.013865]
+Intra dependency: (1, 9) active ==> (1, 24) active
+(1, 9) : [-0.258800, 1.359174]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 9) inactive ==> (1, 42) active
+(1, 9) : [-0.258800, 1.359174]
+(1, 42) : [-0.907045, 1.081178]
+Intra dependency: (1, 10) active ==> (1, 17) inactive
+(1, 10) : [-1.840106, 2.380641]
+(1, 17) : [-1.328035, 0.013865]
+Intra dependency: (1, 10) inactive ==> (1, 24) active
+(1, 10) : [-1.840106, 2.380641]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 10) inactive ==> (1, 34) active
+(1, 10) : [-1.840106, 2.380641]
+(1, 34) : [-1.313085, 1.587939]
+Intra dependency: (1, 10) inactive ==> (1, 43) inactive
+(1, 10) : [-1.840106, 2.380641]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 10) inactive ==> (1, 49) active
+(1, 10) : [-1.840106, 2.380641]
+(1, 49) : [-0.249434, 0.479778]
+Intra dependency: (1, 11) active ==> (1, 14) active
+(1, 11) : [-2.832074, 0.797311]
+(1, 14) : [-0.709778, 1.610179]
+Intra dependency: (1, 11) active ==> (1, 24) active
+(1, 11) : [-2.832074, 0.797311]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 11) active ==> (1, 43) inactive
+(1, 11) : [-2.832074, 0.797311]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 11) active ==> (1, 48) inactive
+(1, 11) : [-2.832074, 0.797311]
+(1, 48) : [-2.851605, 0.916655]
+Intra dependency: (1, 12) inactive ==> (1, 24) active
+(1, 12) : [-0.472685, 1.022803]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 13) inactive ==> (1, 24) active
+(1, 13) : [-1.835884, 1.642221]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 14) active ==> (1, 24) active
+(1, 14) : [-0.709778, 1.610179]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 14) inactive ==> (1, 32) inactive
+(1, 14) : [-0.709778, 1.610179]
+(1, 32) : [-1.107855, 0.223447]
+Intra dependency: (1, 14) inactive ==> (1, 46) inactive
+(1, 14) : [-0.709778, 1.610179]
+(1, 46) : [-1.426509, 0.305097]
+Intra dependency: (1, 15) inactive ==> (1, 17) inactive
+(1, 15) : [-0.202250, 0.287876]
+(1, 17) : [-1.328035, 0.013865]
+Intra dependency: (1, 15) active ==> (1, 24) active
+(1, 15) : [-0.202250, 0.287876]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 15) active ==> (1, 43) inactive
+(1, 15) : [-0.202250, 0.287876]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 16) inactive ==> (1, 24) active
+(1, 16) : [-0.612072, 0.459267]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 17) active ==> (1, 18) inactive
+(1, 17) : [-1.328035, 0.013865]
+(1, 18) : [-2.417917, 1.067597]
+Intra dependency: (1, 17) active ==> (1, 23) inactive
+(1, 17) : [-1.328035, 0.013865]
+(1, 23) : [-1.579690, 0.497962]
+Intra dependency: (1, 17) active ==> (1, 24) active
+(1, 17) : [-1.328035, 0.013865]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 17) active ==> (1, 30) inactive
+(1, 17) : [-1.328035, 0.013865]
+(1, 30) : [-0.916412, 0.647513]
+Intra dependency: (1, 17) active ==> (1, 34) active
+(1, 17) : [-1.328035, 0.013865]
+(1, 34) : [-1.313085, 1.587939]
+Intra dependency: (1, 17) active ==> (1, 37) inactive
+(1, 17) : [-1.328035, 0.013865]
+(1, 37) : [-0.133179, 0.029565]
+Intra dependency: (1, 17) active ==> (1, 42) inactive
+(1, 17) : [-1.328035, 0.013865]
+(1, 42) : [-0.907045, 1.081178]
+Intra dependency: (1, 17) active ==> (1, 43) inactive
+(1, 17) : [-1.328035, 0.013865]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 17) active ==> (1, 49) active
+(1, 17) : [-1.328035, 0.013865]
+(1, 49) : [-0.249434, 0.479778]
+Intra dependency: (1, 18) inactive ==> (1, 24) active
+(1, 18) : [-2.417917, 1.067597]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 18) inactive ==> (1, 43) inactive
+(1, 18) : [-2.417917, 1.067597]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 20) active ==> (1, 24) active
+(1, 20) : [-0.578444, 0.778875]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 21) inactive ==> (1, 24) active
+(1, 21) : [-2.120471, 0.564666]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 22) active ==> (1, 24) active
+(1, 22) : [-1.922258, 1.944247]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 22) inactive ==> (1, 29) inactive
+(1, 22) : [-1.922258, 1.944247]
+(1, 29) : [-0.948613, 0.639368]
+Intra dependency: (1, 23) inactive ==> (1, 24) active
+(1, 23) : [-1.579690, 0.497962]
+(1, 24) : [-0.073117, 0.030774]
+Intra dependency: (1, 24) inactive ==> (1, 25) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 25) : [-2.249197, 0.639513]
+Intra dependency: (1, 24) inactive ==> (1, 27) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 27) : [-0.732350, 0.678347]
+Intra dependency: (1, 24) inactive ==> (1, 29) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 29) : [-0.948613, 0.639368]
+Intra dependency: (1, 24) inactive ==> (1, 30) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 30) : [-0.916412, 0.647513]
+Intra dependency: (1, 24) inactive ==> (1, 31) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 31) : [-0.667456, 0.751740]
+Intra dependency: (1, 24) inactive ==> (1, 32) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 32) : [-1.107855, 0.223447]
+Intra dependency: (1, 24) inactive ==> (1, 33) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 33) : [-0.924936, 2.129844]
+Intra dependency: (1, 24) inactive ==> (1, 34) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 34) : [-1.313085, 1.587939]
+Intra dependency: (1, 24) inactive ==> (1, 37) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 37) : [-0.133179, 0.029565]
+Intra dependency: (1, 24) inactive ==> (1, 38) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 38) : [-1.032450, 0.837487]
+Intra dependency: (1, 24) inactive ==> (1, 41) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 41) : [-0.613770, 0.836042]
+Intra dependency: (1, 24) inactive ==> (1, 42) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 42) : [-0.907045, 1.081178]
+Intra dependency: (1, 24) inactive ==> (1, 43) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 24) inactive ==> (1, 46) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 46) : [-1.426509, 0.305097]
+Intra dependency: (1, 24) inactive ==> (1, 48) active
+(1, 24) : [-0.073117, 0.030774]
+(1, 48) : [-2.851605, 0.916655]
+Intra dependency: (1, 24) inactive ==> (1, 49) inactive
+(1, 24) : [-0.073117, 0.030774]
+(1, 49) : [-0.249434, 0.479778]
+Intra dependency: (1, 25) active ==> (1, 29) inactive
+(1, 25) : [-2.249197, 0.639513]
+(1, 29) : [-0.948613, 0.639368]
+Intra dependency: (1, 27) inactive ==> (1, 43) inactive
+(1, 27) : [-0.732350, 0.678347]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 29) active ==> (1, 48) inactive
+(1, 29) : [-0.948613, 0.639368]
+(1, 48) : [-2.851605, 0.916655]
+Intra dependency: (1, 30) inactive ==> (1, 43) inactive
+(1, 30) : [-0.916412, 0.647513]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 32) active ==> (1, 33) active
+(1, 32) : [-1.107855, 0.223447]
+(1, 33) : [-0.924936, 2.129844]
+Intra dependency: (1, 32) active ==> (1, 43) inactive
+(1, 32) : [-1.107855, 0.223447]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 32) active ==> (1, 46) active
+(1, 32) : [-1.107855, 0.223447]
+(1, 46) : [-1.426509, 0.305097]
+Intra dependency: (1, 32) active ==> (1, 48) inactive
+(1, 32) : [-1.107855, 0.223447]
+(1, 48) : [-2.851605, 0.916655]
+Intra dependency: (1, 33) active ==> (1, 43) inactive
+(1, 33) : [-0.924936, 2.129844]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 33) inactive ==> (1, 46) inactive
+(1, 33) : [-0.924936, 2.129844]
+(1, 46) : [-1.426509, 0.305097]
+Intra dependency: (1, 34) active ==> (1, 43) inactive
+(1, 34) : [-1.313085, 1.587939]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 37) inactive ==> (1, 43) inactive
+(1, 37) : [-0.133179, 0.029565]
+(1, 43) : [-0.555130, 0.193037]
+Intra dependency: (1, 43) active ==> (1, 46) inactive
+(1, 43) : [-0.555130, 0.193037]
+(1, 46) : [-1.426509, 0.305097]
+Intra dependency: (1, 43) active ==> (1, 49) inactive
+(1, 43) : [-0.555130, 0.193037]
+(1, 49) : [-0.249434, 0.479778]
+Using Gurobi to solve LP...
+Branching heuristics set to LargestInterval
+UNKNOWN EXIT CODE! (this should not happen)

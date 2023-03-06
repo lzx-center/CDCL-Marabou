@@ -218,15 +218,16 @@ set(LIBS_INCLUDES ${Boost_INCLUDE_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})
 
 # Gurobi
+set(GUROBI_HOME "/opt/gurobi1001/linux64")
 if (${ENABLE_GUROBI})
   message(STATUS "Using Gurobi for LP relaxation for bound tightening")
   if (NOT DEFINED GUROBI_DIR)
-    set(GUROBI_DIR $ENV{GUROBI_HOME})
+    set(GUROBI_DIR ${GUROBI_HOME})
   endif()
   add_compile_definitions(ENABLE_GUROBI)
 
   set(GUROBI_LIB1 "gurobi_c++")
-  set(GUROBI_LIB2 "gurobi95")
+  set(GUROBI_LIB2 "libgurobi100")
 
   add_library(${GUROBI_LIB1} SHARED IMPORTED)
   set_target_properties(${GUROBI_LIB1} PROPERTIES IMPORTED_LOCATION ${GUROBI_DIR}/lib/libgurobi_c++.a)
@@ -239,7 +240,7 @@ if (${ENABLE_GUROBI})
   if (APPLE)
     set_target_properties(${GUROBI_LIB2} PROPERTIES IMPORTED_LOCATION ${GUROBI_DIR}/lib/libgurobi95.dylib)
   else()
-    set_target_properties(${GUROBI_LIB2} PROPERTIES IMPORTED_LOCATION ${GUROBI_DIR}/lib/libgurobi95.so)
+    set_target_properties(${GUROBI_LIB2} PROPERTIES IMPORTED_LOCATION ${GUROBI_DIR}/lib/libgurobi100.so)
   endif ()
 
   list(APPEND LIBS ${GUROBI_LIB2})

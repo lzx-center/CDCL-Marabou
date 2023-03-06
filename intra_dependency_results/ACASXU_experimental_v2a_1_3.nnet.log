@@ -1,0 +1,45 @@
+Network: /home/center/CDCL-Marabou/resources/nnet/acasxu/ACASXU_experimental_v2a_1_3.nnet
+Number of layers: 8. Input layer size: 5. Output layer size: 5. Number of ReLUs: 300
+Total number of variables: 610
+Property: /home/center/CDCL-Marabou/example/acas_property_1.txt
+
+Engine::processInputQuery: Input query (before preprocessing): 305 equations, 610 variables
+Engine::processInputQuery: Input query (after preprocessing): 605 equations, 880 variables
+
+Input bounds:
+	x0: [  0.6000,   0.6799] 
+	x1: [ -0.5000,   0.5000] 
+	x2: [ -0.5000,   0.5000] 
+	x3: [  0.4500,   0.5000] 
+	x4: [ -0.5000,  -0.4500] 
+
+Running deeppoly!Intra dependency: (1, 6) active ==> (1, 44) inactive
+(1, 6) : [-1.619281, 0.658927]
+(1, 44) : [-1.345680, 1.189542]
+Intra dependency: (1, 8) inactive ==> (1, 16) active
+(1, 8) : [-1.444147, 0.654315]
+(1, 16) : [-0.208921, 0.955582]
+Intra dependency: (1, 9) inactive ==> (1, 38) active
+(1, 9) : [-1.208017, 1.159740]
+(1, 38) : [-1.625937, 1.587082]
+Intra dependency: (1, 10) inactive ==> (1, 39) inactive
+(1, 10) : [-0.309951, 1.118761]
+(1, 39) : [-0.912184, 0.567873]
+Intra dependency: (1, 11) inactive ==> (1, 22) active
+(1, 11) : [-0.713888, 1.087055]
+(1, 22) : [-0.838536, 1.132070]
+Intra dependency: (1, 14) inactive ==> (1, 22) active
+(1, 14) : [-0.833220, 0.842366]
+(1, 22) : [-0.838536, 1.132070]
+Intra dependency: (1, 16) inactive ==> (1, 21) inactive
+(1, 16) : [-0.208921, 0.955582]
+(1, 21) : [-0.308460, 0.342789]
+Intra dependency: (3, 5) active ==> (3, 31) inactive
+(3, 5) : [-2.750077, 1.795083]
+(3, 31) : [-3.636747, 1.618716]
+Intra dependency: (3, 31) active ==> (3, 39) inactive
+(3, 31) : [-3.636747, 1.618716]
+(3, 39) : [-6.826489, 6.187032]
+Using Gurobi to solve LP...
+Branching heuristics set to LargestInterval
+UNKNOWN EXIT CODE! (this should not happen)

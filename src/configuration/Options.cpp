@@ -53,6 +53,7 @@ void Options::initializeDefaultValues()
     _boolOptions[DEBUG_ASSIGNMENT] = false;
     _boolOptions[PRODUCE_PROOFS] = false;
     _boolOptions[CHECK] = false;
+    _boolOptions[LEARN_CLAUSE] = false;
 
     /*
       Int options
@@ -167,7 +168,7 @@ DivideStrategy Options::getDivideStrategy() const
     else if ( strategyString == "pseudo-impact" )
         return DivideStrategy::PseudoImpact;
     else
-        return DivideStrategy::Auto;
+        return DivideStrategy::PseudoImpact;
 }
 
 SnCDivideStrategy Options::getSnCDivideStrategy() const

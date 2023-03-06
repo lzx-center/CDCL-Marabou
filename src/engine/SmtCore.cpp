@@ -678,7 +678,7 @@ void SmtCore::performCheckSplit() {
     ASSERT( _needToSplit );
     _numRejectedPhasePatternProposal = 0;
     // Maybe the constraint has already become inactive - if so, ignore
-    if ( !_constraintForSplitting->isActive() )
+    if ( !_constraintForSplitting->isActive() or _constraintForSplitting->phaseFixed())
     {
         printf("Constraint become not valid!\n");
         _needToSplit = false;
