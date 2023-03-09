@@ -208,8 +208,8 @@ void Marabou::solveQuery()
     bool check = Options::get()->getBool(Options::CHECK);
     if ( _engine.processInputQuery( _inputQuery ) ) {
         if (check) {
-            // _engine.ClauseLearning();
-           _engine.checkSolve2(Options::get()->getInt( Options::TIMEOUT ));
+//             _engine.ClauseLearning();
+           _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
         } else {
             _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
         }
@@ -227,6 +227,8 @@ void Marabou::solveQuery()
     if (searchPathSave != "") {
         searchPath.saveToFile(searchPathSave);
     }
+//    searchPath.calc();
+    printf("Search path num: [%zu]\n", searchPath._paths.size());
     String jsonSave = Options::get()->getString(Options::JSON_SAVE);
     if (jsonSave != "") {
         searchPath.saveJson(jsonSave);
@@ -299,6 +301,8 @@ void Marabou::displayResults( unsigned long long microSecondsElapsed ) const
 
     // Create a summary file, if requested
     String summaryFilePath = Options::get()->getString( Options::SUMMARY_FILE );
+    printf("Total time: %f seconds", 1.0 * microSecondsElapsed / 1000000);
+
     if ( summaryFilePath != "" )
     {
         File summaryFile( summaryFilePath );

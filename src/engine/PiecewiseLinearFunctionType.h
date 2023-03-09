@@ -49,6 +49,10 @@ struct Position {
         }
         return _layer < pos._layer;
     }
+
+    bool operator == (const Position& pos) const {
+        return _layer == pos._layer and _node == pos._node;
+    }
 };
 #endif // __PiecewiseLinearFunctionType_h__
 

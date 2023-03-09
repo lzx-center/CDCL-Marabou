@@ -296,3 +296,23 @@ void BoundManager::registerRowBoundTightener( IRowBoundTightener *ptrRowBoundTig
     ASSERT( _rowBoundTightener == nullptr );
     _rowBoundTightener = ptrRowBoundTightener;
 }
+
+void BoundManager::dump() {
+    for (size_t i = 0; i < _size; ++ i) {
+        printf("Variable %zu, [%f, %f]\n", i, _lowerBounds[i], _upperBounds[i]);
+    }
+}
+
+void BoundManager::enforceLowerBound(unsigned int variable, double value) {
+    _lowerBounds[variable] = value;
+    *_tightenedLower[variable] = true;
+    if ( !consistentBounds( variable ) )
+        recordInconsistentBound( variable, value, Tightening::LB );
+}
+
+void BoundManager::enforceUpperBound(unsigned int variable, double value) {
+    _upperBounds[variable] = value;
+    *_tightenedUpper[variable] = true;
+    if ( !consistentBounds( variable ) )
+        recordInconsistentBound( variable, value, Tightening::UB );
+}

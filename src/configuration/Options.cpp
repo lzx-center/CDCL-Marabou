@@ -168,7 +168,7 @@ DivideStrategy Options::getDivideStrategy() const
     else if ( strategyString == "pseudo-impact" )
         return DivideStrategy::PseudoImpact;
     else
-        return DivideStrategy::PseudoImpact;
+        return DivideStrategy::Polarity;
 }
 
 SnCDivideStrategy Options::getSnCDivideStrategy() const

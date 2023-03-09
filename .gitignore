@@ -44,3 +44,5 @@ build
 cmake-build-debug/
 visualize
 example
+sat_example
+resources

@@ -95,6 +95,13 @@ struct CaseSplitTypeInfo {
     void serialize(Archive &ar, const unsigned int version) {
         ar & _position & _type;
     }
+
+    bool operator < (const CaseSplitTypeInfo& split) const {
+        if (_position == split._position) {
+            return _type < split._type;
+        }
+        return _position < split._position;
+    }
 };
 
 class PiecewiseLinearCaseSplit

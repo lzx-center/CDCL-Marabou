@@ -194,7 +194,7 @@ void DeepPolyWeightedSumElement::computeBoundWithBackSubstitution
                                  currentElement, deepPolyElementsBefore );
     }
     ASSERT( _residualLayerIndices.empty());
-//
+
 //    auto intra_depends = [&](unsigned i, unsigned j) {
 //        unsigned pre_size = preSizeElement->getSize();
 //        std::vector<double> w1(pre_size), w2(pre_size), wp(pre_size);

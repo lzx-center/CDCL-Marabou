@@ -2,213 +2,11 @@
   "data": [
     [
       {
-        "split": "(1, 0, Relu inactive)",
+        "split": "(1, 0, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 1, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 2, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 3, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 4, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 5, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 6, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 7, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 8, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 9, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 10, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 11, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 12, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 13, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 14, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 15, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 16, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 17, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 18, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 19, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 20, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 21, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 22, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 23, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 24, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 25, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 26, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 27, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 28, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 29, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 30, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 31, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 32, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 33, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 34, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 35, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 36, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 37, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 38, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 39, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 40, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 41, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 42, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 43, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 44, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 45, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 46, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 47, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 48, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 49, Relu inactive)",
-        "implied": []
-      }
-    ],
-    [
-      {
-        "split": "(1, 0, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 1, Relu active)",
+        "split": "(1, 1, Relu inactive)",
         "implied": []
       },
       {
@@ -228,23 +26,23 @@
         "implied": []
       },
       {
-        "split": "(1, 6, Relu inactive)",
+        "split": "(1, 6, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 7, Relu active)",
+        "split": "(1, 7, Relu inactive)",
         "implied": []
       },
       {
-        "split": "(1, 8, Relu inactive)",
+        "split": "(1, 8, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 9, Relu inactive)",
+        "split": "(1, 9, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 10, Relu active)",
+        "split": "(1, 10, Relu inactive)",
         "implied": []
       },
       {
@@ -252,11 +50,11 @@
         "implied": []
       },
       {
-        "split": "(1, 12, Relu active)",
+        "split": "(1, 12, Relu inactive)",
         "implied": []
       },
       {
-        "split": "(1, 13, Relu active)",
+        "split": "(1, 13, Relu inactive)",
         "implied": []
       },
       {
@@ -272,415 +70,11 @@
         "implied": []
       },
       {
-        "split": "(1, 17, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 18, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 19, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 20, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 21, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 22, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 23, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 24, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 25, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 26, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 27, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 28, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 29, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 30, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 31, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 32, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 33, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 34, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 35, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 36, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 37, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 38, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 39, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 40, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 41, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 42, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 43, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 44, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 45, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 46, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 47, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 48, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 49, Relu inactive)",
-        "implied": []
-      }
-    ],
-    [
-      {
-        "split": "(1, 0, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 1, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 2, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 3, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 4, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 5, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 6, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 7, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 8, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 9, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 10, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 11, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 12, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 13, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 14, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 15, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 16, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 17, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 18, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 19, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 20, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 21, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 22, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 23, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 24, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 25, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 26, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 27, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 28, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 29, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 30, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 31, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 32, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 33, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 34, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 35, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 36, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 37, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 38, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 39, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 40, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 41, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 42, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 43, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 44, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 45, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 46, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 47, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 48, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 49, Relu inactive)",
-        "implied": []
-      }
-    ],
-    [
-      {
-        "split": "(1, 0, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 1, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 2, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 3, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 4, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 5, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 6, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 7, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 8, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 9, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 10, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 11, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 12, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 13, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 14, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 15, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 16, Relu active)",
-        "implied": []
-      },
-      {
         "split": "(1, 17, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 18, Relu active)",
+        "split": "(1, 18, Relu inactive)",
         "implied": []
       },
       {
@@ -692,613 +86,7 @@
         "implied": []
       },
       {
-        "split": "(1, 21, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 22, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 23, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 24, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 25, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 26, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 27, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 28, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 29, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 30, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 31, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 32, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 33, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 34, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 35, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 36, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 37, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 38, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 39, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 40, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 41, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 42, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 43, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 44, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 45, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 46, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 47, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 48, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 49, Relu inactive)",
-        "implied": []
-      }
-    ],
-    [
-      {
-        "split": "(1, 0, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 1, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 2, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 3, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 4, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 5, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 6, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 7, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 8, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 9, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 10, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 11, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 12, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 13, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 14, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 15, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 16, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 17, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 18, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 19, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 20, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 21, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 22, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 23, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 24, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 25, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 26, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 27, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 28, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 29, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 30, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 31, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 32, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 33, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 34, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 35, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 36, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 37, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 38, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 39, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 40, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 41, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 42, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 43, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 44, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 45, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 46, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 47, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 48, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 49, Relu inactive)",
-        "implied": []
-      }
-    ],
-    [
-      {
-        "split": "(1, 0, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 1, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 2, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 3, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 4, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 5, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 6, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 7, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 8, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 9, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 10, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 11, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 12, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 13, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 14, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 15, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 16, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 17, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 18, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 19, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 20, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 21, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 22, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 23, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 24, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 25, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 26, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 27, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 28, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 29, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 30, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 31, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 32, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 33, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 34, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 35, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 36, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 37, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 38, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 39, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 40, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 41, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 42, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 43, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 44, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 45, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 46, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 47, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 48, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 49, Relu inactive)",
-        "implied": []
-      }
-    ],
-    [
-      {
-        "split": "(1, 0, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 1, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 2, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 3, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 4, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 5, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 6, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 7, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 8, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 9, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 10, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 11, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 12, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 13, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 14, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 15, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 16, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 17, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 18, Relu active)",
-        "implied": []
-      },
-      {
-        "split": "(1, 19, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 20, Relu inactive)",
-        "implied": []
-      },
-      {
-        "split": "(1, 21, Relu active)",
+        "split": "(1, 21, Relu inactive)",
         "implied": []
       },
       {
@@ -1318,11 +106,11 @@
         "implied": []
       },
       {
-        "split": "(1, 26, Relu inactive)",
+        "split": "(1, 26, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 27, Relu inactive)",
+        "split": "(1, 27, Relu active)",
         "implied": []
       },
       {
@@ -1334,11 +122,11 @@
         "implied": []
       },
       {
-        "split": "(1, 30, Relu inactive)",
+        "split": "(1, 30, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 31, Relu inactive)",
+        "split": "(1, 31, Relu active)",
         "implied": []
       },
       {
@@ -1354,7 +142,7 @@
         "implied": []
       },
       {
-        "split": "(1, 35, Relu active)",
+        "split": "(1, 35, Relu inactive)",
         "implied": []
       },
       {
@@ -1362,15 +150,1429 @@
         "implied": []
       },
       {
-        "split": "(1, 37, Relu inactive)",
+        "split": "(1, 37, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 38, Relu inactive)",
+        "split": "(1, 38, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 39, Relu active)",
+        "split": "(1, 39, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 40, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 41, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 42, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 43, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 44, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 45, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 46, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 47, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 48, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 49, Relu inactive)",
+        "implied": []
+      }
+    ],
+    [
+      {
+        "split": "(1, 0, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 1, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 2, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 3, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 4, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 5, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 6, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 7, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 8, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 9, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 10, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 11, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 12, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 13, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 14, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 15, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 16, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 17, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 18, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 19, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 20, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 21, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 22, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 23, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 24, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 25, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 26, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 27, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 28, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 29, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 30, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 31, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 32, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 33, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 34, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 35, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 36, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 37, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 38, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 39, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 40, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 41, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 42, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 43, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 44, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 45, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 46, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 47, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 48, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 49, Relu inactive)",
+        "implied": []
+      }
+    ],
+    [
+      {
+        "split": "(1, 0, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 1, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 2, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 3, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 4, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 5, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 6, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 7, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 8, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 9, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 10, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 11, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 12, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 13, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 14, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 15, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 16, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 17, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 18, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 19, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 20, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 21, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 22, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 23, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 24, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 25, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 26, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 27, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 28, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 29, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 30, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 31, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 32, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 33, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 34, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 35, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 36, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 37, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 38, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 39, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 40, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 41, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 42, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 43, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 44, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 45, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 46, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 47, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 48, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 49, Relu inactive)",
+        "implied": []
+      }
+    ],
+    [
+      {
+        "split": "(1, 0, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 1, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 2, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 3, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 4, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 5, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 6, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 7, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 8, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 9, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 10, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 11, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 12, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 13, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 14, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 15, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 16, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 17, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 18, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 19, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 20, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 21, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 22, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 23, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 24, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 25, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 26, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 27, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 28, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 29, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 30, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 31, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 32, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 33, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 34, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 35, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 36, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 37, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 38, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 39, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 40, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 41, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 42, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 43, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 44, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 45, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 46, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 47, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 48, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 49, Relu inactive)",
+        "implied": []
+      }
+    ],
+    [
+      {
+        "split": "(1, 0, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 1, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 2, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 3, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 4, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 5, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 6, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 7, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 8, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 9, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 10, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 11, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 12, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 13, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 14, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 15, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 16, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 17, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 18, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 19, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 20, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 21, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 22, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 23, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 24, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 25, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 26, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 27, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 28, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 29, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 30, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 31, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 32, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 33, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 34, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 35, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 36, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 37, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 38, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 39, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 40, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 41, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 42, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 43, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 44, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 45, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 46, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 47, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 48, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 49, Relu inactive)",
+        "implied": []
+      }
+    ],
+    [
+      {
+        "split": "(1, 0, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 1, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 2, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 3, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 4, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 5, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 6, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 7, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 8, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 9, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 10, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 11, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 12, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 13, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 14, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 15, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 16, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 17, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 18, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 19, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 20, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 21, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 22, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 23, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 24, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 25, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 26, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 27, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 28, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 29, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 30, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 31, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 32, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 33, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 34, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 35, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 36, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 37, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 38, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 39, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 40, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 41, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 42, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 43, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 44, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 45, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 46, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 47, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 48, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 49, Relu inactive)",
+        "implied": []
+      }
+    ],
+    [
+      {
+        "split": "(1, 0, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 1, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 2, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 3, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 4, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 5, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 6, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 7, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 8, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 9, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 10, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 11, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 12, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 13, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 14, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 15, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 16, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 17, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 18, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 19, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 20, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 21, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 22, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 23, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 24, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 25, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 26, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 27, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 28, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 29, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 30, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 31, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 32, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 33, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 34, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 35, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 36, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 37, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 38, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 39, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 40, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 41, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 42, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 43, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 44, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 45, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 46, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 47, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 48, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 49, Relu inactive)",
+        "implied": []
+      }
+    ],
+    [
+      {
+        "split": "(1, 0, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 1, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 2, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 3, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 4, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 5, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 6, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 7, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 8, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 9, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 10, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 11, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 12, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 13, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 14, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 15, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 16, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 17, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 18, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 19, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 20, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 21, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 22, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 23, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 24, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 25, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 26, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 27, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 28, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 29, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 30, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 31, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 32, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 33, Relu inactive)",
+        "implied": []
+      },
+      {
+        "split": "(1, 34, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 35, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 36, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 37, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 38, Relu active)",
+        "implied": []
+      },
+      {
+        "split": "(1, 39, Relu inactive)",
         "implied": []
       },
       {
@@ -1382,27 +1584,27 @@
         "implied": []
       },
       {
-        "split": "(1, 42, Relu active)",
+        "split": "(1, 42, Relu inactive)",
         "implied": []
       },
       {
-        "split": "(1, 43, Relu inactive)",
+        "split": "(1, 43, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 44, Relu inactive)",
+        "split": "(1, 44, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 45, Relu inactive)",
+        "split": "(1, 45, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 46, Relu inactive)",
+        "split": "(1, 46, Relu active)",
         "implied": []
       },
       {
-        "split": "(1, 47, Relu active)",
+        "split": "(1, 47, Relu inactive)",
         "implied": []
       },
       {

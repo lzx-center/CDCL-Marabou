@@ -208,6 +208,33 @@ void SearchPath::saveJson(const String &jsonPath) {
     os.close();
 }
 
+void SearchPath::calc() {
+    double success_rate = 1.0 * _learnt.size() / _paths.size();
+    printf("Learnt success rate: %f", success_rate);
+    for (auto& learnt : _learnt) {
+        int use_time = 0;
+        if (!learnt.size())
+            continue;
+        for (auto& path : _paths) {
+            std::set<CaseSplitTypeInfo> st;
+            for (auto& element : path) {
+                st.insert(element._caseSplit);
+            }
+
+            bool contain = true;
+            for (auto& element : learnt) {
+                if (!st.count(element._caseSplit)) {
+                    contain = false;
+                }
+            }
+            if (contain) {
+                use_time ++;
+            }
+        }
+        printf("Learnt size %zu, can use time: %d, rate: %f\n", learnt.size(), use_time, 1.0 * use_time / _paths.size());
+    }
+}
+
 
 void PathElement::setSplit(CaseSplitTypeInfo &info) {
     _caseSplit = info;

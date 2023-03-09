@@ -81,6 +81,7 @@ public:
     bool solve( unsigned timeoutInSeconds = 0 );
     bool checkSolve2(unsigned timeoutInSeconds = 0);
     bool checkSolve(unsigned  timeoutInSeconds = 0);
+
     PiecewiseLinearConstraint* getConstraintByPosition(Position pos);
 
     void dumpConstraintBoundInfo(PathElement& pathElement);
@@ -175,6 +176,9 @@ public:
     void postContextPopHook();
     void preContextPushHook();
 
+    void enforcePopHook();
+    void enforcePushHook();
+
     /*
       Reset the state of the engine, before solving a new query
       (as part of DnC mode).
@@ -264,7 +268,10 @@ private:
         PERFORMED_WEAK_RESTORATION = 2,
     };
 
-
+    /*
+     * use to restore constraint state
+     */
+    EngineState tmpState;
     /*
       Perform bound tightening operations that require
       access to the explicit basis matrix.
@@ -352,6 +359,7 @@ private:
     */
     Preprocessor _preprocessor;
 
+    EngineState _initial;
     /*
       Is preprocessing enabled?
     */

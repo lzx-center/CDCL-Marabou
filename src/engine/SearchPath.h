@@ -51,7 +51,7 @@ public:
 
 class SearchPath {
 public:
-    std::vector<std::vector<PathElement>> _paths;
+    std::vector<std::vector<PathElement>> _paths, _learnt;
     std::vector<PathElement> _eliminatedConstraint;
 
     friend class boost::serialization::access;
@@ -81,6 +81,8 @@ public:
     void loadJson(const String& jsonPath);
 
     void saveJson(const String& path);
+
+    void calc();
 };
 
 

@@ -299,7 +299,6 @@ bool SmtCore::popSplit()
         }
 
         SmtStackEntry *stackEntry = _stack.back();
-
         popContext();
         _engine->postContextPopHook();
         // Restore the state of the engine
@@ -679,7 +678,7 @@ void SmtCore::performCheckSplit() {
     ASSERT( _needToSplit );
     _numRejectedPhasePatternProposal = 0;
     // Maybe the constraint has already become inactive - if so, ignore
-    if ( !_constraintForSplitting->isActive() )
+    if (!_constraintForSplitting or !_constraintForSplitting->isActive() )
     {
         printf("Constraint become not valid!\n");
         _needToSplit = false;

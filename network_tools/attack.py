@@ -325,13 +325,13 @@ def attack_single_sample(net, sample, is_target, print_info=False):
     sample = sample.clone().detach().to(torch.float).requires_grad_(True)
     loss = loss_fn(net(sample), y)
 
-    if sat and print_info:
-        print("---" * 20)
-        print(f"o: {sample.tolist()}\n")
-        print(f"min: {net.norm_mins}")
-        print(f"adv: {adv.data.tolist()}")
-        print(f"max: {net.norm_maxes}")
-        print(f"loss: {loss}\ntarget: {is_target}")
+    # if sat and print_info:
+    #     print("---" * 20)
+    #     print(f"o: {sample.tolist()}\n")
+    #     print(f"min: {net.norm_mins}")
+    #     print(f"adv: {adv.data.tolist()}")
+    #     print(f"max: {net.norm_maxes}")
+    #     print(f"loss: {loss}\ntarget: {is_target}")
     return sat, adv, loss
 
 
@@ -367,7 +367,6 @@ def main():
         "/home/center/CDCL-Marabou/sat_example/prop2/acas_property_2.txt",
         "/home/center/CDCL-Marabou/sat_example/prop3/acas_property_3.txt",
         "/home/center/CDCL-Marabou/sat_example/prop4/acas_property_4.txt",
-        # "/home/center/CDCL-Marabou/resources/properties/acas_property_1.txt",
     ]
     counter = 0
     success_num = 0
@@ -384,7 +383,7 @@ def main():
                     if success:
                         success_num += 1
                     else:
-                        can_not_attack.append(file)
+                        can_not_attack.append((file, property_path))
     print(f"total {counter}, success {success_num}, ratio: {success_num / counter * 100}%")
     print(f"Can not attack {can_not_attack}")
 

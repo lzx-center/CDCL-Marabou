@@ -1,3 +1,4 @@
+import NetAnalysis
 import nnet
 import torch
 import random
@@ -5,9 +6,11 @@ from attack import InputGenerate, attack_single_sample
 import json
 
 
-class ClauseGenerator(nnet.NNet):
-    def __init__(self, file_name) -> None:
+class ClauseGenerator(NetAnalysis.DeepPolyAnalysis):
+    def __init__(self, file_name, property_file=None) -> None:
         super().__init__(file_name)
+        if property_file:
+            self.load_property(property_file)
         self.candidates = []
 
     # aid functions
@@ -98,6 +101,31 @@ class ClauseGenerator(nnet.NNet):
         layer_nums = self.get_layer_candidates_num(candidates_num)
         self.candidates.clear()
 
+    def select_candidates_by_impact_score(self, candidates_num):
+        candidates = []
+        self.init()
+        self.deep_poly()
+        target_equation = [[1, -1, 0, 0, 0],
+                           [1, 0, -1, 0, 0],
+                           [1, 0, 0, -1, 0],
+                           [1, 0, 0, 0, -1]]
+        equation_node = self.form_equation_node(target_equation)
+        for layer in [1, 2, 3]:
+            for node in range(self.layerSizes[layer]):
+                node_info = self.get_node_info(layer, node, NetAnalysis.NodeType.reluBack)
+                if node_info.node_status == NetAnalysis.NodeStatus.undefine:
+                    score = self.get_impact_score(equation_node, node_info)
+                    candidates.append((score, (layer, node)))
+        for node in range(self.layerSizes[0]):
+            node_info = self.get_node_info(0, node, NetAnalysis.NodeType.input)
+            score = self.get_impact_score(equation_node, node_info)
+            candidates.append((score, (layer, node)))
+
+        candidates = sorted(candidates, key=lambda x: -x[0])
+        for c in candidates:
+            print(c)
+        return [candidates[i][1] for i in range(candidates_num)]
+
     def norm_sample(self, sample):
         for i in range(self.num_inputs()):
             if sample[i] > self.maxes[i]:
@@ -167,7 +195,9 @@ class ClauseGenerator(nnet.NNet):
         with open(json_path, "w+") as f:
             json.dump(json_content, f)
 
-    def generate_clause(self, candidates_num, sample_num):
+    def generate_clause(self, candidates_num, sample_num, json_path="./clauses.json"):
+        self.init()
+        self.deep_poly()
         samples = InputGenerate().inputs_generate(self.norm_mins, self.norm_maxes, sample_num)
         adversarials = []
         for sample in samples:
@@ -175,16 +205,17 @@ class ClauseGenerator(nnet.NNet):
             for equation in self.property_equation:
                 if equation.type == nnet.EquationType.ge:
                     is_target = True
-            adversarials.append(attack_single_sample(self, sample, is_target))
-        adversarials = sorted(adversarials, key=lambda x: x[2])
-        # adversarials = [adv for adv in adversarials if adv[0]]
+            adversarials.append(attack_single_sample(self, sample, is_target, True))
+        adversarials = sorted(adversarials, key=lambda x: (x[0], x[2]))
         candidates = []
         for i in range(self.layerSizes[1]):
             candidates.append((1, i))
         self.candidates = candidates
+        # self.candidates = self.select_candidates_by_impact_score(candidates_num)
+
 
         states = self.calculate_states([val[1] for val in adversarials[:30]])
-        index = [i for i in range(len(candidates))]
+        index = [i for i in range(len(self.candidates))]
 
         # self.select_candidates_by_grand(candidates_num)
         # samples = self.sample_with_grand(sample_num)
@@ -192,20 +223,25 @@ class ClauseGenerator(nnet.NNet):
         # index = [1, 2]
         # print(len(states))
         res = self.find_appear_pattern(index, states)
-        self.save_to_json(res)
+        print(res)
+        self.save_to_json(res, json_path)
+
         #
         # # grand and candidates
         # for i in range(10):
         #     candidates = random.sample(self.candidates, 2)
         #     self.sample_with_candidates_and_grand(candidates)
         #     break
-        print([val[0] for val in adversarials[:30]])
+        # print([val[0] for val in adversarials[:30]])
 
 
 if __name__ == "__main__":
-    # clause = ClauseGenerator("/home/center/CDCL-Marabou/sat_example/prop2/ACASXU_experimental_v2a_2_1.nnet")
-    clause = ClauseGenerator("/home/center/CDCL-Marabou/sat_example/prop2/ACASXU_experimental_v2a_1_3.nnet")
-    clause.load_property("/home/center/CDCL-Marabou/sat_example/prop2/acas_property_2.txt")
-    # clause = ClauseGenerator("/home/center/CDCL-Marabou/sat_example/prop2/ACASXU_experimental_v2a_1_2.nnet")
-    clause.generate_clause(10, 1000)
-    # clause.read_property("/home/center/CDCL-Marabou/sat_example/prop2/acas_property_2.txt")
+    net = "/home/center/CDCL-Marabou/sat_example/prop2/ACASXU_experimental_v2a_1_5.nnet"
+    prop = "/home/center/CDCL-Marabou/sat_example/prop2/acas_property_2.txt"
+    # # clause = ClauseGenerator("/home/center/CDCL-Marabou/sat_example/prop2/ACASXU_experimental_v2a_2_1.nnet")
+    clause = ClauseGenerator(net, prop)
+    clause.select_candidates_by_impact_score(100)
+    #
+    # # clause = ClauseGenerator("/home/center/CDCL-Marabou/sat_example/prop2/ACASXU_experimental_v2a_1_2.nnet")
+    # clause.generate_clause(20, 1000)
+    # # clause.read_property("/home/center/CDCL-Marabou/sat_example/prop2/acas_property_2.txt")

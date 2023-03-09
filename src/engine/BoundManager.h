@@ -85,6 +85,9 @@ public:
     bool setLowerBound( unsigned variable, double value );
     bool setUpperBound( unsigned variable, double value );
 
+    void enforceLowerBound( unsigned variable, double value );
+    void enforceUpperBound( unsigned variable, double value );
+
     /*
        Return current bound value.
      */
@@ -138,6 +141,8 @@ public:
        Register RowBoundTightener for updates to local bound pointers.
      */
     void registerRowBoundTightener( IRowBoundTightener *ptrRowBoundTightener );
+
+    void dump();
 
 private:
     CVC4::context::Context &_context;

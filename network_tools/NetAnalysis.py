@@ -67,19 +67,15 @@ class NodeInfo:
     def get_upper_bound(self):
         return self.upper_bound
 
-    def propagate_to_layer(self, layer=0):
+    def propagate_to_layer(self, layer=0, node_type=NodeType.input):
         # print(self.name)
-        if layer > self.layer:
+        if layer and layer > self.layer:
             raise Exception("Can not propagate to layer less than current layer")
-        if layer == self.layer and self.node_type == NodeType.reluBack:
+        if layer and layer == self.layer and self.node_type == NodeType.reluBack:
             raise Exception("Can not progate to itself")
 
-        repeat_num = max(0, 2 * (self.layer - layer - 1))
-        if self.node_type in {NodeType.reluBack, NodeType.reluForward}:
-            repeat_num += 1
-
         sym_lower, sym_upper = self.symbolic_lower_bound, self.symbolic_upper_bound
-        for _ in range(repeat_num):
+        while True:
             t_lower, t_upper = {}, {}
             for node_info, coeff in sym_lower.items():
                 if coeff < 0:
@@ -104,20 +100,34 @@ class NodeInfo:
             sym_upper = t_upper
             self.calc_bounds_via_symbolic(t_lower, t_upper)
 
-        self.symbolic_lower_bounds[layer] = sym_lower
-        self.symbolic_upper_bounds[layer] = sym_upper
+            # end propagate judgement
+            break_flag = False
+            if len(sym_upper) == 0 and len(sym_lower) == 0:
+                break_flag = True
+            for node_info, _ in sym_lower.items():
+                if node_info.node_type == node_type and node_info.layer == layer:
+                    break_flag = True
+                    break
+            for node_info, _ in sym_upper.items():
+                if node_info.node_type == node_type and node_info.layer == layer:
+                    break_flag = True
+                    break
+            if break_flag:
+                break
+
+        return sym_lower, sym_upper
 
     # to string
     def __str__(self) -> str:
         ret = f"Node name: {self.name}\nNode type: {self.node_type}\nLower bound: {self.lower_bound}\n" \
               f"Upper bound: {self.upper_bound}\n"
         s_lower, s_upper = self.symbolic_lower_bound, self.symbolic_upper_bound
-        ret += "Symbolic lower: "
-        for node, coeff in s_lower.items():
-            ret += f"{coeff} {node.name} "
-        ret += "\nSymbolic upper: "
-        for node, coeff in s_upper.items():
-            ret += f"{coeff} {node.name} "
+        # ret += "Symbolic lower: "
+        # for node, coeff in s_lower.items():
+        #     ret += f"{coeff} {node.name} "
+        # ret += "\nSymbolic upper: "
+        # for node, coeff in s_upper.items():
+        #     ret += f"{coeff} {node.name} "
         ret += f"\nNode status: {self.node_status}"
         return ret
 
@@ -156,12 +166,11 @@ class NodeInfo:
                 upper_bound += pre_node.upper_bound * coeff
         self.lower_bound = max(self.lower_bound, lower_bound)
         self.upper_bound = min(self.upper_bound, upper_bound)
-        self.__update_status()
 
     def clac_bounds_via_layer(self, layer=0):
-        sym_lower = self.get_symbolic_lower_bound(layer)
-        sym_upper = self.get_symbolic_upper_bound(layer)
+        sym_lower, sym_upper = self.propagate_to_layer()
         self.calc_bounds_via_symbolic(sym_lower, sym_upper)
+        self.__update_status()
 
 
 class DeepPolyAnalysis(nnet.NNet):
@@ -193,7 +202,7 @@ class DeepPolyAnalysis(nnet.NNet):
         self.node_names[query] = name
         return name
 
-    def get_node_info(self, layer, node, type):
+    def get_node_info(self, layer, node, type) -> NodeInfo:
         return self.get_node_info_by_name(self.get_node_name(layer, node, type))
 
     def get_node_info_by_name(self, name):
@@ -258,10 +267,10 @@ class DeepPolyAnalysis(nnet.NNet):
 
                 forward_info.clac_bounds_via_layer()
                 self.node_infos[node_name_forward] = forward_info
-                # print("----" * 10)
-                # print(back_info)
-                # print("----" * 10)
-                # print(forward_info)
+                print("----" * 10)
+                print(back_info)
+                print("----" * 10)
+                print(forward_info)
         # output
         layer = self.numLayers
         for node in range(self.layerSizes[layer]):
@@ -284,8 +293,8 @@ class DeepPolyAnalysis(nnet.NNet):
             back_info.symbolic_upper_bound[sc] = self.biases[layer - 1][node]
             back_info.clac_bounds_via_layer()
             self.node_infos[node_name_back] = back_info
-            # print("----" * 10)
-            # print(back_info)
+            print("----" * 10)
+            print(back_info)
 
     def _generate_split_data(self, node_info_set):
         data = []
@@ -527,8 +536,42 @@ class DeepPolyAnalysis(nnet.NNet):
     def get_total_node_num(self):
         return sum(self.layerSizes)
 
-    def ESIP(self):
-        pass
+    def form_equation_node(self, out_puts):
+        """
+
+        Args:
+            out_puts: a list of size: out_put_num * n
+
+        Returns:
+            a node with upper bound and lower bound as target equation
+        """
+        node_name = self.get_node_name(self.numLayers + 1, 0, NodeType.reluBack)
+        node_info = NodeInfo(node_name, node_type=NodeType.reluBack, layer=self.numLayers + 1, node=0)
+        for equation in out_puts:
+            for i in range(len(equation)):
+                out_info = self.get_node_info(self.numLayers, i, NodeType.output)
+                if node_info in node_info.symbolic_lower_bound:
+                    node_info.symbolic_lower_bound[out_info] += equation[i]
+                    node_info.symbolic_upper_bound[out_info] += equation[i]
+                    continue
+                node_info.symbolic_lower_bound[out_info] = equation[i]
+                node_info.symbolic_upper_bound[out_info] = equation[i]
+        return node_info
+
+    def get_impact_score(self, equation_node: NodeInfo, target_node: NodeInfo):
+        sym_low, sym_up = equation_node.propagate_to_layer(target_node.layer, target_node.node_type)
+        if target_node not in sym_low:
+            sym_low = {target_node: 0}
+        if target_node not in sym_up:
+            sym_up = {target_node: 0}
+
+        coe = sym_up[target_node] - sym_low[target_node]
+        tmp_node = NodeInfo("tmp", NodeType.reluBack)
+        tmp_node.symbolic_upper_bound[target_node] = coe
+        tmp_node.symbolic_lower_bound[target_node] = coe
+        tmp_node.clac_bounds_via_layer()
+        score = tmp_node.upper_bound - tmp_node.lower_bound
+        return score
 
 
 def recursive_split(analysis, input_lower, input_upper, certain_node, domains=[]):
@@ -576,7 +619,28 @@ def split_input(net_path, property_path):
         analysis.dependency_analysis()
 
 
+def deep_poly(net_path, property_path):
+    analysis = DeepPolyAnalysis(net_path)
+    analysis.load_property(property_path)
+    analysis.init()
+    analysis.deep_poly()
+
+    # target_equation = [[1, -1, 0, 0, 0],
+    #                    [1, 0, -1, 0, 0],
+    #                    [1, 0, 0, -1, 0],
+    #                    [1, 0, 0, 0, -1]]
+    #
+    # equation_node = analysis.form_equation_node(target_equation)
+    # for i in range(analysis.layerSizes[2]):
+    #     target_node = analysis.get_node_info(2, i, NodeType.reluBack)
+    #     if target_node.node_status == NodeStatus.undefine:
+    #         score = analysis.get_impact_score(equation_node, target_node)
+    #         print(target_node.name, score, target_node.node_status)
+
+    # analysis.dependency_analysis()
+
+
 if __name__ == "__main__":
-    net = "/home/center/CDCL-Marabou/example/ACASXU_experimental_v2a_1_1.nnet"
-    prop = "/home/center/CDCL-Marabou/example/acas_property_1.txt"
-    split_input(net, prop)
+    net = "/home/center/CDCL-Marabou/example/test.nnet"
+    prop = "/home/center/CDCL-Marabou/example/test.txt"
+    deep_poly(net, prop)
