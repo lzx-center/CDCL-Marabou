@@ -35,8 +35,10 @@ Marabou::Marabou()
     : _acasParser( NULL )
     , _onnxParser( NULL )
     , _engine()
-    , _solver(_engine)
+    , _solver()
 {
+    _engine.setSolver(&_solver);
+    _solver.setEngine(&_engine);
 }
 
 Marabou::~Marabou()
@@ -210,7 +212,8 @@ void Marabou::solveQuery()
     if ( _engine.processInputQuery( _inputQuery ) ) {
         if (check) {
 //             _engine.ClauseLearning();
-           _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
+            _solver.solve();
+//           _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
         } else {
             _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
         }

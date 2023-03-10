@@ -47,7 +47,6 @@
 #include <context/context.h>
 #include <atomic>
 
-
 #ifdef _WIN32
 #undef ERROR
 #endif
@@ -59,6 +58,9 @@ class InputQuery;
 class PiecewiseLinearConstraint;
 class String;
 
+namespace Minisat {
+    class Solver;
+}
 
 using CVC4::context::Context;
 
@@ -77,6 +79,9 @@ public:
       (a timeout of 0 means no time limit). Returns true if found, false if infeasible.
     */
     Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
+
+    //sat related
+    void initEngine();
 
     bool solve( unsigned timeoutInSeconds = 0 );
     bool checkSolve2(unsigned timeoutInSeconds = 0);
@@ -254,7 +259,12 @@ public:
 
     void setRandomSeed( unsigned seed );
 
+    void setSolver(Minisat::Solver* solver_ptr);
 private:
+
+    Minisat::Solver* _solver;
+
+    std::vector<double> initial_lower, initial_upper;
 
     enum BasisRestorationRequired {
         RESTORATION_NOT_NEEDED = 0,

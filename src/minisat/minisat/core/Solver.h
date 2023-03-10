@@ -43,6 +43,9 @@ public:
     Solver();
     virtual ~Solver();
 
+    void setEngine(Engine* engine) {
+        engine_ptr = engine;
+    }
     // Problem specification:
     //
     Var     newVar    (lbool upol = l_Undef, bool dvar = true); // Add a new variable with parameters specifying variable mode.
@@ -158,6 +161,8 @@ protected:
     //
     struct VarData { CRef reason; int level; };
     static inline VarData mkVarData(CRef cr, int l){ VarData d = {cr, l}; return d; }
+
+    Engine *engine_ptr;
 
     struct Watcher {
         CRef cref;
@@ -398,13 +403,6 @@ inline void     Solver::toDimacs     (const char* file){ vec<Lit> as; toDimacs(f
 inline void     Solver::toDimacs     (const char* file, Lit p){ vec<Lit> as; as.push(p); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q){ vec<Lit> as; as.push(p); as.push(q); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q, Lit r){ vec<Lit> as; as.push(p); as.push(q); as.push(r); toDimacs(file, as); }
-
-class MarabouSolver : public Solver {
-public:
-    MarabouSolver(Engine& engine) : engine(engine), Solver() {}
-private:
-    Engine& engine;
-};
 
 //=================================================================================================
 // Debug etc:

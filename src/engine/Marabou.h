@@ -35,7 +35,6 @@ public:
 
 private:
     InputQuery _inputQuery;
-
     /*
       Extract the options and input files (network and property), and
       use them to generate the input query
@@ -78,7 +77,7 @@ private:
     */
     Engine _engine;
 
-    Minisat::MarabouSolver _solver;
+    Minisat::Solver _solver;
 
 };
 

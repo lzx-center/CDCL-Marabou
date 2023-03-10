@@ -32,7 +32,7 @@
 #include "TimeUtils.h"
 #include "VariableOutOfBoundDuringOptimizationException.h"
 #include "Vector.h"
-
+#include "minisat/core/Solver.h"
 #include <random>
 
 Engine::Engine()
@@ -156,7 +156,8 @@ bool Engine::solve(unsigned timeoutInSeconds) {
 
     updateDirections();
     storeState(_initial, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE );
-    std::vector<double> initial_lower(_tableau->getN()), initial_upper(_tableau->getN());
+    initial_lower.resize(_tableau->getN());
+    initial_upper.resize(_tableau->getN());
     for (size_t i = 0; i < _tableau->getN(); ++ i) {
         initial_lower[i] = _tableau->getLowerBound(i);
         initial_upper[i] = _tableau->getUpperBound(i);
@@ -3687,6 +3688,43 @@ void Engine::enforcePushHook() {
 void Engine::enforcePopHook() {
     _boundManager.restoreLocalBounds();
     _tableau->postContextPopHook();
+}
+
+void Engine::setSolver(Minisat::Solver* solver_ptr) {
+    _solver = solver_ptr;
+}
+
+void Engine::initEngine() {
+    SignalHandler::getInstance()->initialize();
+    SignalHandler::getInstance()->registerClient(this);
+
+    // Register the boundManager with all the PL constraints
+    for (auto &plConstraint: _plConstraints)
+        plConstraint->registerBoundManager(&_boundManager);
+
+    for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
+        auto pos = plConstraint->getPosition();
+        CaseSplitType type = CaseSplitType::UNKNOWN;
+        if (plConstraint->getPhaseStatus() == RELU_PHASE_ACTIVE) {
+            type = CaseSplitType::RELU_ACTIVE;
+        } else if (plConstraint->getPhaseStatus() == RELU_PHASE_INACTIVE) {
+            type = CaseSplitType::RELU_INACTIVE;
+        } else {
+            printf("Can not handle!\n");
+        }
+        _smtCore._searchPath.addEliminatedConstraint(pos._layer, pos._node, RELU_ACTIVE);
+    }
+
+
+    updateDirections();
+    storeState(_initial, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE );
+
+    initial_lower.resize(_tableau->getN());
+    initial_upper.resize(_tableau->getN());
+    for (size_t i = 0; i < _tableau->getN(); ++ i) {
+        initial_lower[i] = _tableau->getLowerBound(i);
+        initial_upper[i] = _tableau->getUpperBound(i);
+    }
 }
 
     
