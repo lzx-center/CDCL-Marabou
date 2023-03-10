@@ -35,6 +35,7 @@ Marabou::Marabou()
     : _acasParser( NULL )
     , _onnxParser( NULL )
     , _engine()
+    , _solver(_engine)
 {
 }
 

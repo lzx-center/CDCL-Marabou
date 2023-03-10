@@ -20,6 +20,7 @@
 #include "OnnxParser.h"
 #include "Engine.h"
 #include "InputQuery.h"
+#include "minisat/core/Solver.h"
 
 class Marabou
 {
@@ -76,6 +77,9 @@ private:
       The solver
     */
     Engine _engine;
+
+    Minisat::MarabouSolver _solver;
+
 };
 
 #endif // __Marabou_h__

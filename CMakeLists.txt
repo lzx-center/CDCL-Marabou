@@ -247,6 +247,8 @@ if (${ENABLE_GUROBI})
   target_include_directories(${GUROBI_LIB2} INTERFACE ${GUROBI_DIR}/include/)
 endif()
 
+target_link_libraries(${MARABOU_LIB} minisat-lib-shared)
+
 #OpenBLAS
 if (NOT MSVC)
 if (${ENABLE_OPENBLAS})

@@ -45,6 +45,7 @@ macro(marabou_add_test test_name test_dir add_common_real add_engine_real labels
     add_dependencies(build-tests ${name})
 endmacro()
 
+add_subdirectory(minisat)
 add_subdirectory(configuration)
 add_subdirectory(engine)
 add_subdirectory(basis_factorization)
