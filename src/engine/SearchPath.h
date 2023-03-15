@@ -85,5 +85,6 @@ public:
     void calc();
 };
 
+void dumpSearchPath(std::vector<PathElement>& vec);
 
 #endif //MARABOU_SEARCHPATH_H

@@ -43,6 +43,7 @@
 #include "Statistics.h"
 #include "SumOfInfeasibilitiesManager.h"
 #include "SymbolicBoundTighteningType.h"
+#include "minisat/core/Solver.h"
 
 #include <context/context.h>
 #include <atomic>
@@ -58,10 +59,6 @@ class InputQuery;
 class PiecewiseLinearConstraint;
 class String;
 
-namespace Minisat {
-    class Solver;
-}
-
 using CVC4::context::Context;
 
 class Engine : public IEngine, public SignalHandler::Signalable
@@ -74,14 +71,62 @@ public:
     Engine();
     ~Engine();
 
+
     /*
       Attempt to find a feasible solution for the input within a time limit
       (a timeout of 0 means no time limit). Returns true if found, false if infeasible.
     */
     Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
+    Map<Position, Minisat::Lit> _positionToLit;
+    Map<Minisat::Lit, Position> _litToPosition;
 
+
+    /*
+    Get Context reference
+    */
+    Context &getContext() { return _context; }
+
+    /*
+       Checks whether the current bounds are consistent. Exposed for the SmtCore.
+     */
+    bool consistentBounds() const;
     //sat related
+    bool gurobiSolve( unsigned timeoutInSeconds = 0 );
+    unsigned int analysisBacktrackLevel(std::vector<PathElement> &path,
+                                        std::vector<PathElement> &learned);
+
+    unsigned int analysisBacktrackLevelMarabou(std::vector<PathElement> &path,
+                                        std::vector<PathElement> &learned);
+
+    unsigned int backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit);
     void initEngine();
+    void restart();
+
+    PhaseStatus getPhaseStatusByLit(Minisat::Lit lit);
+    CaseSplitType getCaseSplitTypeByLit(Minisat::Lit lit);
+    Minisat::Lit getLitByCaseSplitTypeInfo(CaseSplitTypeInfo &type_info);
+    bool applyValidConstraintCaseSplitsWithSat();
+    void performPropagatedSplit(Minisat::vec<Minisat::Lit> &vec);
+    void performTargetSplit(PiecewiseLinearConstraint *constraint, PhaseStatus type);
+    void performTargetSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type, int record);
+
+    void performSplit();
+
+    Minisat::Lit getLitByPosition(Position& position);
+    Position getPositionByLit(Minisat::Lit lit);
+    bool checkFeasible();
+    void learnClauseByGurobi();
+    void performBoundTightening();
+    void performBoundTighteningWithoutEnqueue();
+    void backToCurrentState();
+    void backToOriginState();
+
+    bool processUnSat();
+    int learnClauseAndGetBackLevel(Minisat::vec<Minisat::Lit> &vec);
+    unsigned int getStackDepth();
+    bool gurobiBranch();
+    void encodePathToLit(std::vector<PathElement> &path, Minisat::vec<Minisat::Lit> &vec);
+    Minisat::Lit getBranchLit();
 
     bool solve( unsigned timeoutInSeconds = 0 );
     bool checkSolve2(unsigned timeoutInSeconds = 0);
@@ -369,7 +414,7 @@ private:
     */
     Preprocessor _preprocessor;
 
-    EngineState _initial;
+    EngineState _initial, _tmpState;
     /*
       Is preprocessing enabled?
     */
@@ -767,15 +812,7 @@ private:
     */
     bool minimizeCostWithGurobi( const LinearExpression &costFunction );
 
-    /*
-      Get Context reference
-    */
-    Context &getContext() { return _context; }
 
-    /*
-       Checks whether the current bounds are consistent. Exposed for the SmtCore.
-     */
-    bool consistentBounds() const;
 
     /*
       DEBUG only

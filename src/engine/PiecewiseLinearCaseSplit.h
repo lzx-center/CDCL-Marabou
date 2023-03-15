@@ -12,7 +12,7 @@
  ** [[ Add lengthier description here ]]
 
 **/
-
+#pragma once
 #ifndef __PiecewiseLinearCaseSplit_h__
 #define __PiecewiseLinearCaseSplit_h__
 

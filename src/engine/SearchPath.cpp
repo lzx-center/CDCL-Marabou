@@ -75,6 +75,13 @@ void SearchPath::dumpPath(int i) {
     String out;
     for (auto& element: _paths[i]) {
         element._caseSplit.dump(out);
+        if (element._impliedSplits.size()) {
+            out += "->";
+            for (auto& imply: element._impliedSplits) {
+                imply.dump(out);
+                out += " ";
+            }
+        }
         out += "\n";
     }
     printf("%s\n", out.ascii());
@@ -286,4 +293,18 @@ void PathElement::dumpJson(String &output) {
     }
     output += "]";
     output += "}";
+}
+
+void dumpSearchPath(std::vector<PathElement>& vec) {
+    for (size_t i = 0; i < vec.size(); ++ i) {
+        printf("Level %zu: ", i + 1);
+        vec[i]._caseSplit.dump();
+        if (vec[i]._impliedSplits.size()) {
+            printf(" implied: ");
+            for (auto& im : vec[i]._impliedSplits) {
+                im.dump(); printf(" ");
+            }
+        }
+        printf("\n");
+    }
 }

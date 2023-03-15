@@ -19,7 +19,7 @@
 #include "EngineState.h"
 #include "FloatUtils.h"
 #include "GlobalConfiguration.h"
-#include "IEngine.h"
+#include "Engine.h"
 #include "MStringf.h"
 #include "MarabouError.h"
 #include "Options.h"
@@ -27,7 +27,7 @@
 #include "ReluConstraint.h"
 #include "SmtCore.h"
 
-SmtCore::SmtCore( IEngine *engine )
+SmtCore::SmtCore( Engine *engine )
         : _statistics( NULL )
         , _engine( engine )
         , _context( _engine->getContext() )
@@ -360,6 +360,8 @@ void SmtCore::recordImpliedValidSplit( PiecewiseLinearCaseSplit &validSplit )
 
     checkSkewFromDebuggingSolution();
 }
+
+
 
 void SmtCore::allSplitsSoFar( List<PiecewiseLinearCaseSplit> &result ) const
 {
@@ -862,6 +864,179 @@ bool SmtCore::popCheckSplit() {
     checkSkewFromDebuggingSolution();
 
     return true;
+}
+
+unsigned int SmtCore::AtLeastBackTrackTo(unsigned level) {
+    if ( _stack.empty() )
+        return 0;
+
+    String error;
+    if (getStackDepth() > level) {
+        _stack.back()->_alternativeSplits.clear();
+    }
+    while ( getStackDepth() > level and _stack.back()->_alternativeSplits.empty() )
+    {
+        if ( checkSkewFromDebuggingSolution() )
+        {
+            // Pops should not occur from a compliant stack!
+            printf( "Error! Popping from a compliant stack\n" );
+            throw MarabouError( MarabouError::DEBUGGING_ERROR );
+        }
+        delete _stack.back()->_engineState;
+        delete _stack.back();
+        _stack.popBack();
+        popContext();
+        if (getStackDepth() > level) {
+            _stack.back()->_alternativeSplits.clear();
+        }
+        if ( _stack.empty() )
+            return 0;
+    }
+
+    SmtStackEntry *stackEntry = _stack.back();
+    popContext();
+    _engine->postContextPopHook();
+    // Restore the state of the engine
+    _engine->restoreState( *( stackEntry->_engineState ) );
+
+    // Apply the new split and erase it from the list
+    auto& split = stackEntry->_activeSplit;
+
+    // Erase any valid splits that were learned using the split we just
+    // popped
+    _engine->preContextPushHook();
+    pushContext();
+    _engine->applySplit( split );
+//    printf("apply split : "); split.dump();
+//    printf("\n");
+    auto& learnt_clause = _searchPath._learnt.back();
+    auto position = learnt_clause.back()._caseSplit._position;
+//    printf("-----Learnt-----\n");
+//    for (auto learn : learnt_clause) {
+//        learn._caseSplit.dump();
+//        printf("\n");
+//    }
+//    printf("")
+    CaseSplitType type = learnt_clause.back()._caseSplit._type;
+//    printf("============================================================================\n");
+//    printf("Learnt size: %d, statck depth:%d \n", learnt_clause.size(),getStackDepth() );
+//    printf("-------------------------------\n");
+
+    for (auto& split : stackEntry->_impliedValidSplits) {
+        auto pos = split.getPosition();
+        auto type = split.getType();
+        auto constraint = _engine->getConstraintByPosition(pos);
+        _engine->performTargetSplit(constraint, type, 0);
+    }
+
+    // get learned path
+//    printf("-------------------------------\n");
+    auto constraint = _engine->getConstraintByPosition(position);
+    type = reverseCaseSplitType(type);
+
+    _engine->performTargetSplit(constraint, type, 1);
+
+
+    return getStackDepth();
+}
+
+CaseSplitType SmtCore::reverseCaseSplitType(CaseSplitType type) {
+    switch (type) {
+        case RELU_INACTIVE:
+            return RELU_ACTIVE;
+        case RELU_ACTIVE:
+            return RELU_INACTIVE;
+        case DISJUNCTION_LOWER:
+            return DISJUNCTION_UPPER;
+        case DISJUNCTION_UPPER:
+            return DISJUNCTION_LOWER;
+        default:
+            return UNKNOWN;
+    }
+}
+
+void SmtCore::recordSatImpliedValidSplit(PiecewiseLinearCaseSplit &validSplit) {
+    if ( _stack.empty() )
+        _satImpliedValidSplitsAtRoot.append( validSplit );
+    else
+        _stack.back()->_satImpliedValidSplits.append( validSplit );
+}
+
+unsigned int SmtCore::backTrackToGivenLevelAndPerformSplit(unsigned int level, CaseSplitTypeInfo& info) {
+    if ( _stack.empty() )
+        return 0;
+
+    String error;
+    if (getStackDepth() > level) {
+        _stack.back()->_alternativeSplits.clear();
+    }
+    while ( getStackDepth() > level and _stack.back()->_alternativeSplits.empty() )
+    {
+        if ( checkSkewFromDebuggingSolution() )
+        {
+            // Pops should not occur from a compliant stack!
+            printf( "Error! Popping from a compliant stack\n" );
+            throw MarabouError( MarabouError::DEBUGGING_ERROR );
+        }
+        delete _stack.back()->_engineState;
+        delete _stack.back();
+        _stack.popBack();
+        popContext();
+        if (getStackDepth() > level) {
+            _stack.back()->_alternativeSplits.clear();
+        }
+        if ( _stack.empty() )
+            return 0;
+    }
+
+    SmtStackEntry *stackEntry = _stack.back();
+    popContext();
+    _engine->postContextPopHook();
+    // Restore the state of the engine
+    _engine->restoreState( *( stackEntry->_engineState ) );
+
+    // Apply the new split and erase it from the list
+    auto& split = stackEntry->_activeSplit;
+
+    // Erase any valid splits that were learned using the split we just
+    // popped
+    _engine->preContextPushHook();
+    pushContext();
+    _engine->applySplit( split );
+//    printf("apply split : "); split.dump();
+//    printf("\n");
+//    printf("-----Learnt-----\n");
+//    for (auto learn : learnt_clause) {
+//        learn._caseSplit.dump();
+//        printf("\n");
+//    }
+//    printf("")
+
+//    printf("============================================================================\n");
+//    printf("Learnt size: %d, statck depth:%d \n", learnt_clause.size(),getStackDepth() );
+//    printf("-------------------------------\n");
+
+    for (auto& split : stackEntry->_impliedValidSplits) {
+        auto pos = split.getPosition();
+        auto type = split.getType();
+        auto constraint = _engine->getConstraintByPosition(pos);
+        _engine->performTargetSplit(constraint, type, 0);
+    }
+
+    // get learned path
+//    printf("-------------------------------\n");
+
+    auto position = info._position;
+    CaseSplitType type = info._type;
+    auto constraint = _engine->getConstraintByPosition(position);
+    _engine->performTargetSplit(constraint, type, 1);
+
+
+    return getStackDepth();
+}
+
+CaseSplitTypeInfo SmtCore::getActiveCaseSplitInfo() {
+    return _stack.back()->_activeSplit.getInfo();
 }
 
     

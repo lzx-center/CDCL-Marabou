@@ -32,7 +32,7 @@
 #define SMT_LOG( x, ... ) LOG( GlobalConfiguration::SMT_CORE_LOGGING, "SmtCore: %s\n", x )
 
 class EngineState;
-class IEngine;
+class Engine;
 class String;
 
 using CVC4::context::Context;
@@ -42,7 +42,7 @@ class SmtCore
 public:
     CaseSplitType _splitType;
 
-    SmtCore( IEngine *engine );
+    SmtCore( Engine *engine );
     ~SmtCore();
 
     /*
@@ -105,16 +105,26 @@ public:
       phase pattern proposal.
     */
     void resetSplitConditions();
-
     /*
       Returns true iff the SMT core wants to perform a case split.
     */
     bool needToSplit() const;
-
+    void setNeedToSplit(bool needSplit) {_needToSplit = needSplit;};
+    bool haveConstraintToSplit() {return _constraintForSplitting != nullptr;};
     /*
       Perform the split according to the constraint marked for
       splitting. Update bounds, add equations and update the stack.
     */
+    unsigned int AtLeastBackTrackTo(unsigned level);
+    unsigned int backTrackToGivenLevelAndPerformSplit(unsigned int level, CaseSplitTypeInfo& info);
+    CaseSplitTypeInfo getActiveCaseSplitInfo();
+
+    PiecewiseLinearConstraint * getConstraintForSplit() {
+        return _constraintForSplitting;
+    }
+
+    CaseSplitType reverseCaseSplitType(CaseSplitType type);
+
     void performSplit();
     void performCheckSplit();
     /*
@@ -145,7 +155,7 @@ public:
       Let the smt core know of an implied valid case split that was discovered.
     */
     void recordImpliedValidSplit( PiecewiseLinearCaseSplit &validSplit );
-
+    void recordSatImpliedValidSplit( PiecewiseLinearCaseSplit &validSplit );
     /*
       Return a list of all splits performed so far, both SMT-originating and valid ones,
       in the correct order.
@@ -195,7 +205,7 @@ private:
     /*
       Valid splits that were implied by level 0 of the stack.
     */
-    List<PiecewiseLinearCaseSplit> _impliedValidSplitsAtRoot;
+    List<PiecewiseLinearCaseSplit> _impliedValidSplitsAtRoot, _satImpliedValidSplitsAtRoot;
 
     /*
       Collect and print various statistics.
@@ -210,7 +220,7 @@ private:
     /*
       The engine.
     */
-    IEngine *_engine;
+    Engine *_engine;
 
     /*
       Context for synchronizing the search.

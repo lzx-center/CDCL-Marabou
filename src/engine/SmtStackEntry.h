@@ -28,7 +28,7 @@ struct SmtStackEntry
 {
 public:
     PiecewiseLinearCaseSplit _activeSplit;
-    List<PiecewiseLinearCaseSplit> _impliedValidSplits;
+    List<PiecewiseLinearCaseSplit> _impliedValidSplits, _satImpliedValidSplits;
     List<PiecewiseLinearCaseSplit> _alternativeSplits;
     EngineState *_engineState;
 

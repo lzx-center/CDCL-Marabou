@@ -24,6 +24,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 #include "minisat/mtl/Sort.h"
 #include "minisat/utils/System.h"
 #include "minisat/core/Solver.h"
+#include "Engine.h"
 
 using namespace Minisat;
 
@@ -485,7 +486,15 @@ void Solver::analyzeFinal(Lit p, LSet& out_conflict)
 
 void Solver::uncheckedEnqueue(Lit p, CRef from)
 {
+    if (sign(p))
+        printf("Enqueue: -%d\n", var(p));
+    else
+        printf("Enqueue: %d\n", var(p));
+
     assert(value(p) == l_Undef);
+    if (value(p) != l_Undef) {
+        throw MarabouError(MarabouError::Code::REPEAT_ASSIGN);
+    }
     assigns[var(p)] = lbool(!sign(p));
     vardata[var(p)] = mkVarData(from, decisionLevel());
     trail.push_(p);
@@ -629,6 +638,18 @@ void Solver::rebuildOrderHeap()
     order_heap.build(vs);
 }
 
+void Solver::dumpTrail() {
+    printf("Dump trail:\n");
+    for (int i = 0; i < trail_lim.size(); ++ i) {
+        printf("Level %d: ", i + 1 );
+        printf(sign(trail[trail_lim[i]]) ? "-%d " : "%d ", var(trail[trail_lim[i]]));
+        printf("implied: ");
+        for (int j = trail_lim[i] + 1; j < (i == trail_lim.size() - 1 ? trail.size() : trail_lim[i + 1]); ++ j) {
+            printf(sign(trail[j]) ? "-%d " : "%d ", var(trail[j]));
+        }
+        printf("\n");
+    }
+}
 
 /*_________________________________________________________________________________________________
 |
@@ -707,9 +728,14 @@ lbool Solver::search(int nof_conflicts)
     vec<Lit>    learnt_clause;
     starts++;
 
+    bool perform_split = false;
     for (;;){
+        int origin_head = qhead;
         CRef confl = propagate();
+        int after_head = qhead;
         if (confl != CRef_Undef){
+            perform_split = false;
+            printf("Conflict found!\n");
             // CONFLICT
             conflicts++; conflictC++;
             if (decisionLevel() == 0) return l_False;
@@ -717,6 +743,9 @@ lbool Solver::search(int nof_conflicts)
             learnt_clause.clear();
             analyze(confl, learnt_clause, backtrack_level);
             cancelUntil(backtrack_level);
+            //TODO: marabou: back track to given level
+
+            //TODO: marabou: do target split
 
             if (learnt_clause.size() == 1){
                 uncheckedEnqueue(learnt_clause[0]);
@@ -742,14 +771,14 @@ lbool Solver::search(int nof_conflicts)
                            (int)dec_vars - (trail_lim.size() == 0 ? trail.size() : trail_lim[0]), nClauses(), (int)clauses_literals, 
                            (int)max_learnts, nLearnts(), (double)learnts_literals/nLearnts(), progressEstimate()*100);
             }
-
         }else{
             // NO CONFLICT
             if ((nof_conflicts >= 0 && conflictC >= nof_conflicts) || !withinBudget()){
                 // Reached bound on number of conflicts:
                 progress_estimate = progressEstimate();
                 cancelUntil(0);
-                return l_Undef; }
+                return l_Undef;
+            }
 
             // Simplify the set of problem clauses:
             if (decisionLevel() == 0 && !simplify())
@@ -760,6 +789,47 @@ lbool Solver::search(int nof_conflicts)
                 reduceDB();
 
             Lit next = lit_Undef;
+
+            //marabou: split according to propagated lits
+            dumpTrail();
+            vec<Lit> propagated;
+            for (int i = origin_head; i < after_head; ++ i) {
+                propagated.push(trail[i]);
+            }
+            if (propagated.size()) {
+                engine_ptr->performPropagatedSplit(propagated);
+            }
+
+            //marabou: check feasible
+            bool feasible = engine_ptr->checkFeasible();
+            if (!feasible) {
+                learnt_clause.clear();
+                // return conflict clause
+                // TODO: should apply back track
+                int level = engine_ptr->learnClauseAndGetBackLevel(learnt_clause);
+                printf("Should back track to: [%d]\n", level);
+                // add learnt clause
+                cancelUntil(level);
+                next = learnt_clause[0];
+
+                // TODO: marabou: backtrack and apply directly
+
+                printf("Enqueue next ");
+                printf(sign(next) ? "-%d\n" : "%d\n", var(next));
+
+                if (learnt_clause.size() == 1){
+                    uncheckedEnqueue(learnt_clause[0]);
+                } else {
+                    CRef cr = ca.alloc(learnt_clause, true);
+                    learnts.push(cr);
+                    attachClause(cr);
+                    claBumpActivity(ca[cr]);
+                    uncheckedEnqueue(learnt_clause[0], cr);
+                }
+                engine_ptr->backtrackAndPerformLearntSplit(level, learnt_clause[0]);
+                continue;
+            }
+            // else check if there is a solution when branching
             while (decisionLevel() < assumptions.size()){
                 // Perform user provided assumption:
                 Lit p = assumptions[decisionLevel()];
@@ -778,8 +848,14 @@ lbool Solver::search(int nof_conflicts)
             if (next == lit_Undef){
                 // New variable decision:
                 decisions++;
-                next = pickBranchLit();
-
+                // marabou: do branch
+                bool solutionFound = engine_ptr->gurobiBranch();
+                if (solutionFound) {
+                    return l_True;
+                }
+                // next split should be in _constraintForSplit
+                // get the split Lit by marabou and split
+                next = engine_ptr->getBranchLit();
                 if (next == lit_Undef)
                     // Model found:
                     return l_True;
@@ -865,6 +941,8 @@ lbool Solver::solve_()
         double rest_base = luby_restart ? luby(restart_inc, curr_restarts) : pow(restart_inc, curr_restarts);
         status = search(rest_base * restart_first);
         if (!withinBudget()) break;
+        if (curr_restarts)
+            engine_ptr->restart();
         curr_restarts++;
     }
 

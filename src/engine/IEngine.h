@@ -21,7 +21,7 @@
 #include "TableauStateStorageLevel.h"
 #include "List.h"
 #include "context/context.h"
-
+#include "PiecewiseLinearFunctionType.h"
 #ifdef _WIN32
 #undef ERROR
 #endif
@@ -64,6 +64,9 @@ public:
     */
     virtual void preContextPushHook() = 0;
     virtual void postContextPopHook() = 0;
+
+    // center: add
+    virtual PiecewiseLinearConstraint* getConstraintByPosition(Position pos) {return nullptr;};
 
     /*
       Methods for storing and restoring the state of the engine.
