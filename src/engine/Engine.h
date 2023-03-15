@@ -98,7 +98,7 @@ public:
     unsigned int analysisBacktrackLevelMarabou(std::vector<PathElement> &path,
                                         std::vector<PathElement> &learned);
 
-    unsigned int backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit);
+    bool backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit);
     void initEngine();
     void restart();
 
@@ -119,6 +119,7 @@ public:
     void learnClauseByGurobi();
     void performBoundTightening();
     void performBoundTighteningWithoutEnqueue();
+    bool processOneStepUnSat();
     void backToCurrentState();
     void backToOriginState();
 

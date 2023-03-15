@@ -308,6 +308,12 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
         assert(confl != CRef_Undef); // (otherwise should be UIP)
         Clause& c = ca[confl];
 
+        printf("conflict clause: ");
+        for (int i = 0; i < c.size(); ++ i) {
+            printf(sign(c[i]) ? "-%d " : "%d ", var(c[i]));
+        }
+        printf("\n");
+
         if (c.learnt())
             claBumpActivity(c);
 
@@ -317,6 +323,7 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
             if (!seen[var(q)] && level(var(q)) > 0){
                 varBumpActivity(var(q));
                 seen[var(q)] = 1;
+                printf("Lit %d, decision level: %d\n", var(q), level(var(q)));
                 if (level(var(q)) >= decisionLevel())
                     pathC++;
                 else
@@ -328,12 +335,13 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
         while (!seen[var(trail[index--])]);
         p     = trail[index+1];
         confl = reason(var(p));
+        printf("var: %d , confl: %d\n", var(p), confl);
         seen[var(p)] = 0;
         pathC--;
 
     }while (pathC > 0);
     out_learnt[0] = ~p;
-
+    printf("Start simplify!\n");
     // Simplify conflict clause:
     //
     int i, j;
@@ -741,7 +749,16 @@ lbool Solver::search(int nof_conflicts)
             if (decisionLevel() == 0) return l_False;
 
             learnt_clause.clear();
+            dumpTrail();
+            printf("Begin analysis！\n");
             analyze(confl, learnt_clause, backtrack_level);
+
+            printf("Learnt clause: ");
+            for (int i = 0; i < learnt_clause.size(); ++ i) {
+                printf(sign(learnt_clause[i]) ? "-%d " : "%d ", var(learnt_clause[i]));
+            }
+            printf("\nShould back track to level %d\n", backtrack_level);
+
             cancelUntil(backtrack_level);
             //TODO: marabou: back track to given level
 
@@ -807,26 +824,28 @@ lbool Solver::search(int nof_conflicts)
                 // return conflict clause
                 // TODO: should apply back track
                 int level = engine_ptr->learnClauseAndGetBackLevel(learnt_clause);
-                printf("Should back track to: [%d]\n", level);
+                printf("Current level: %d, Should back track to: [%d]\n", decisionLevel(), level);
                 // add learnt clause
                 cancelUntil(level);
-                next = learnt_clause[0];
 
-                // TODO: marabou: backtrack and apply directly
+                // use learnt_clause back as next
+                next = learnt_clause[learnt_clause.size() - 1];
+                learnt_clause.pop();
 
                 printf("Enqueue next ");
                 printf(sign(next) ? "-%d\n" : "%d\n", var(next));
 
                 if (learnt_clause.size() == 1){
-                    uncheckedEnqueue(learnt_clause[0]);
+                    uncheckedEnqueue(next);
                 } else {
                     CRef cr = ca.alloc(learnt_clause, true);
                     learnts.push(cr);
                     attachClause(cr);
                     claBumpActivity(ca[cr]);
-                    uncheckedEnqueue(learnt_clause[0], cr);
+                    uncheckedEnqueue(next, cr);
                 }
-                engine_ptr->backtrackAndPerformLearntSplit(level, learnt_clause[0]);
+                // marabou: backtrack and apply directly
+                engine_ptr->backtrackAndPerformLearntSplit(level, next);
                 continue;
             }
             // else check if there is a solution when branching

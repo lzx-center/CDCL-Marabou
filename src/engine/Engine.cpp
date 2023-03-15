@@ -3356,16 +3356,16 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &origin_path, std::
     std::vector<PathElement> path;
     path = origin_path;
 
-//    for (auto& element : origin_path) {
-//        PathElement new_e;
-//        new_e._caseSplit = element._caseSplit;
-//        path.push_back(std::move(new_e));
-//        for (auto& info : element._impliedSplits) {
-//            PathElement imply_e;
-//            imply_e._caseSplit = info;
-//            path.push_back(std::move(imply_e));
-//        }
-//    }
+    for (auto& element : origin_path) {
+        PathElement new_e;
+        new_e._caseSplit = element._caseSplit;
+        path.push_back(std::move(new_e));
+        for (auto& info : element._impliedSplits) {
+            PathElement imply_e;
+            imply_e._caseSplit = info;
+            path.push_back(std::move(imply_e));
+        }
+    }
 
     _milpEncoder->storeInitialBounds(lowerBounds, upperBounds);
     auto gurobi = GurobiWrapper();
@@ -3785,7 +3785,7 @@ bool Engine::processUnSat() {
     }
 
     if (level < _smtCore.getStackDepth() - 1) {
-            auto back_level = _smtCore.AtLeastBackTrackTo(level);
+        auto back_level = _smtCore.AtLeastBackTrackTo(level);
 //        auto back_level = _smtCore.At(level, info);
         printf("Back track to level: %d\n", back_level);
         if (back_level) {
@@ -3938,14 +3938,34 @@ bool Engine::applyValidConstraintCaseSplitsWithSat() {
     return appliedSplit;
 }
 
-unsigned int Engine::backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit) {
+bool Engine::backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit) {
     CaseSplitTypeInfo info;
     info._position = getPositionByLit(lit);
     info._type = getCaseSplitTypeByLit(lit);
     printf("Engine::backtrackAndPerformLearntSplit: ");
     info.dump();
     printf("\n");
-    return _smtCore.backTrackToGivenLevelAndPerformSplit(level, info);
+    if (level == _smtCore.getStackDepth()) {
+        bool sat = processOneStepUnSat();
+        printf("perform pop, and perform split: ");
+        _smtCore.getActiveCaseSplitInfo().dump();
+        printf("\n");
+        return sat;
+    } else {
+        auto back_level = _smtCore.AtLeastBackTrackTo(level);
+        printf("Back track to level: %d\n", back_level);
+        if (back_level) {
+            performBoundTighteningWithoutEnqueue();
+        } else {
+            if (_verbosity > 0) {
+                printf("\nEngine::solve: unsat query\n");
+                _statistics.print();
+            }
+            _exitCode = Engine::UNSAT;
+            return false;
+        }
+    }
+    return true;
 }
 
 PhaseStatus Engine::getPhaseStatusByLit(Minisat::Lit lit) {
@@ -4002,16 +4022,16 @@ int Engine::learnClauseAndGetBackLevel(Minisat::vec<Minisat::Lit> &vec) {
         backToCurrentState();
     }
     if (learn) {
-//        searchPath._learnt.push_back(std::move(new_path));
-        level = analysisBacktrackLevel(back, new_path);
-        std::reverse(new_path.begin(), new_path.end());
+        level = analysisBacktrackLevelMarabou(back, new_path);
         encodePathToLit(new_path, vec);
     } else {
         new_path = back;
-        std::reverse(new_path.begin(), new_path.end());
-        new_path[0].dump();
+        PathElement pe;
+        pe._caseSplit = back.back()._caseSplit;
+        new_path.push_back(pe);
         encodePathToLit(new_path, vec);
     }
+    searchPath._learnt.push_back(std::move(new_path));
     return level;
 }
 
@@ -4218,8 +4238,11 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
         return back->first;
     } else {
         printf("GG!\n");
-        for (int i = 0; i < back->second; ++ i) {learned.pop_back();}
-        learned.push_back(path.back());
+//        for (int i = 0; i < back->second; ++ i) {learned.pop_back();}
+//        learned.push_back(path.back());
+        PathElement pe;
+        pe._caseSplit = path.back()._caseSplit;
+        learned.push_back(pe);
         return back->first - 1;
     }
     return 0;
@@ -4227,4 +4250,18 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
 
 void Engine::performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type) {
     _smtCore.performGivenSplit(constraint, type);
+}
+
+bool Engine::processOneStepUnSat() {
+    if (!_smtCore.popSplit()) {
+        if (_verbosity > 0) {
+            printf("\nEngine::solve: unsat query\n");
+            _statistics.print();
+        }
+        _exitCode = Engine::UNSAT;
+        return false;
+    } else {
+        performBoundTightening();
+    }
+    return true;
 }
