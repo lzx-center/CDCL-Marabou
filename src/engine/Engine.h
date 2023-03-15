@@ -109,7 +109,8 @@ public:
     void performPropagatedSplit(Minisat::vec<Minisat::Lit> &vec);
     void performTargetSplit(PiecewiseLinearConstraint *constraint, PhaseStatus type);
     void performTargetSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type, int record);
-
+    // enqueue
+    void performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type);
     void performSplit();
 
     Minisat::Lit getLitByPosition(Position& position);

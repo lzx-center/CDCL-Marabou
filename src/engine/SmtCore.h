@@ -116,6 +116,7 @@ public:
       splitting. Update bounds, add equations and update the stack.
     */
     unsigned int AtLeastBackTrackTo(unsigned level);
+    unsigned int backTrackTo(unsigned level);
     unsigned int backTrackToGivenLevelAndPerformSplit(unsigned int level, CaseSplitTypeInfo& info);
     CaseSplitTypeInfo getActiveCaseSplitInfo();
 
@@ -127,6 +128,7 @@ public:
 
     void performSplit();
     void performCheckSplit();
+    void performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type);
     /*
       Pop an old split from the stack, and perform a new split as
       needed. Return true if successful, false if the stack is empty.

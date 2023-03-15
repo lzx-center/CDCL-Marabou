@@ -1029,7 +1029,7 @@ unsigned int SmtCore::backTrackToGivenLevelAndPerformSplit(unsigned int level, C
     auto position = info._position;
     CaseSplitType type = info._type;
     auto constraint = _engine->getConstraintByPosition(position);
-    _engine->performTargetSplit(constraint, type, 1);
+    performGivenSplit(constraint, type);
 
 
     return getStackDepth();
@@ -1037,6 +1037,112 @@ unsigned int SmtCore::backTrackToGivenLevelAndPerformSplit(unsigned int level, C
 
 CaseSplitTypeInfo SmtCore::getActiveCaseSplitInfo() {
     return _stack.back()->_activeSplit.getInfo();
+}
+
+void SmtCore::performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type) {
+    _numRejectedPhasePatternProposal = 0;
+    // Maybe the constraint has already become inactive - if so, ignore
+    if (!constraint or !constraint->isActive() )
+    {
+        printf("Constraint become not valid!\n");
+        return;
+    }
+
+    // Before storing the state of the engine, we:
+    //   1. Obtain the splits.
+    //   2. Disable the constraint, so that it is marked as disbaled in the EngineState.
+    List<PiecewiseLinearCaseSplit> oSplits = constraint->getCaseSplits(), splits;
+    for (auto& split : oSplits) {
+        if (split.getType() == type) {
+            splits.append(split);
+            break;
+        }
+    }
+    assert(splits.size() == 1);
+    constraint->setActiveConstraint( false );
+    // Obtain the current state of the engine
+    EngineState *stateBeforeSplits = new EngineState;
+    stateBeforeSplits->_stateId = _stateId;
+    ++_stateId;
+    _engine->storeState( *stateBeforeSplits,
+                         TableauStateStorageLevel::STORE_BOUNDS_ONLY );
+    _engine->preContextPushHook();
+    pushContext();
+    SmtStackEntry *stackEntry = new SmtStackEntry;
+    // Perform the first split: add bounds and equations
+    List<PiecewiseLinearCaseSplit>::iterator split = splits.begin();
+    ASSERT( split->getEquations().size() == 0 );
+    _engine->applySplit( *split );
+    stackEntry->_activeSplit = *split;
+
+    // Store the remaining splits on the stack, for later
+    stackEntry->_engineState = stateBeforeSplits;
+    _stack.append( stackEntry );
+}
+
+unsigned int SmtCore::backTrackTo(unsigned int level) {
+    if ( _stack.empty() )
+        return 0;
+
+    String error;
+    if (getStackDepth() > level) {
+        _stack.back()->_alternativeSplits.clear();
+    }
+    while ( getStackDepth() > level and _stack.back()->_alternativeSplits.empty() )
+    {
+        if ( checkSkewFromDebuggingSolution() )
+        {
+            // Pops should not occur from a compliant stack!
+            printf( "Error! Popping from a compliant stack\n" );
+            throw MarabouError( MarabouError::DEBUGGING_ERROR );
+        }
+        delete _stack.back()->_engineState;
+        delete _stack.back();
+        _stack.popBack();
+        popContext();
+        if (getStackDepth() > level) {
+            _stack.back()->_alternativeSplits.clear();
+        }
+        if ( _stack.empty() )
+            return 0;
+    }
+
+    SmtStackEntry *stackEntry = _stack.back();
+    popContext();
+    _engine->postContextPopHook();
+    // Restore the state of the engine
+    _engine->restoreState( *( stackEntry->_engineState ) );
+
+    // Apply the new split and erase it from the list
+    auto& split = stackEntry->_activeSplit;
+
+    // Erase any valid splits that were learned using the split we just
+    // popped
+    _engine->preContextPushHook();
+    pushContext();
+    _engine->applySplit( split );
+//    printf("apply split : "); split.dump();
+//    printf("\n");
+    auto& learnt_clause = _searchPath._learnt.back();
+    auto position = learnt_clause.back()._caseSplit._position;
+//    printf("-----Learnt-----\n");
+//    for (auto learn : learnt_clause) {
+//        learn._caseSplit.dump();
+//        printf("\n");
+//    }
+//    printf("")
+    CaseSplitType type = learnt_clause.back()._caseSplit._type;
+//    printf("============================================================================\n");
+//    printf("Learnt size: %d, statck depth:%d \n", learnt_clause.size(),getStackDepth() );
+//    printf("-------------------------------\n");
+
+    for (auto& split : stackEntry->_impliedValidSplits) {
+        auto pos = split.getPosition();
+        auto type = split.getType();
+        auto constraint = _engine->getConstraintByPosition(pos);
+        _engine->performTargetSplit(constraint, type, 0);
+    }
+    return getStackDepth();
 }
 
     

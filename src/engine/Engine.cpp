@@ -3355,6 +3355,7 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &origin_path, std::
     // add implied
     std::vector<PathElement> path;
     path = origin_path;
+
 //    for (auto& element : origin_path) {
 //        PathElement new_e;
 //        new_e._caseSplit = element._caseSplit;
@@ -3365,9 +3366,6 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &origin_path, std::
 //            path.push_back(std::move(imply_e));
 //        }
 //    }
-
-    printf("Path to be learn:\n");
-    dumpSearchPath(origin_path);
 
     _milpEncoder->storeInitialBounds(lowerBounds, upperBounds);
     auto gurobi = GurobiWrapper();
@@ -3763,20 +3761,32 @@ bool Engine::processUnSat() {
     _smtCore.recordStackInfo();
     auto& searchPath = getSearchPath();
     auto& back = searchPath._paths.back();
+//    printf("Unsat path!\n");
+//    dumpSearchPath(back);
     std::vector<PathElement> new_path;
 //    printf("search path\n");
 //    searchPath.dumpPath(searchPath._paths.size() - 1);
     bool learn = false;
-    if (_smtCore.getStackDepth() < 20) {
+
+    if (_smtCore.getStackDepth() < 18) {
         backToOriginState();
         learn = conflictClauseLearning(back, initial_lower, initial_upper, new_path);
         backToCurrentState();
     }
+
+    int level = _smtCore.getStackDepth() - 1;
+    CaseSplitTypeInfo info;
     if (learn) {
-        auto level = analysisBacktrackLevel(back, new_path);
+        info._position = new_path.back().getPosition();
+        info._type = _smtCore.reverseCaseSplitType(new_path.back().getType());
+        level = analysisBacktrackLevelMarabou(back, new_path);
         printf("Should backtrack form level [%d] to level: [%d]\n", _smtCore.getStackDepth(), level);
         searchPath._learnt.push_back(std::move(new_path));
-        auto back_level = _smtCore.AtLeastBackTrackTo(level);
+    }
+
+    if (level < _smtCore.getStackDepth() - 1) {
+            auto back_level = _smtCore.AtLeastBackTrackTo(level);
+//        auto back_level = _smtCore.At(level, info);
         printf("Back track to level: %d\n", back_level);
         if (back_level) {
             performBoundTighteningWithoutEnqueue();
@@ -4168,6 +4178,11 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
         total ++;
     }
 
+//    printf("Origin path:\n");
+//    dumpSearchPath(path);
+//    printf("Learnt path:\n");
+//    dumpSearchPath(learned);
+
     learned.clear();
 
     for (size_t i = 0; i < path.size(); ++ i) {
@@ -4181,7 +4196,7 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
             learned.push_back(std::move(tmp));
         }
         for (auto& imply : path[i]._impliedSplits) {
-            if (cnt.count(info._position)) {
+            if (cnt.count(imply._position)) {
                 cnt[info._position] --;
                 total --;
                 level_lit_count[i + 1] ++;
@@ -4193,14 +4208,23 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
         }
         if (!total) break;
     }
+    for (auto& item : level_lit_count) {
+        printf("Level %d: %d\n", item.first, item.second);
+    }
     auto back = level_lit_count.rbegin();
     if (back->second == 1) {
         printf("Perfect!\n");
         back ++;
         return back->first;
     } else {
-        printf("GG");
+        printf("GG!\n");
+        for (int i = 0; i < back->second; ++ i) {learned.pop_back();}
+        learned.push_back(path.back());
         return back->first - 1;
     }
     return 0;
+}
+
+void Engine::performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type) {
+    _smtCore.performGivenSplit(constraint, type);
 }
