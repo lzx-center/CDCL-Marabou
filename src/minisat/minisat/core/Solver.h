@@ -58,6 +58,7 @@ public:
     bool    addClause (Lit p, Lit q, Lit r, Lit s);             // Add a quaternary clause to the solver. 
     bool    addClause_(      vec<Lit>& ps);                     // Add a clause to the solver without making superflous internal copy. Will
                                                                 // change the passed vector 'ps'.
+    void     cancelUntil      (int level);                                             // Backtrack until a certain level.
 
     // Solving:
     //
@@ -71,6 +72,8 @@ public:
     bool    okay         () const;                  // FALSE means solver is in a conflicting state
 
     bool    implies      (const vec<Lit>& assumps, vec<Lit>& out);
+
+    CRef getCurrentStackAsClause(Lit lit);
 
     // Iterate over clauses and top-level assignments:
     ClauseIterator clausesBegin() const;
@@ -87,7 +90,7 @@ public:
     void    toDimacs     (const char* file, Lit p);
     void    toDimacs     (const char* file, Lit p, Lit q);
     void    toDimacs     (const char* file, Lit p, Lit q, Lit r);
-    
+
     // Variable mode:
     // 
     void    setPolarity    (Var v, lbool b); // Declare which polarity the decision heuristic should use for a variable. Requires mode 'polarity_user'.
@@ -106,6 +109,7 @@ public:
     int     nFreeVars  ()      const;
     void    printStats ()      const;       // Print some current statistics to standard output.
     void    uncheckedEnqueue (Lit p, CRef from = CRef_Undef);// Enqueue a literal. Assumes value of literal is undefined.
+    void     newDecisionLevel ();                                                      // Begins a new decision level.
 
     // Resource contraints:
     //
@@ -247,10 +251,8 @@ protected:
     //
     void     insertVarOrder   (Var x);                                                 // Insert a variable in the decision order priority queue.
     Lit      pickBranchLit    ();                                                      // Return the next decision variable.
-    void     newDecisionLevel ();                                                      // Begins a new decision level.
     bool     enqueue          (Lit p, CRef from = CRef_Undef);                         // Test if fact 'p' contradicts current state, enqueue otherwise.
     CRef     propagate        ();                                                      // Perform unit propagation. Returns possibly conflicting clause.
-    void     cancelUntil      (int level);                                             // Backtrack until a certain level.
     void     analyze          (CRef confl, vec<Lit>& out_learnt, int& out_btlevel);    // (bt = backtrack)
     void     analyzeFinal     (Lit p, LSet& out_conflict);                             // COULD THIS BE IMPLEMENTED BY THE ORDINARIY "analyze" BY SOME REASONABLE GENERALIZATION?
     bool     litRedundant     (Lit p);                                                 // (helper method for 'analyze()')
@@ -403,6 +405,7 @@ inline void     Solver::toDimacs     (const char* file){ vec<Lit> as; toDimacs(f
 inline void     Solver::toDimacs     (const char* file, Lit p){ vec<Lit> as; as.push(p); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q){ vec<Lit> as; as.push(p); as.push(q); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q, Lit r){ vec<Lit> as; as.push(p); as.push(q); as.push(r); toDimacs(file, as); }
+
 
 //=================================================================================================
 // Debug etc:

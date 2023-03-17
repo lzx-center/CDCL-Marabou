@@ -757,10 +757,20 @@ void SmtCore::performCheckSplit() {
 
 void SmtCore::printSimpleStackInfo() {
     printf("Total stack depth: %d\n", getStackDepth());
-    int level = 0;
+    int level = 1;
     for (auto& stack : _stack) {
-        printf("Stack level: %d, ", level ++);
-        stack->_activeSplit.getPosition().dump();
+        printf("level: %d, ", level ++);
+        stack->_activeSplit.getInfo().dump();
+        printf(" implied: ");
+        for (auto& info : stack->_impliedValidSplits) {
+            info.getInfo().dump();
+            printf(" ");
+        }
+        printf(" sat implied: ");
+        for (auto& info : stack->_satImpliedValidSplits) {
+            info.getInfo().dump();
+            printf(" ");
+        }
         printf("\n");
     }
 }
@@ -864,6 +874,68 @@ bool SmtCore::popCheckSplit() {
     checkSkewFromDebuggingSolution();
 
     return true;
+}
+unsigned int SmtCore::atLeastBackTractWithSat(unsigned level, Minisat::Lit lit, Minisat::CRef cr) {
+    if ( _stack.empty() )
+        return 0;
+
+    String error;
+    if (getStackDepth() > level) {
+        _stack.back()->_alternativeSplits.clear();
+    }
+    while ( getStackDepth() > level and _stack.back()->_alternativeSplits.empty() )
+    {
+        if ( checkSkewFromDebuggingSolution() )
+        {
+            // Pops should not occur from a compliant stack!
+            printf( "Error! Popping from a compliant stack\n" );
+            throw MarabouError( MarabouError::DEBUGGING_ERROR );
+        }
+        delete _stack.back()->_engineState;
+        delete _stack.back();
+        _stack.popBack();
+        popContext();
+        if (getStackDepth() > level) {
+            _stack.back()->_alternativeSplits.clear();
+        }
+        if ( _stack.empty() )
+            return 0;
+    }
+
+    SmtStackEntry *stackEntry = _stack.back();
+    popContext();
+    _engine->postContextPopHook();
+    _engine->restoreState( *( stackEntry->_engineState ) );
+    auto& split = stackEntry->_activeSplit;
+    _engine->preContextPushHook();
+    pushContext();
+    _engine->applySplit( split );
+
+    for (auto& split : stackEntry->_impliedValidSplits) {
+        auto pos = split.getPosition();
+        auto type = split.getType();
+        auto constraint = _engine->getConstraintByPosition(pos);
+        _engine->performTargetSplit(constraint, type, 0);
+    }
+
+    for (auto& split : stackEntry->_satImpliedValidSplits) {
+        auto pos = split.getPosition();
+        auto type = split.getType();
+        auto constraint = _engine->getConstraintByPosition(pos);
+        _engine->performTargetSplit(constraint, type, 0);
+    }
+
+    auto type = _engine->getCaseSplitTypeByLit(lit);
+    auto pos = _engine->getPositionByLit(lit);
+    // get learned path
+    auto constraint = _engine->getConstraintByPosition(pos);
+
+    _engine->performTargetSplit(constraint, type, 1);
+
+    _engine->_solver->cancelUntil(getStackDepth());
+    _engine->_solver->uncheckedEnqueue(lit, cr);
+
+    return getStackDepth();
 }
 
 unsigned int SmtCore::AtLeastBackTrackTo(unsigned level) {
@@ -1143,6 +1215,97 @@ unsigned int SmtCore::backTrackTo(unsigned int level) {
         _engine->performTargetSplit(constraint, type, 0);
     }
     return getStackDepth();
+}
+
+bool SmtCore::popSplitWithSat(Minisat::Lit lit, Minisat::CRef cr) {
+    if ( _stack.empty() )
+        return false;
+    bool inconsistent = true;
+    while ( inconsistent )
+    {
+        // Remove any entries that have no alternatives
+        String error;
+        while ( _stack.back()->_alternativeSplits.empty() )
+        {
+            if ( checkSkewFromDebuggingSolution() )
+            {
+                // Pops should not occur from a compliant stack!
+                printf( "Error! Popping from a compliant stack\n" );
+                throw MarabouError( MarabouError::DEBUGGING_ERROR );
+            }
+            if (Options::get()->getBool(Options::CHECK)) {
+                if (_stack.size() != 1) {
+                    delete _stack.back()->_engineState;
+                    delete _stack.back();
+                    _stack.popBack();
+                    popContext();
+                } else {
+                    popContext();
+                    _engine->postContextPopHook();
+                    _engine->restoreState(*(_stack.back()->_engineState));
+                    delete _stack.back()->_engineState;
+                    delete _stack.back();
+                    _stack.popBack();
+                }
+            } else {
+                delete _stack.back()->_engineState;
+                delete _stack.back();
+                _stack.popBack();
+                popContext();
+            }
+            if ( _stack.empty() )
+                return false;
+        }
+
+        if ( checkSkewFromDebuggingSolution() )
+        {
+            // Pops should not occur from a compliant stack!
+            printf( "Error! Popping from a compliant stack\n" );
+            throw MarabouError( MarabouError::DEBUGGING_ERROR );
+        }
+
+        SmtStackEntry *stackEntry = _stack.back();
+        popContext();
+        _engine->postContextPopHook();
+        // Restore the state of the engine
+        SMT_LOG( "\tRestoring engine state..." );
+        _engine->restoreState( *( stackEntry->_engineState ) );
+        SMT_LOG( "\tRestoring engine state - DONE" );
+
+        // Apply the new split and erase it from the list
+        auto split = stackEntry->_alternativeSplits.begin();
+
+        // Erase any valid splits that were learned using the split we just
+        // popped
+        stackEntry->_impliedValidSplits.clear();
+
+        SMT_LOG( "\tApplying new split..." );
+        ASSERT( split->getEquations().size() == 0 );
+        _engine->preContextPushHook();
+        pushContext();
+        _engine->applySplit( *split );
+        SMT_LOG( "\tApplying new split - DONE" );
+
+        stackEntry->_activeSplit = *split;
+        stackEntry->_alternativeSplits.erase( split );
+
+        inconsistent = !_engine->consistentBounds();
+    }
+    printf("Current level: %d\n", getStackDepth());
+    _engine->_solver->cancelUntil(getStackDepth() - 1);
+    _engine->_solver->newDecisionLevel();
+
+    auto info = getActiveCaseSplitInfo();
+    auto lit_real = _engine->getLitByCaseSplitTypeInfo(info);
+
+    if (lit == lit_real ) {
+        _engine->_solver->uncheckedEnqueue(lit_real, cr);
+    } else {
+        _engine->_solver->uncheckedEnqueue(lit_real);
+    }
+
+    checkSkewFromDebuggingSolution();
+    return true;
 }
 
     

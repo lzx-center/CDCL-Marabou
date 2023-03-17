@@ -70,6 +70,7 @@ public:
 
     Engine();
     ~Engine();
+    Minisat::Solver* _solver;
 
 
     /*
@@ -98,9 +99,12 @@ public:
     unsigned int analysisBacktrackLevelMarabou(std::vector<PathElement> &path,
                                         std::vector<PathElement> &learned);
 
-    bool backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit);
+    bool backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit, Minisat::CRef cr);
     void initEngine();
     void restart();
+    void printStackInfo();
+
+    void queryConstraintActivity(int pos, int node);
 
     PhaseStatus getPhaseStatusByLit(Minisat::Lit lit);
     CaseSplitType getCaseSplitTypeByLit(Minisat::Lit lit);
@@ -309,7 +313,6 @@ public:
     void setSolver(Minisat::Solver* solver_ptr);
 private:
 
-    Minisat::Solver* _solver;
 
     std::vector<double> initial_lower, initial_upper;
 

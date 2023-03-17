@@ -26,6 +26,7 @@
 #include "Statistics.h"
 #include "context/context.h"
 #include "SearchPath.h"
+#include "minisat/core/SolverTypes.h"
 
 #include <memory>
 
@@ -115,6 +116,7 @@ public:
       Perform the split according to the constraint marked for
       splitting. Update bounds, add equations and update the stack.
     */
+    unsigned int atLeastBackTractWithSat(unsigned level, Minisat::Lit lit, Minisat::CRef cr=Minisat::CRef_Undef);
     unsigned int AtLeastBackTrackTo(unsigned level);
     unsigned int backTrackTo(unsigned level);
     unsigned int backTrackToGivenLevelAndPerformSplit(unsigned int level, CaseSplitTypeInfo& info);
@@ -134,6 +136,7 @@ public:
       needed. Return true if successful, false if the stack is empty.
     */
     bool popSplit();
+    bool popSplitWithSat(Minisat::Lit lit, Minisat::CRef cr);
     bool popCheckSplit();
     void popToBottom();
 

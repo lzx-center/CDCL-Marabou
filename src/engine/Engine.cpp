@@ -3923,49 +3923,35 @@ bool Engine::applyValidConstraintCaseSplitsWithSat() {
             PhaseStatus status = constraint->getPhaseStatus();
             auto pos = constraint->getPosition();
             Minisat::Lit lit = getLitByPosition(pos);
-            printf("applyValidConstraintCaseSplitsWithSat::position: ");
-            pos.dump();
-            printf(" Lit val: %d\n", Minisat::var(lit));
             if (status == PhaseStatus::RELU_PHASE_INACTIVE) {
-                _solver->uncheckedEnqueue(~lit);
-            } else if (status == PhaseStatus::RELU_PHASE_ACTIVE) {
-                _solver->uncheckedEnqueue(lit);
+                lit = ~lit;
+            } else if (status == PhaseStatus::RELU_PHASE_ACTIVE) {;
             } else {
                 printf("Unsupported!\n");
                 exit(-1);
             }
+            auto cr = _solver->getCurrentStackAsClause(lit);
+            printf("applyValidConstraintCaseSplitsWithSat::position: ");
+            pos.dump();
+            printf(" Lit val: %d\n", Minisat::var(lit));
+            _solver->uncheckedEnqueue(lit, cr);
         }
     return appliedSplit;
 }
 
-bool Engine::backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit) {
-    CaseSplitTypeInfo info;
-    info._position = getPositionByLit(lit);
-    info._type = getCaseSplitTypeByLit(lit);
-    printf("Engine::backtrackAndPerformLearntSplit: ");
-    info.dump();
-    printf("\n");
-    if (level == _smtCore.getStackDepth()) {
-        bool sat = processOneStepUnSat();
-        printf("perform pop, and perform split: ");
-        _smtCore.getActiveCaseSplitInfo().dump();
-        printf("\n");
-        return sat;
-    } else {
-        auto back_level = _smtCore.AtLeastBackTrackTo(level);
-        printf("Back track to level: %d\n", back_level);
-        if (back_level) {
-            performBoundTighteningWithoutEnqueue();
-        } else {
-            if (_verbosity > 0) {
-                printf("\nEngine::solve: unsat query\n");
-                _statistics.print();
-            }
-            _exitCode = Engine::UNSAT;
-            return false;
-        }
-    }
-    return true;
+bool Engine::backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit, Minisat::CRef cr) {
+    bool sat = true;
+//    int before = _smtCore.getStackDepth();
+//    _smtCore.popSplitWithSat(lit, cr);
+//    int after = _smtCore.getStackDepth();
+//    if (after < before and after > level) {
+        printf("Perform at least back trac!\n");
+        _smtCore.atLeastBackTractWithSat(level, lit, cr);
+//    }
+
+    _smtCore.printSimpleStackInfo();
+    _solver->dumpTrail();
+    return sat;
 }
 
 PhaseStatus Engine::getPhaseStatusByLit(Minisat::Lit lit) {
@@ -4235,6 +4221,11 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
     if (back->second == 1) {
         printf("Perfect!\n");
         back ++;
+
+        PathElement pe;
+        pe._caseSplit = learned.back()._caseSplit;
+        learned.push_back(pe);
+
         return back->first;
     } else {
         printf("GG!\n");
@@ -4265,3 +4256,15 @@ bool Engine::processOneStepUnSat() {
     }
     return true;
 }
+
+void Engine::printStackInfo() {
+    _smtCore.printSimpleStackInfo();
+}
+
+void Engine::queryConstraintActivity(int layer, int node) {
+    Position pos = Position(layer, node);
+    auto constraint = getConstraintByPosition(pos);
+    pos.dump();
+    printf(" is active: %d\n", constraint->isActive());
+}
+

@@ -38,7 +38,7 @@ static DoubleOption  opt_var_decay         (_cat, "var-decay",   "The variable a
 static DoubleOption  opt_clause_decay      (_cat, "cla-decay",   "The clause activity decay factor",              0.999,    DoubleRange(0, false, 1, false));
 static DoubleOption  opt_random_var_freq   (_cat, "rnd-freq",    "The frequency with which the decision heuristic tries to choose a random variable", 0, DoubleRange(0, true, 1, true));
 static DoubleOption  opt_random_seed       (_cat, "rnd-seed",    "Used by the random variable selection",         91648253, DoubleRange(0, false, HUGE_VAL, false));
-static IntOption     opt_ccmin_mode        (_cat, "ccmin-mode",  "Controls conflict clause minimization (0=none, 1=basic, 2=deep)", 2, IntRange(0, 2));
+static IntOption     opt_ccmin_mode        (_cat, "ccmin-mode",  "Controls conflict clause minimization (0=none, 1=basic, 2=deep)", 1, IntRange(0, 2));
 static IntOption     opt_phase_saving      (_cat, "phase-saving", "Controls the level of phase saving (0=none, 1=limited, 2=full)", 2, IntRange(0, 2));
 static BoolOption    opt_rnd_init_act      (_cat, "rnd-init",    "Randomize the initial activity", false);
 static BoolOption    opt_luby_restart      (_cat, "luby",        "Use the Luby restart sequence", true);
@@ -308,26 +308,26 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
         assert(confl != CRef_Undef); // (otherwise should be UIP)
         Clause& c = ca[confl];
 
-        printf("conflict clause: ");
+        printf("conflict clause [%d]: ", confl);
         for (int i = 0; i < c.size(); ++ i) {
             printf(sign(c[i]) ? "-%d " : "%d ", var(c[i]));
         }
-        printf("\n");
+        printf("\nShould back track to level %d\n", out_btlevel);
 
         if (c.learnt())
             claBumpActivity(c);
 
         for (int j = (p == lit_Undef) ? 0 : 1; j < c.size(); j++){
             Lit q = c[j];
-
             if (!seen[var(q)] && level(var(q)) > 0){
                 varBumpActivity(var(q));
                 seen[var(q)] = 1;
-                printf("Lit %d, decision level: %d\n", var(q), level(var(q)));
                 if (level(var(q)) >= decisionLevel())
                     pathC++;
                 else
                     out_learnt.push(q);
+                printf("Lit %d, decision level: %d, reason %d, current level: %d, pathC %d\n",
+                       var(q), level(var(q)), reason(var(q)), decisionLevel(), pathC);
             }
         }
         
@@ -335,22 +335,22 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
         while (!seen[var(trail[index--])]);
         p     = trail[index+1];
         confl = reason(var(p));
-        printf("var: %d , confl: %d\n", var(p), confl);
         seen[var(p)] = 0;
         pathC--;
+        printf("var %d, reason: %d, pathC: %d\n", var(p), confl, pathC);
 
     }while (pathC > 0);
     out_learnt[0] = ~p;
-    printf("Start simplify!\n");
+
     // Simplify conflict clause:
-    //
+    printf("Hello! do simplify\n");
     int i, j;
     out_learnt.copyTo(analyze_toclear);
     if (ccmin_mode == 2){
         for (i = j = 1; i < out_learnt.size(); i++)
             if (reason(var(out_learnt[i])) == CRef_Undef || !litRedundant(out_learnt[i]))
                 out_learnt[j++] = out_learnt[i];
-        
+
     }else if (ccmin_mode == 1){
         for (i = j = 1; i < out_learnt.size(); i++){
             Var x = var(out_learnt[i]);
@@ -367,7 +367,7 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
         }
     }else
         i = j = out_learnt.size();
-
+    printf("Hello!\n");
     max_literals += out_learnt.size();
     out_learnt.shrink(i - j);
     tot_literals += out_learnt.size();
@@ -494,10 +494,15 @@ void Solver::analyzeFinal(Lit p, LSet& out_conflict)
 
 void Solver::uncheckedEnqueue(Lit p, CRef from)
 {
-    if (sign(p))
-        printf("Enqueue: -%d\n", var(p));
-    else
-        printf("Enqueue: %d\n", var(p));
+    printf(sign(p) ? "Enqueue: -%d, reason: %d\n"  :"Enqueue: %d, reason: %d\n", var(p), from);
+    if (from != CRef_Undef) {
+        Clause& c = ca[from];
+        for (int i = 0; i < c.size(); ++ i) {
+            Lit lit = c[i];
+            printf(sign(lit) ? "-%d " : "%d ", var(lit) );
+        }
+        printf("\n");
+    }
 
     assert(value(p) == l_Undef);
     if (value(p) != l_Undef) {
@@ -567,9 +572,10 @@ CRef Solver::propagate()
                 // Copy the remaining watches:
                 while (i < end)
                     *j++ = *i++;
-            }else
+            }else {
+                printf("Propagate:\n");
                 uncheckedEnqueue(first, cr);
-
+            }
         NextClause:;
         }
         ws.shrink(i - j);
@@ -650,10 +656,10 @@ void Solver::dumpTrail() {
     printf("Dump trail:\n");
     for (int i = 0; i < trail_lim.size(); ++ i) {
         printf("Level %d: ", i + 1 );
-        printf(sign(trail[trail_lim[i]]) ? "-%d " : "%d ", var(trail[trail_lim[i]]));
+        printf( sign(trail[trail_lim[i]]) ? "-%d(%d) " : "%d(%d) ", var(trail[trail_lim[i]]), reason(var(trail[trail_lim[i]])) );
         printf("implied: ");
         for (int j = trail_lim[i] + 1; j < (i == trail_lim.size() - 1 ? trail.size() : trail_lim[i + 1]); ++ j) {
-            printf(sign(trail[j]) ? "-%d " : "%d ", var(trail[j]));
+            printf(sign(trail[j]) ? "-%d(%d) " : "%d(%d) ", var(trail[j]), reason(var(trail[j])));
         }
         printf("\n");
     }
@@ -749,30 +755,29 @@ lbool Solver::search(int nof_conflicts)
             if (decisionLevel() == 0) return l_False;
 
             learnt_clause.clear();
-            dumpTrail();
+//            dumpTrail();
             printf("Begin analysis！\n");
             analyze(confl, learnt_clause, backtrack_level);
 
-            printf("Learnt clause: ");
-            for (int i = 0; i < learnt_clause.size(); ++ i) {
-                printf(sign(learnt_clause[i]) ? "-%d " : "%d ", var(learnt_clause[i]));
-            }
-            printf("\nShould back track to level %d\n", backtrack_level);
+            CRef cr = CRef_Undef;
 
-            cancelUntil(backtrack_level);
-            //TODO: marabou: back track to given level
-
-            //TODO: marabou: do target split
-
-            if (learnt_clause.size() == 1){
-                uncheckedEnqueue(learnt_clause[0]);
-            }else{
-                CRef cr = ca.alloc(learnt_clause, true);
+            if (learnt_clause.size() > 1){
+                cr = ca.alloc(learnt_clause, true);
                 learnts.push(cr);
                 attachClause(cr);
                 claBumpActivity(ca[cr]);
-                uncheckedEnqueue(learnt_clause[0], cr);
             }
+
+            printf("Learnt clause [%d]: ", cr);
+            for (int i = 0; i < learnt_clause.size(); ++ i) {
+                printf(sign(learnt_clause[i]) ? "-%d " : "%d ", var(learnt_clause[i]));
+            }
+            printf("\nLearnt!: Should back track to level %d\n", backtrack_level);
+
+            if (!engine_ptr->backtrackAndPerformLearntSplit(backtrack_level, learnt_clause[0], cr))
+                return l_False;
+
+            origin_head = after_head = qhead;
 
             varDecayActivity();
             claDecayActivity();
@@ -789,6 +794,7 @@ lbool Solver::search(int nof_conflicts)
                            (int)max_learnts, nLearnts(), (double)learnts_literals/nLearnts(), progressEstimate()*100);
             }
         }else{
+//            dumpTrail();
             // NO CONFLICT
             if ((nof_conflicts >= 0 && conflictC >= nof_conflicts) || !withinBudget()){
                 // Reached bound on number of conflicts:
@@ -808,14 +814,21 @@ lbool Solver::search(int nof_conflicts)
             Lit next = lit_Undef;
 
             //marabou: split according to propagated lits
-            dumpTrail();
             vec<Lit> propagated;
             for (int i = origin_head; i < after_head; ++ i) {
                 propagated.push(trail[i]);
             }
             if (propagated.size()) {
+                printf("Perform propagate split:\n");
+                for (int i = 0; i < propagated.size(); ++ i) {
+                    printf(sign(propagated[i]) ? "-%d " : "%d ", var(propagated[i]));
+                }
+                printf("\n");
                 engine_ptr->performPropagatedSplit(propagated);
             }
+            printf("Before check!\n");
+            dumpTrail();
+            engine_ptr->printStackInfo();
 
             //marabou: check feasible
             bool feasible = engine_ptr->checkFeasible();
@@ -825,27 +838,28 @@ lbool Solver::search(int nof_conflicts)
                 // TODO: should apply back track
                 int level = engine_ptr->learnClauseAndGetBackLevel(learnt_clause);
                 printf("Current level: %d, Should back track to: [%d]\n", decisionLevel(), level);
-                // add learnt clause
-                cancelUntil(level);
-
-                // use learnt_clause back as next
                 next = learnt_clause[learnt_clause.size() - 1];
                 learnt_clause.pop();
+                CRef cr = CRef_Undef;
 
-                printf("Enqueue next ");
-                printf(sign(next) ? "-%d\n" : "%d\n", var(next));
-
-                if (learnt_clause.size() == 1){
-                    uncheckedEnqueue(next);
-                } else {
-                    CRef cr = ca.alloc(learnt_clause, true);
-                    learnts.push(cr);
-                    attachClause(cr);
-                    claBumpActivity(ca[cr]);
-                    uncheckedEnqueue(next, cr);
+                for (int i = 0; i < learnt_clause.size() / 2; ++ i) {
+                    std::swap(learnt_clause[i], learnt_clause[learnt_clause.size() - 1]);
                 }
-                // marabou: backtrack and apply directly
-                engine_ptr->backtrackAndPerformLearntSplit(level, next);
+
+                if (learnt_clause.size() > 1){
+                    cr = ca.alloc(learnt_clause, false);
+//                    learnts.push(cr);
+                    attachClause(cr);
+//                    claBumpActivity(ca[cr]);
+                }
+
+                printf("Learnt clause [%d]: ", cr);
+                for (int i = 0; i < learnt_clause.size(); ++ i) {
+                    printf(sign(learnt_clause[i]) ? "-%d " : "%d ", var(learnt_clause[i]));
+                }
+
+                if (!engine_ptr->backtrackAndPerformLearntSplit(level, next, cr))
+                    return l_False;
                 continue;
             }
             // else check if there is a solution when branching
@@ -881,6 +895,7 @@ lbool Solver::search(int nof_conflicts)
             }
 
             // Increase decision level and enqueue 'next'
+            printf("Do branch: ");
             newDecisionLevel();
             uncheckedEnqueue(next);
         }
@@ -1160,4 +1175,15 @@ void Solver::garbageCollect()
         printf("|  Garbage collection:   %12d bytes => %12d bytes             |\n", 
                ca.size()*ClauseAllocator::Unit_Size, to.size()*ClauseAllocator::Unit_Size);
     to.moveTo(ca);
+}
+
+CRef Solver::getCurrentStackAsClause(Lit lit) {
+    vec<Lit> vec;
+    vec.push(lit);
+    for (int i = trail_lim.size() - 1; i >= 0; -- i) {
+        vec.push(~trail[trail_lim[i]]);
+    }
+    CRef cr = ca.alloc(vec, false);
+    attachClause(cr);
+    return cr;
 }
