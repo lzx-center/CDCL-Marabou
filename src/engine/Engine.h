@@ -102,6 +102,7 @@ public:
     bool backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit, Minisat::CRef cr);
     void initEngine();
     void restart();
+    void processSat();
     void printStackInfo();
 
     void queryConstraintActivity(int pos, int node);

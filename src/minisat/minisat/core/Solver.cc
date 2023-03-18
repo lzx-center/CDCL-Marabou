@@ -303,16 +303,16 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
     //
     out_learnt.push();      // (leave room for the asserting literal)
     int index   = trail.size() - 1;
-
     do{
         assert(confl != CRef_Undef); // (otherwise should be UIP)
         Clause& c = ca[confl];
 
+        printf("--------------------\n");
         printf("conflict clause [%d]: ", confl);
         for (int i = 0; i < c.size(); ++ i) {
             printf(sign(c[i]) ? "-%d " : "%d ", var(c[i]));
         }
-        printf("\nShould back track to level %d\n", out_btlevel);
+        printf("\n");
 
         if (c.learnt())
             claBumpActivity(c);
@@ -326,7 +326,7 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
                     pathC++;
                 else
                     out_learnt.push(q);
-                printf("Lit %d, decision level: %d, reason %d, current level: %d, pathC %d\n",
+                printf("Seen: Lit [%d], decision level: %d, reason %d, current level: %d, pathC %d\n",
                        var(q), level(var(q)), reason(var(q)), decisionLevel(), pathC);
             }
         }
@@ -653,7 +653,7 @@ void Solver::rebuildOrderHeap()
 }
 
 void Solver::dumpTrail() {
-    printf("Dump trail:\n");
+    printf("======================Dump trail======================\n");
     for (int i = 0; i < trail_lim.size(); ++ i) {
         printf("Level %d: ", i + 1 );
         printf( sign(trail[trail_lim[i]]) ? "-%d(%d) " : "%d(%d) ", var(trail[trail_lim[i]]), reason(var(trail[trail_lim[i]])) );
@@ -744,6 +744,8 @@ lbool Solver::search(int nof_conflicts)
 
     bool perform_split = false;
     for (;;){
+        engine_ptr->printStackInfo();
+        dumpTrail();
         int origin_head = qhead;
         CRef confl = propagate();
         int after_head = qhead;
@@ -794,9 +796,12 @@ lbool Solver::search(int nof_conflicts)
                            (int)max_learnts, nLearnts(), (double)learnts_literals/nLearnts(), progressEstimate()*100);
             }
         }else{
-//            dumpTrail();
+            printf("No conflict!\n");
+            engine_ptr->printStackInfo();
+            dumpTrail();
             // NO CONFLICT
             if ((nof_conflicts >= 0 && conflictC >= nof_conflicts) || !withinBudget()){
+                printf("progressEstimate!!!!\n");
                 // Reached bound on number of conflicts:
                 progress_estimate = progressEstimate();
                 cancelUntil(0);
@@ -826,10 +831,10 @@ lbool Solver::search(int nof_conflicts)
                 printf("\n");
                 engine_ptr->performPropagatedSplit(propagated);
             }
-            printf("Before check!\n");
-            dumpTrail();
-            engine_ptr->printStackInfo();
 
+            printf("Before check!\n");
+            engine_ptr->printStackInfo();
+            dumpTrail();
             //marabou: check feasible
             bool feasible = engine_ptr->checkFeasible();
             if (!feasible) {
@@ -838,13 +843,11 @@ lbool Solver::search(int nof_conflicts)
                 // TODO: should apply back track
                 int level = engine_ptr->learnClauseAndGetBackLevel(learnt_clause);
                 printf("Current level: %d, Should back track to: [%d]\n", decisionLevel(), level);
-                next = learnt_clause[learnt_clause.size() - 1];
-                learnt_clause.pop();
-                CRef cr = CRef_Undef;
-
                 for (int i = 0; i < learnt_clause.size() / 2; ++ i) {
                     std::swap(learnt_clause[i], learnt_clause[learnt_clause.size() - 1]);
                 }
+                next = learnt_clause[0];
+                CRef cr = CRef_Undef;
 
                 if (learnt_clause.size() > 1){
                     cr = ca.alloc(learnt_clause, false);
@@ -884,6 +887,7 @@ lbool Solver::search(int nof_conflicts)
                 // marabou: do branch
                 bool solutionFound = engine_ptr->gurobiBranch();
                 if (solutionFound) {
+                    engine_ptr->processSat();
                     return l_True;
                 }
                 // next split should be in _constraintForSplit
@@ -898,6 +902,9 @@ lbool Solver::search(int nof_conflicts)
             printf("Do branch: ");
             newDecisionLevel();
             uncheckedEnqueue(next);
+            printf("After branch\n");
+            engine_ptr->printStackInfo();
+            dumpTrail();
         }
     }
 }
@@ -975,8 +982,7 @@ lbool Solver::solve_()
         double rest_base = luby_restart ? luby(restart_inc, curr_restarts) : pow(restart_inc, curr_restarts);
         status = search(rest_base * restart_first);
         if (!withinBudget()) break;
-        if (curr_restarts)
-            engine_ptr->restart();
+        engine_ptr->restart();
         curr_restarts++;
     }
 

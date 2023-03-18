@@ -756,7 +756,7 @@ void SmtCore::performCheckSplit() {
 }
 
 void SmtCore::printSimpleStackInfo() {
-    printf("Total stack depth: %d\n", getStackDepth());
+    printf("=========Total stack depth: %d=========\n", getStackDepth());
     int level = 1;
     for (auto& stack : _stack) {
         printf("level: %d, ", level ++);
@@ -880,7 +880,7 @@ unsigned int SmtCore::atLeastBackTractWithSat(unsigned level, Minisat::Lit lit, 
         return 0;
 
     String error;
-    if (getStackDepth() > level) {
+    if (getStackDepth() > level and level > 0) {
         _stack.back()->_alternativeSplits.clear();
     }
     while ( getStackDepth() > level and _stack.back()->_alternativeSplits.empty() )
@@ -898,44 +898,69 @@ unsigned int SmtCore::atLeastBackTractWithSat(unsigned level, Minisat::Lit lit, 
         if (getStackDepth() > level) {
             _stack.back()->_alternativeSplits.clear();
         }
-        if ( _stack.empty() )
+        if ( _stack.empty() ) {
             return 0;
+        }
     }
 
     SmtStackEntry *stackEntry = _stack.back();
     popContext();
     _engine->postContextPopHook();
     _engine->restoreState( *( stackEntry->_engineState ) );
-    auto& split = stackEntry->_activeSplit;
-    _engine->preContextPushHook();
-    pushContext();
-    _engine->applySplit( split );
 
-    for (auto& split : stackEntry->_impliedValidSplits) {
-        auto pos = split.getPosition();
-        auto type = split.getType();
+    if (level) {
+        auto& split = stackEntry->_activeSplit;
+        _engine->preContextPushHook();
+        pushContext();
+        _engine->applySplit( split );
+
+        for (auto& split : stackEntry->_impliedValidSplits) {
+            auto pos = split.getPosition();
+            auto type = split.getType();
+            auto constraint = _engine->getConstraintByPosition(pos);
+            _engine->performTargetSplit(constraint, type, 0);
+        }
+
+        for (auto& split : stackEntry->_satImpliedValidSplits) {
+            auto pos = split.getPosition();
+            auto type = split.getType();
+            auto constraint = _engine->getConstraintByPosition(pos);
+            _engine->performTargetSplit(constraint, type, 0);
+        }
+
+        auto type = _engine->getCaseSplitTypeByLit(lit);
+        auto pos = _engine->getPositionByLit(lit);
+        // get learned path
         auto constraint = _engine->getConstraintByPosition(pos);
-        _engine->performTargetSplit(constraint, type, 0);
+
+        _engine->performTargetSplit(constraint, type, 1);
+
+        _engine->_solver->cancelUntil(getStackDepth());
+        _engine->_solver->uncheckedEnqueue(lit, cr);
+
+        return getStackDepth();
+    } else {
+        auto split = stackEntry->_alternativeSplits.begin();
+        stackEntry->_impliedValidSplits.clear();
+        stackEntry->_satImpliedValidSplits.clear();
+        _engine->preContextPushHook();
+
+        pushContext();
+        _engine->applySplit( *split );
+
+        stackEntry->_activeSplit = *split;
+        stackEntry->_alternativeSplits.erase( split );
+
+        auto type = _engine->getCaseSplitTypeByLit(lit);
+        auto pos = _engine->getPositionByLit(lit);
+        auto info = (*split).getInfo();
+        ASSERT(info._type == type);
+        ASSERT(info._position == pos);
+        _engine->_solver->cancelUntil(0);
+        _engine->_solver->newDecisionLevel();
+        _engine->_solver->uncheckedEnqueue(lit, cr);
+        return getStackDepth();
     }
-
-    for (auto& split : stackEntry->_satImpliedValidSplits) {
-        auto pos = split.getPosition();
-        auto type = split.getType();
-        auto constraint = _engine->getConstraintByPosition(pos);
-        _engine->performTargetSplit(constraint, type, 0);
-    }
-
-    auto type = _engine->getCaseSplitTypeByLit(lit);
-    auto pos = _engine->getPositionByLit(lit);
-    // get learned path
-    auto constraint = _engine->getConstraintByPosition(pos);
-
-    _engine->performTargetSplit(constraint, type, 1);
-
-    _engine->_solver->cancelUntil(getStackDepth());
-    _engine->_solver->uncheckedEnqueue(lit, cr);
-
-    return getStackDepth();
 }
 
 unsigned int SmtCore::AtLeastBackTrackTo(unsigned level) {

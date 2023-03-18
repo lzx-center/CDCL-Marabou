@@ -271,6 +271,7 @@ bool Engine::solve(unsigned timeoutInSeconds) {
                         printf("\nEngine::solve: sat assignment found\n");
                         _statistics.print();
                     }
+                    printf("Hello!!\n");
                     _smtCore.recordStackInfo();
                     _exitCode = Engine::SAT;
 
@@ -3719,12 +3720,19 @@ void Engine::initEngine() {
 }
 
 void Engine::restart() {
-    printf("Need restart!\n");
+    while(_smtCore.popSplit());
+    restoreState(_initial);
+    for (int i = 0; i < initial_lower.size(); ++ i) {
+        _boundManager.enforceUpperBound(i, initial_upper[i]);
+        _boundManager.enforceLowerBound(i, initial_lower[i]);
+    }
+    informLPSolverOfBounds();
 }
+
 
 bool Engine::gurobiSolve( unsigned timeoutInSeconds ) {
     initEngine();
-    applyAllValidConstraintCaseSplits();
+//    applyAllValidConstraintCaseSplits();
     while (true) {
         // Perform any SmtCore-initiated case splits
         if (_smtCore.needToSplit()) {
@@ -3745,6 +3753,7 @@ bool Engine::gurobiSolve( unsigned timeoutInSeconds ) {
             bool solutionFound = gurobiBranch();
             if (solutionFound) {
                 _smtCore.recordStackInfo();
+                _smtCore.printSimpleStackInfo();
                 _exitCode = Engine::SAT;
                 return true;
             } else
@@ -3828,14 +3837,10 @@ void Engine::performBoundTightening() {
 }
 
 bool Engine::checkFeasible() {
-    if (!_tableau->allBoundsValid()) {
-        return false;
-    }
     LinearExpression costFunction;
 
     _milpEncoder->encodeCostFunction(*_gurobi, costFunction);
     _gurobi->setTimeLimit(FloatUtils::infinity());
-    _gurobi->solve();
 
     if (_gurobi->infeasible()) {
         return false;
@@ -3873,9 +3878,9 @@ Minisat::Lit Engine::getLitByPosition(Position &position) {
 void Engine::encodePathToLit(std::vector<PathElement> &path, Minisat::vec<Minisat::Lit> &vec) {
     for( auto& element : path) {
         vec.push(~getLitByCaseSplitTypeInfo(element._caseSplit));
-        for (auto& implied_element : element._impliedSplits) {
-            vec.push(~getLitByCaseSplitTypeInfo(implied_element));
-        }
+//        for (auto& implied_element : element._impliedSplits) {
+//            vec.push(~getLitByCaseSplitTypeInfo(implied_element));
+//        }
     }
 }
 
@@ -3945,12 +3950,19 @@ bool Engine::backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit
 //    _smtCore.popSplitWithSat(lit, cr);
 //    int after = _smtCore.getStackDepth();
 //    if (after < before and after > level) {
-        printf("Perform at least back trac!\n");
-        _smtCore.atLeastBackTractWithSat(level, lit, cr);
+    printf("Perform at least back trac!\n");
+    auto cur_level = _smtCore.atLeastBackTractWithSat(level, lit, cr);
+    if (!cur_level) {
+        printf("\nEngine::solve: unsat query\n");
+        _exitCode = Engine::UNSAT;
+        return false;
+    }
 //    }
-
+    printf("After backtrackAndPerformLearntSplit\n");
     _smtCore.printSimpleStackInfo();
     _solver->dumpTrail();
+    informLPSolverOfBounds();
+    _gurobi->updateModel();
     return sat;
 }
 
@@ -4012,9 +4024,6 @@ int Engine::learnClauseAndGetBackLevel(Minisat::vec<Minisat::Lit> &vec) {
         encodePathToLit(new_path, vec);
     } else {
         new_path = back;
-        PathElement pe;
-        pe._caseSplit = back.back()._caseSplit;
-        new_path.push_back(pe);
         encodePathToLit(new_path, vec);
     }
     searchPath._learnt.push_back(std::move(new_path));
@@ -4175,7 +4184,7 @@ void Engine::performSplit() {
     _smtCore.performSplit();
 }
 
-unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &path, std::vector<PathElement> &learned) {
+unsigned int Engine:: analysisBacktrackLevelMarabou(std::vector<PathElement> &path, std::vector<PathElement> &learned) {
     std::map<int, int> level_lit_count;
     std::map<Position, int> cnt;
     int total = 0;
@@ -4221,19 +4230,15 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
     if (back->second == 1) {
         printf("Perfect!\n");
         back ++;
-
-        PathElement pe;
-        pe._caseSplit = learned.back()._caseSplit;
-        learned.push_back(pe);
-
         return back->first;
     } else {
         printf("GG!\n");
-//        for (int i = 0; i < back->second; ++ i) {learned.pop_back();}
-//        learned.push_back(path.back());
-        PathElement pe;
-        pe._caseSplit = path.back()._caseSplit;
-        learned.push_back(pe);
+        learned.clear();
+        for (auto& element : path) {
+            PathElement pe;
+            pe._caseSplit = element._caseSplit;
+            learned.push_back(std::move(pe));
+        }
         return back->first - 1;
     }
     return 0;
@@ -4266,5 +4271,10 @@ void Engine::queryConstraintActivity(int layer, int node) {
     auto constraint = getConstraintByPosition(pos);
     pos.dump();
     printf(" is active: %d\n", constraint->isActive());
+}
+
+void Engine::processSat() {
+    _exitCode = Engine::SAT;
+    _smtCore.recordStackInfo();
 }
 
