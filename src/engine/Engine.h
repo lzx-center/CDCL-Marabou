@@ -111,6 +111,9 @@ public:
     void performTargetSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type, int record);
     // enqueue
     void performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type);
+    CaseSplitTypeInfo getCaseSplitTypeInfoByLit(Minisat::Lit lit);
+    void performSplitByLit(Minisat::Lit lit);
+    PiecewiseLinearCaseSplit getCaseSplit(CaseSplitTypeInfo info);
     void performSplit();
 
     Minisat::Lit getLitByPosition(Position& position);
@@ -121,6 +124,9 @@ public:
     void performBoundTighteningWithoutEnqueue();
     void backToCurrentState();
     void backToOriginState();
+    void backToInitial();
+    bool gurobiCheck(Minisat::vec<Minisat::Lit> &vec, int last);
+    void gurobiPropagate(Minisat::vec<Minisat::Lit>& vec);
 
     bool processUnSat();
     int learnClauseAndGetBackLevel(Minisat::vec<Minisat::Lit> &vec);
@@ -129,6 +135,7 @@ public:
     void encodePathToLit(std::vector<PathElement> &path, Minisat::vec<Minisat::Lit> &vec);
     Minisat::Lit getBranchLit();
 
+    bool gurobiCheckSolve(unsigned int timeoutInSeconds);
     bool solve( unsigned timeoutInSeconds = 0 );
     bool checkSolve2(unsigned timeoutInSeconds = 0);
     bool checkSolve(unsigned  timeoutInSeconds = 0);
@@ -144,6 +151,15 @@ public:
 
     bool conflictClauseLearning(std::vector<PathElement> &path, std::vector<double> lowerBounds,
                                 std::vector<double> upperBounds, std::vector<PathElement> &newPath);
+
+    bool conflictClauseLearning(std::vector<PathElement> &path, std::vector<PathElement> &newPath);
+
+    bool conflictClauseLearning(Minisat::vec<Minisat::Lit> &trail,
+                                Minisat::vec<Minisat::Lit> &learnt);
+
+    int analyzeBackTrackLevel(Minisat::vec<int>& trail_lim,
+                              Minisat::vec<Minisat::Lit>& trail,
+                              Minisat::vec<Minisat::Lit>& learnt);
     /*
       Minimize the cost function with respect to the current set of linear constraints.
     */

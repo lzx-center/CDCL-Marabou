@@ -57,8 +57,8 @@ public:
     bool    addClause (Lit p, Lit q, Lit r);                    // Add a ternary clause to the solver. 
     bool    addClause (Lit p, Lit q, Lit r, Lit s);             // Add a quaternary clause to the solver. 
     bool    addClause_(      vec<Lit>& ps);                     // Add a clause to the solver without making superflous internal copy. Will
-                                                                // change the passed vector 'ps'.
-
+    int      level            (Var x) const;
+    // change the passed vector 'ps'.
     // Solving:
     //
     bool    simplify     ();                        // Removes already satisfied clauses.
@@ -155,6 +155,7 @@ public:
     uint64_t solves, starts, decisions, rnd_decisions, propagations, conflicts;
     uint64_t dec_vars, num_clauses, num_learnts, clauses_literals, learnts_literals, max_literals, tot_literals;
 
+    void dumpTrail(const char* message);
     void dumpTrail();
 protected:
 
@@ -282,7 +283,6 @@ protected:
     int      decisionLevel    ()      const; // Gives the current decisionlevel.
     uint32_t abstractLevel    (Var x) const; // Used to represent an abstraction of sets of decision levels.
     CRef     reason           (Var x) const;
-    int      level            (Var x) const;
     double   progressEstimate ()      const; // DELETE THIS ?? IT'S NOT VERY USEFUL ...
     bool     withinBudget     ()      const;
     void     relocAll         (ClauseAllocator& to);
@@ -403,6 +403,8 @@ inline void     Solver::toDimacs     (const char* file){ vec<Lit> as; toDimacs(f
 inline void     Solver::toDimacs     (const char* file, Lit p){ vec<Lit> as; as.push(p); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q){ vec<Lit> as; as.push(p); as.push(q); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q, Lit r){ vec<Lit> as; as.push(p); as.push(q); as.push(r); toDimacs(file, as); }
+
+
 
 //=================================================================================================
 // Debug etc:

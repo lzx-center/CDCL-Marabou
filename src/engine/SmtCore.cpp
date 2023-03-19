@@ -758,9 +758,28 @@ void SmtCore::performCheckSplit() {
 void SmtCore::printSimpleStackInfo() {
     printf("Total stack depth: %d\n", getStackDepth());
     int level = 0;
+//    printf("Level: %d ", level ++);
+//    if (!_impliedValidSplitsAtRoot.empty())
+//    {
+//        printf("->");
+//        for (auto& splits : _impliedValidSplitsAtRoot) {
+//            auto info = splits.getInfo();
+//            info.dump();
+//            printf(" ");
+//        }
+//    }
     for (auto& stack : _stack) {
-        printf("Stack level: %d, ", level ++);
+        printf("Stack level: %d ", level ++);
         stack->_activeSplit.getPosition().dump();
+        if (!stack->_impliedValidSplits.empty())
+        {
+            printf("->");
+            for (auto& splits : stack->_impliedValidSplits) {
+                auto info = splits.getInfo();
+                info.dump();
+                printf(" ");
+            }
+        }
         printf("\n");
     }
 }
@@ -1145,4 +1164,16 @@ unsigned int SmtCore::backTrackTo(unsigned int level) {
     return getStackDepth();
 }
 
-    
+void SmtCore::pushEmptyStack() {
+    SmtStackEntry* entry = new SmtStackEntry;
+    _stack.append(entry);
+}
+
+void SmtCore::emptyStackClear() {
+    _stack.back()->_impliedValidSplits.clear();
+}
+
+
+
+
+

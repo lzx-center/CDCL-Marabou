@@ -638,8 +638,27 @@ void Solver::rebuildOrderHeap()
     order_heap.build(vs);
 }
 
+void Solver::dumpTrail(const char *message) {
+    printf("------ %s:\n", message);
+    dumpTrail();
+}
 void Solver::dumpTrail() {
     printf("Dump trail:\n");
+    if (!trail_lim.size()) {
+        printf("Level 0: ");
+        for (int i = 0; i < trail.size(); ++ i) {
+            printf(sign(trail[i]) ? "-%d " : "%d ", var(trail[i]));
+        }
+        printf("\n");
+        return;
+    }
+    if (trail_lim.size() and trail_lim[0]) {
+        printf("Level 0: ");
+        for (int i = 0; i < trail_lim[0]; ++ i) {
+            printf(sign(trail[i]) ? "-%d " : "%d ", var(trail[i]));
+        }
+        printf("\n");
+    }
     for (int i = 0; i < trail_lim.size(); ++ i) {
         printf("Level %d: ", i + 1 );
         printf(sign(trail[trail_lim[i]]) ? "-%d " : "%d ", var(trail[trail_lim[i]]));
@@ -730,6 +749,8 @@ lbool Solver::search(int nof_conflicts)
 
     bool perform_split = false;
     for (;;){
+        engine_ptr->gurobiPropagate(trail);
+        dumpTrail("Before propagate");
         int origin_head = qhead;
         CRef confl = propagate();
         int after_head = qhead;
@@ -743,9 +764,6 @@ lbool Solver::search(int nof_conflicts)
             learnt_clause.clear();
             analyze(confl, learnt_clause, backtrack_level);
             cancelUntil(backtrack_level);
-            //TODO: marabou: back track to given level
-
-            //TODO: marabou: do target split
 
             if (learnt_clause.size() == 1){
                 uncheckedEnqueue(learnt_clause[0]);
@@ -790,45 +808,36 @@ lbool Solver::search(int nof_conflicts)
 
             Lit next = lit_Undef;
 
-            //marabou: split according to propagated lits
-            dumpTrail();
-            vec<Lit> propagated;
-            for (int i = origin_head; i < after_head; ++ i) {
-                propagated.push(trail[i]);
-            }
-            if (propagated.size()) {
-                engine_ptr->performPropagatedSplit(propagated);
-            }
 
             //marabou: check feasible
-            bool feasible = engine_ptr->checkFeasible();
+            dumpTrail("Before check");
+
+            bool feasible = engine_ptr->gurobiCheck(trail, trail.size());
             if (!feasible) {
-                learnt_clause.clear();
-                // return conflict clause
-                // TODO: should apply back track
-                int level = engine_ptr->learnClauseAndGetBackLevel(learnt_clause);
-                printf("Should back track to: [%d]\n", level);
-                // add learnt clause
-                cancelUntil(level);
-                next = learnt_clause[0];
+                printf("Is infeasible!\n");
+                vec<Lit> learnt;
+                auto backtrack_level = engine_ptr->analyzeBackTrackLevel(trail_lim, trail, learnt);
+                if (backtrack_level == -1)
+                    return l_False;
+                cancelUntil(backtrack_level);
+                printf("Should back track to %d\n", backtrack_level);
 
-                // TODO: marabou: backtrack and apply directly
-
-                printf("Enqueue next ");
-                printf(sign(next) ? "-%d\n" : "%d\n", var(next));
-
-                if (learnt_clause.size() == 1){
-                    uncheckedEnqueue(learnt_clause[0]);
-                } else {
-                    CRef cr = ca.alloc(learnt_clause, true);
+                if (learnt.size() == 1){
+                    uncheckedEnqueue(learnt[0]);
+                }else{
+                    CRef cr = ca.alloc(learnt, true);
                     learnts.push(cr);
                     attachClause(cr);
                     claBumpActivity(ca[cr]);
-                    uncheckedEnqueue(learnt_clause[0], cr);
+                    uncheckedEnqueue(learnt[0], cr);
                 }
-                engine_ptr->backtrackAndPerformLearntSplit(level, learnt_clause[0]);
+
+                varDecayActivity();
+                claDecayActivity();
                 continue;
             }
+
+
             // else check if there is a solution when branching
             while (decisionLevel() < assumptions.size()){
                 // Perform user provided assumption:
@@ -848,14 +857,10 @@ lbool Solver::search(int nof_conflicts)
             if (next == lit_Undef){
                 // New variable decision:
                 decisions++;
-                // marabou: do branch
-                bool solutionFound = engine_ptr->gurobiBranch();
-                if (solutionFound) {
-                    return l_True;
-                }
                 // next split should be in _constraintForSplit
                 // get the split Lit by marabou and split
-                next = engine_ptr->getBranchLit();
+                next = pickBranchLit();
+                printf("====Pick next lit: %d====\n", var(next));
                 if (next == lit_Undef)
                     // Model found:
                     return l_True;
