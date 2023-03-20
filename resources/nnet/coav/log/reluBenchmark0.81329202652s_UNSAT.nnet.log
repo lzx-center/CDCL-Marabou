@@ -15,1115 +15,597 @@ Input bounds:
 	x5: [ -0.1801,  -0.1488] 
 
 Using Gurobi to solve LP...
-x0 [0.231068, 0.262318]
-x1 [0.425145, 0.456395]
-x2 [0.143975, 0.175225]
-x3 [0.561469, 0.592719]
-x4 [0.180182, 0.211432]
-x5 [-0.180094, -0.148844]
-x6 [-0.159128, -0.030923]
-x7 [0.439731, 0.700714]
-x8 [-0.014696, -0.012390]
-x9 [-0.273829, -0.045981]
-x10 [0.128214, 0.380024]
-x11 [0.097842, 0.212588]
-x12 [-0.008130, -0.006944]
-x13 [-0.181410, -0.102499]
-x14 [-0.591183, -0.394629]
-x15 [-0.010546, -0.008273]
-x16 [-0.020868, -0.017796]
-x17 [0.234546, 0.411279]
-x18 [0.187266, 0.363707]
-x19 [-0.060612, -0.045981]
-x20 [-0.493304, -0.343654]
-x21 [0.801462, 1.074399]
-x22 [-0.207341, -0.167868]
-x23 [-0.686272, -0.582565]
-x24 [-0.405139, -0.284655]
-x25 [0.188119, 0.430695]
-x26 [-0.014813, -0.012703]
-x27 [-0.097735, 0.137285]
-x28 [-0.004522, 0.270372]
-x29 [0.280177, 0.459708]
-x30 [-0.023054, -0.020229]
-x31 [0.099112, 0.203716]
-x32 [0.378240, 0.693863]
-x33 [-0.011533, -0.010074]
-x34 [0.515675, 0.705138]
-x35 [-0.636838, -0.461897]
-x36 [-0.505066, -0.300882]
-x37 [-0.019446, -0.017280]
-x38 [0.011720, 0.338682]
-x39 [-0.233710, -0.169364]
-x40 [-0.679015, -0.489265]
-x41 [-0.025199, -0.022895]
-x42 [-0.008349, -0.006352]
-x43 [-0.576368, -0.337622]
-x44 [0.288403, 0.487328]
-x45 [-0.389592, -0.219101]
-x46 [0.439731, 0.700714]
-x47 [0.128214, 0.380024]
-x48 [0.097842, 0.212588]
-x49 [0.234546, 0.411279]
-x50 [0.187266, 0.363707]
-x51 [0.801462, 1.074399]
-x52 [0.188119, 0.430695]
-x53 [0.000000, 0.137285]
-x54 [0.000000, 0.270372]
-x55 [0.280177, 0.459708]
-x56 [0.099112, 0.203716]
-x57 [0.378240, 0.693863]
-x58 [0.515675, 0.705138]
-x59 [0.011720, 0.338682]
-x60 [0.288403, 0.487328]
-x61 [-0.700714, -0.439731]
-x62 [0.000000, 0.260983]
-x63 [-0.035384, 0.233191]
-x64 [0.000000, 0.114746]
-x65 [-0.411279, -0.234546]
-x66 [0.000000, 0.176733]
-x67 [0.187266, 0.363707]
-x68 [-1.074399, -0.801462]
-x69 [0.000000, 0.272938]
-x70 [-0.430695, -0.188119]
-x71 [0.000000, 0.242576]
-x72 [-0.137285, 0.000000]
-x73 [0.000000, 0.137285]
-x74 [-0.455054, -0.018980]
-x75 [0.000000, 0.179531]
-x76 [-0.203716, -0.099112]
-x77 [0.000000, 0.104604]
-x78 [0.378240, 0.693863]
-x79 [0.515675, 0.705138]
-x80 [0.011720, 0.338682]
-x81 [0.288403, 0.487328]
-x82 [0.000000, 0.260983]
-x83 [0.000000, 0.233191]
-x84 [0.000000, 0.114746]
-x85 [0.000000, 0.176733]
-x86 [0.187266, 0.363707]
-x87 [0.000000, 0.272938]
-x88 [0.000000, 0.242576]
-x89 [0.000000, 0.137285]
-x90 [0.000000, 0.179531]
-x91 [0.000000, 0.104604]
-x92 [0.378240, 0.693863]
-x93 [0.515675, 0.705138]
-x94 [0.011720, 0.338682]
-x95 [0.288403, 0.487328]
-x96 [0.439731, 0.700714]
-x97 [-0.381336, -0.128214]
-x98 [0.000000, 0.253122]
-x99 [0.128214, 0.381336]
-x100 [-0.411279, -0.234546]
-x101 [0.000000, 0.176733]
-x102 [-0.123612, 0.218463]
-x103 [0.000000, 0.176441]
-x104 [-0.876790, -0.448097]
-x105 [0.000000, 0.272938]
-x106 [0.801462, 1.074399]
-x107 [-0.430695, -0.188119]
-x108 [0.000000, 0.242576]
-x109 [0.090005, 0.430695]
-x110 [0.000000, 0.137285]
-x111 [-0.459708, -0.166204]
-x112 [0.000000, 0.179531]
-x113 [0.086861, 0.350196]
-x114 [0.000000, 0.104604]
-x115 [-0.529276, -0.239999]
-x116 [0.000000, 0.315623]
-x117 [-0.288358, 0.139648]
-x118 [0.000000, 0.189463]
-x119 [0.515675, 0.705138]
-x120 [-0.338682, -0.011720]
-x121 [0.000000, 0.326962]
-x122 [0.011720, 0.338682]
-x123 [-0.487328, -0.288403]
-x124 [0.000000, 0.198925]
-x125 [0.439731, 0.700714]
-x126 [0.000000, 0.253122]
-x127 [0.128214, 0.381336]
-x128 [0.000000, 0.176733]
-x129 [0.000000, 0.218463]
-x130 [0.000000, 0.176441]
-x131 [0.000000, 0.272938]
-x132 [0.801462, 1.074399]
-x133 [0.000000, 0.242576]
-x134 [0.090005, 0.430695]
-x135 [0.000000, 0.137285]
-x136 [0.000000, 0.179531]
-x137 [0.086861, 0.350196]
-x138 [0.000000, 0.104604]
-x139 [0.000000, 0.315623]
-x140 [0.000000, 0.139648]
-x141 [0.000000, 0.189463]
-x142 [0.515675, 0.705138]
-x143 [0.000000, 0.326962]
-x144 [0.011720, 0.338682]
-x145 [0.000000, 0.198925]
-x146 [-0.030776, -0.016082]
-x147 [0.188798, 0.692093]
-x148 [-0.601426, 0.444327]
-x149 [-0.720152, 0.530222]
-x150 [-0.034449, -0.021411]
-x151 [-1.779092, 1.023601]
-x152 [0.610005, 1.938915]
-x153 [0.100291, 0.723412]
-x154 [-1.323648, 0.226062]
-x155 [-0.026570, -0.014624]
-x156 [-0.582767, 0.087844]
-x157 [-0.460959, 0.029947]
-x158 [-0.024475, -0.016102]
-x159 [-0.047897, -0.038881]
-x160 [-0.021982, -0.011981]
-x161 [-1.180360, -0.553227]
-x162 [-0.528051, -0.292786]
-x163 [0.040462, 0.120115]
-x164 [-0.066444, 0.574582]
-x165 [0.188798, 0.692093]
-x166 [0.000000, 0.444327]
-x167 [0.000000, 0.530222]
-x168 [0.000000, 1.023601]
-x169 [0.610005, 1.938915]
-x170 [0.100291, 0.723412]
-x171 [0.000000, 0.226062]
-x172 [0.000000, 0.087844]
-x173 [0.000000, 0.029947]
-x174 [0.000000, 0.000000]
-x175 [0.000000, 0.000000]
-x176 [0.040462, 0.120115]
-x177 [0.000000, 0.574582]
-x178 [-2.506965, 0.000000]
-x179 [0.030923, 0.159128]
-x180 [0.012390, 0.014696]
-x181 [0.045981, 0.273829]
-x182 [0.006944, 0.008130]
-x183 [0.102499, 0.181410]
-x184 [0.394629, 0.591183]
-x185 [0.008273, 0.010546]
-x186 [0.017796, 0.020868]
-x187 [0.045981, 0.060612]
-x188 [0.343654, 0.493304]
-x189 [0.167868, 0.207341]
-x190 [0.582565, 0.686272]
-x191 [0.284655, 0.405139]
-x192 [0.012703, 0.014813]
-x193 [0.000000, 0.097735]
-x194 [0.000000, 0.004522]
-x195 [0.020229, 0.023054]
-x196 [0.010074, 0.011533]
-x197 [0.461897, 0.636838]
-x198 [0.300882, 0.505066]
-x199 [0.017280, 0.019446]
-x200 [0.169364, 0.233710]
-x201 [0.489265, 0.679015]
-x202 [0.022895, 0.025199]
-x203 [0.006352, 0.008349]
-x204 [0.337622, 0.576368]
-x205 [0.219101, 0.389592]
-x206 [0.439731, 0.700714]
-x207 [0.000000, 0.084374]
-x208 [0.234546, 0.411279]
-x209 [0.801462, 1.074399]
-x210 [0.188119, 0.430695]
-x211 [0.000000, 0.137285]
-x212 [0.009805, 0.459708]
-x213 [0.099112, 0.203716]
-x214 [0.097842, 0.494770]
-x215 [0.000000, 0.030372]
-x216 [0.234546, 0.411279]
-x217 [0.000000, 0.129161]
-x218 [0.437755, 0.887133]
-x219 [0.188119, 0.430695]
-x220 [0.142892, 0.459708]
-x221 [0.174524, 0.594751]
-x222 [0.000000, 0.326898]
-x223 [0.011720, 0.338682]
-x224 [0.288403, 0.487328]
-x225 [0.001406, 0.045033]
-x226 [0.000000, 1.423763]
-x227 [0.000000, 1.426727]
-x228 [0.000000, 2.199466]
-x229 [0.010776, 0.045278]
-x230 [0.000000, 4.399137]
-x231 [0.000000, 0.539807]
-x232 [0.000000, 1.241948]
-x233 [0.000000, 2.927238]
-x234 [0.002334, 0.037657]
-x235 [0.000000, 1.025222]
-x236 [0.000000, 1.409729]
-x237 [0.006167, 0.035272]
-x238 [0.025771, 0.063198]
-x239 [0.003102, 0.033685]
-x240 [0.000000, 1.949711]
-x241 [0.000000, 1.057990]
-x242 [0.000000, 0.043033]
-x243 [0.000000, 1.457457]
--1.00x6 -0.98x0 +0.43x1 -0.75x2 +0.32x3 +0.46x4 +1.16x5  = 0.01
--1.00x7 -0.40x0 -1.74x1 -1.63x2 +1.80x3 +1.16x4 -1.63x5  = -0.16
--1.00x8 -0.00x0 -0.01x1 -0.02x2 -0.01x3 +0.02x4 +0.01x5  = -0.00
--1.00x9 -1.92x0 -0.57x1 +0.23x2 -2.40x3 -1.23x4 -0.95x5  = -2.00
--1.00x10 -1.24x0 +1.17x1 -2.16x2 -0.40x3 -2.68x4 -0.41x5  = -1.08
--1.00x11 -0.58x0 +0.18x1 +0.40x2 -0.64x3 +1.38x4 -0.48x5  = -0.17
--1.00x12 -0.00x0 -0.01x1 -0.01x2 -0.01x3 +0.01x4 +0.00x5  = -0.00
--1.00x13 +1.29x0 -0.30x1 +0.09x2 +0.65x3 +0.15x4 +0.04x5  = 0.74
--1.00x14 +1.93x0 +0.69x1 -0.75x2 -1.22x3 -1.64x4 +0.06x5  = 0.12
--1.00x15 +0.01x0 +0.00x1 -0.02x2 -0.02x3 -0.00x4 -0.02x5  = -0.00
--1.00x16 -0.01x0 -0.02x1 -0.02x2 -0.02x3 +0.02x4 -0.02x5  = -0.00
--1.00x17 -0.61x0 -0.09x1 +0.18x2 +0.97x3 +2.60x4 -1.21x5  = 0.78
--1.00x18 +0.07x0 +0.86x1 +1.35x2 -0.75x3 -0.68x4 +1.93x5  = -0.55
--1.00x19 +0.15x0 -0.12x1 +0.03x2 +0.04x3 +0.10x4 +0.03x5  = 0.08
--1.00x20 -0.55x0 +1.87x1 -0.82x2 -1.11x3 -0.21x4 +0.22x5  = 0.26
--1.00x21 +2.15x0 -2.95x1 -1.73x2 +1.43x3 +0.21x4 +0.26x5  = -1.16
--1.00x22 -0.42x0 +0.01x1 +0.07x2 +0.08x3 -0.57x4 -0.11x5  = 0.05
--1.00x23 +1.08x0 -0.20x1 -0.71x2 -0.83x3 -0.24x4 +0.25x5  = 0.13
--1.00x24 -0.66x0 +1.39x1 -0.19x2 -0.06x3 +0.47x4 -1.09x5  = 1.00
--1.00x25 -0.87x0 -0.91x1 +3.01x2 +2.13x3 +0.13x4 +0.70x5  = 0.70
--1.00x26 -0.01x0 -0.01x1 -0.01x2 -0.02x3 +0.01x4 -0.00x5  = -0.00
--1.00x27 +3.25x0 -1.45x1 -0.36x2 -1.20x3 -0.56x4 +0.69x5  = -0.84
--1.00x28 -2.52x0 +2.05x1 -2.31x2 -0.89x3 -0.31x4 -0.71x5  = -0.68
--1.00x29 -0.29x0 -0.72x1 +2.45x2 +1.97x3 +0.28x4 +0.03x5  = 0.82
--1.00x30 -0.02x0 +0.01x1 +0.00x2 -0.02x3 -0.02x4 +0.02x5  = 0.00
--1.00x31 +1.76x0 +0.17x1 +0.08x2 +0.26x3 -0.28x4 -0.80x5  = 0.60
--1.00x32 +2.78x0 -1.68x1 +2.93x2 +1.18x3 +0.53x4 +1.00x5  = 0.50
--1.00x33 -0.01x0 +0.01x1 -0.00x2 -0.01x3 -0.01x4 +0.01x5  = 0.00
--1.00x34 +0.39x0 +1.46x1 -0.47x2 +0.31x3 +2.41x4 -1.03x5  = 0.87
--1.00x35 -0.71x0 +0.26x1 +1.01x2 -2.72x3 -0.65x4 +0.25x5  = -1.09
--1.00x36 +0.90x0 +2.39x1 +0.88x2 -0.73x3 +0.91x4 +0.71x5  = 1.46
--1.00x37 +0.00x0 -0.02x1 -0.02x2 -0.01x3 -0.01x4 -0.01x5  = -0.00
--1.00x38 +1.85x0 -1.05x1 +5.47x2 +1.35x3 -0.03x4 +0.71x5  = 1.35
--1.00x39 +0.22x0 -0.28x1 -0.40x2 +0.40x3 +0.35x4 -0.41x5  = 0.43
--1.00x40 -0.43x0 +4.04x1 +1.05x2 -0.45x3 -0.10x4 -0.00x5  = 2.15
--1.00x41 +0.00x0 -0.02x1 -0.01x2 -0.01x3 -0.02x4 +0.02x5  = 0.00
--1.00x42 +0.00x0 -0.00x1 -0.02x2 +0.01x3 +0.03x4 -0.00x5  = 0.01
--1.00x43 +2.25x0 -0.52x1 -2.48x2 +1.03x3 -0.83x4 +0.53x5  = 0.73
--1.00x44 +0.32x0 -1.25x1 +2.67x2 +0.63x3 -0.01x4 -1.48x5  = 0.17
--1.00x45 +0.34x0 -2.12x1 +0.36x2 +0.28x3 +0.03x4 +2.33x5  = -0.70
--1.00x61 -1.00x46  = -0.00
--1.00x62 +1.00x46  = 0.44
- = 0.00
- = 0.00
--1.00x63 +1.00x47 -1.00x48  = -0.00
--1.00x64 +1.00x48  = 0.10
- = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x65 -1.00x49  = -0.00
--1.00x66 +1.00x49  = 0.23
--1.00x67 +1.00x50  = 0.00
- = 0.00
--1.00x68 -1.00x51  = -0.00
--1.00x69 +1.00x51  = 0.80
- = 0.00
- = 0.00
--1.00x70 -1.00x52  = -0.00
--1.00x71 +1.00x52  = 0.19
--1.00x72 -1.00x53  = -0.00
--1.00x73 +1.00x53  = -0.00
--1.00x74 +1.00x54 -1.00x55  = -0.00
--1.00x75 +1.00x55  = 0.28
--1.00x76 -1.00x56  = -0.00
--1.00x77 +1.00x56  = 0.10
--1.00x78 +1.00x57  = 0.00
- = 0.00
--1.00x79 +1.00x58  = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x80 +1.00x59  = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x81 +1.00x60  = 0.00
- = 0.00
--1.00x96 +1.00x82  = -0.44
- = 0.00
--1.00x97 -1.00x83 -1.00x84  = 0.10
--1.00x98 +1.00x83 +1.00x84  = 0.03
--1.00x99 +1.00x83 +1.00x84  = -0.10
- = 0.00
- = 0.00
- = 0.00
--1.00x100 -1.00x85  = 0.23
--1.00x101 +1.00x85  = -0.00
--1.00x102 +1.00x85 -1.00x86  = -0.23
--1.00x103 +1.00x86  = 0.19
--1.00x104 +1.00x86 -1.00x87  = 0.80
--1.00x105 +1.00x87  = -0.00
--1.00x106 +1.00x87  = -0.80
- = 0.00
--1.00x107 -1.00x88  = 0.19
--1.00x108 +1.00x88  = -0.00
--1.00x109 +1.00x88 -1.00x89  = -0.19
--1.00x110 +1.00x89  = -0.00
--1.00x111 +1.00x89 -1.00x90  = 0.28
--1.00x112 +1.00x90  = -0.00
--1.00x113 +1.00x90 -1.00x91  = -0.18
--1.00x114 +1.00x91  = -0.00
--1.00x115 +1.00x91 -1.00x92  = -0.10
--1.00x116 +1.00x92  = 0.38
--1.00x117 +1.00x92 -1.00x93  = 0.00
--1.00x118 +1.00x93  = 0.52
--1.00x119 +1.00x93  = 0.00
- = 0.00
--1.00x120 -1.00x94  = 0.00
--1.00x121 +1.00x94  = 0.01
--1.00x122 +1.00x94  = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x123 -1.00x95  = 0.00
--1.00x124 +1.00x95  = 0.29
--1.00x146 -0.01x125 -0.01x126 +0.01x127 -0.01x128 +0.01x129 +0.01x130 -0.00x131 +0.00x132 -0.00x133 -0.01x134 -0.01x135 -0.01x136 -0.01x137 -0.01x138 +0.01x139 +0.00x140 +0.00x141 -0.01x142 -0.01x143 -0.02x144 +0.00x145  = 0.01
--1.00x147 -0.06x125 -0.57x126 +1.65x127 +0.24x128 -0.99x129 -0.99x130 +0.88x131 -1.50x132 +0.12x133 +1.12x134 +1.12x135 -0.56x136 -0.48x137 -0.48x138 +0.72x139 -0.39x140 -0.39x141 -0.15x142 -0.56x143 -0.36x144 +0.59x145  = -1.49
--1.00x148 -0.44x125 +0.05x126 +1.33x127 +0.18x128 +0.14x129 +0.14x130 +0.62x131 -0.18x132 -1.03x133 +0.04x134 +0.04x135 -0.70x136 -1.72x137 -1.72x138 +0.89x139 +0.25x140 +0.25x141 -0.39x142 +0.01x143 -0.69x144 -0.67x145  = -0.76
--1.00x149 +1.78x125 +0.08x126 -0.35x127 -0.14x128 +0.75x129 +0.75x130 +0.95x131 +0.93x132 -1.70x133 -1.54x134 -1.54x135 -0.17x136 -0.15x137 -0.15x138 -1.46x139 -0.91x140 -0.91x141 +0.67x142 -0.35x143 +0.67x144 -0.76x145  = 1.43
--1.00x150 +0.00x125 -0.00x126 -0.01x127 -0.01x128 +0.01x129 +0.01x130 -0.00x131 -0.01x132 -0.01x133 +0.01x134 +0.01x135 +0.00x136 -0.00x137 -0.00x138 -0.01x139 -0.01x140 -0.01x141 +0.01x142 -0.01x143 -0.01x144 -0.00x145  = 0.01
--1.00x151 -2.13x125 +0.51x126 -2.15x127 +1.92x128 +1.68x129 +1.68x130 -2.62x131 +0.93x132 +1.86x133 +0.70x134 +0.70x135 +0.18x136 -1.16x137 -1.16x138 +1.18x139 +1.37x140 +1.37x141 -2.89x142 +1.53x143 +2.37x144 +2.76x145  = -0.65
--1.00x152 +0.67x125 +0.46x126 -0.25x127 +0.29x128 +1.30x129 +1.30x130 +0.86x131 -1.71x132 +0.28x133 +0.34x134 +0.34x135 -2.51x136 -1.71x137 -1.71x138 +0.34x139 +0.03x140 +0.03x141 +0.42x142 -0.26x143 -1.16x144 -0.25x145  = -2.66
--1.00x153 +0.72x125 -1.09x126 +0.65x127 +0.37x128 -1.28x129 -1.28x130 +0.89x131 -0.32x132 +0.82x133 +1.31x134 +1.31x135 -0.15x136 -0.32x137 -0.32x138 -0.31x139 +0.07x140 +0.07x141 +0.28x142 -0.15x143 +0.40x144 +0.24x145  = 0.26
--1.00x154 +1.86x125 +0.62x126 +0.46x127 -0.73x128 +0.26x129 +0.26x130 +1.80x131 -0.13x132 -0.61x133 -2.74x134 -2.74x135 -0.29x136 +0.44x137 +0.44x138 -1.65x139 -0.60x140 -0.60x141 +0.92x142 -0.54x143 -0.18x144 -1.25x145  = 1.04
--1.00x155 -0.01x125 -0.00x126 +0.01x127 +0.01x128 +0.01x129 +0.01x130 -0.01x131 +0.01x132 +0.00x133 -0.00x134 -0.00x135 -0.00x136 -0.01x137 -0.01x138 -0.01x139 +0.00x140 +0.00x141 -0.01x142 -0.01x143 +0.00x144 -0.01x145  = 0.01
--1.00x156 +0.35x125 +0.13x126 +0.19x127 -0.14x128 -0.48x129 -0.48x130 -0.26x131 +0.60x132 +0.01x133 -0.04x134 -0.04x135 -0.01x136 -0.02x137 -0.02x138 -0.64x139 -0.48x140 -0.48x141 +0.33x142 -0.37x143 -0.38x144 -0.68x145  = 0.76
--1.00x157 +0.34x125 -0.75x126 +0.54x127 +0.17x128 -0.97x129 -0.97x130 +0.34x131 -0.19x132 +0.35x133 +0.82x134 +0.82x135 +0.75x136 +0.02x137 +0.02x138 -0.51x139 -0.04x140 -0.04x141 -0.20x142 -0.19x143 +0.40x144 -0.31x145  = 0.35
--1.00x158 -0.00x125 -0.01x126 -0.00x127 -0.01x128 +0.00x129 +0.00x130 -0.01x131 -0.00x132 -0.00x133 +0.01x134 +0.01x135 -0.01x136 -0.00x137 -0.00x138 -0.00x139 -0.01x140 -0.01x141 +0.01x142 -0.01x143 -0.01x144 +0.01x145  = 0.02
--1.00x159 -0.01x125 -0.01x126 -0.01x127 -0.00x128 +0.00x129 +0.00x130 -0.01x131 -0.01x132 -0.01x133 +0.00x134 +0.00x135 -0.01x136 -0.00x137 -0.00x138 -0.01x139 -0.01x140 -0.01x141 -0.00x142 +0.01x143 -0.01x144 +0.01x145  = 0.02
--1.00x160 +0.00x125 +0.01x126 -0.01x127 -0.01x128 -0.01x129 -0.01x130 +0.01x131 -0.00x132 -0.01x133 -0.00x134 -0.00x135 +0.00x136 -0.00x137 -0.00x138 -0.00x139 -0.01x140 -0.01x141 +0.00x142 -0.01x143 +0.00x144 -0.00x145  = 0.01
--1.00x161 +0.81x125 +1.07x126 +0.44x127 -0.29x128 -0.18x129 -0.18x130 -0.24x131 -0.47x132 +0.16x133 -0.40x134 -0.40x135 +0.20x136 +0.93x137 +0.93x138 -0.31x139 -0.71x140 -0.71x141 -0.41x142 -0.04x143 -0.02x144 -0.40x145  = 0.75
--1.00x162 +0.43x125 +0.34x126 -0.05x127 -0.37x128 -0.12x129 -0.12x130 -0.23x131 +0.09x132 +0.28x133 -0.35x134 -0.35x135 -0.23x136 +0.05x137 +0.05x138 -0.13x139 -0.28x140 -0.28x141 -0.06x142 +0.37x143 +0.53x144 -0.24x145  = 0.65
--1.00x163 +0.05x125 -0.02x126 -0.07x127 -0.02x128 +0.15x129 +0.15x130 -0.03x131 -0.00x132 -0.00x133 -0.03x134 -0.03x135 -0.03x136 -0.09x137 -0.09x138 +0.03x139 +0.09x140 +0.09x141 +0.04x142 +0.07x143 +0.03x144 +0.03x145  = -0.03
--1.00x164 -0.99x125 +0.66x126 -0.71x127 -0.24x128 +1.46x129 +1.46x130 +0.32x131 +0.69x132 +0.18x133 +0.18x134 +0.18x135 +1.37x136 +1.05x137 +1.05x138 -0.50x139 +0.25x140 +0.25x141 -0.32x142 -0.54x143 -1.23x144 -1.18x145  = -0.19
--1.00x178 +4.01x165 +3.90x166 -5.95x167 -9.17x168 +6.42x169 +3.98x170 -6.95x171 -2.18x172 +2.86x173 -2.86x174 -1.68x175 -0.34x176 -4.46x177  = -0.21
--1.00x6 -1.00x179  = 0.00
-+1.00x46 -1.00x7  = 0.00
--1.00x8 -1.00x180  = 0.00
--1.00x9 -1.00x181  = 0.00
-+1.00x47 -1.00x10  = 0.00
-+1.00x48 -1.00x11  = 0.00
--1.00x12 -1.00x182  = 0.00
--1.00x13 -1.00x183  = 0.00
--1.00x14 -1.00x184  = 0.00
--1.00x15 -1.00x185  = 0.00
--1.00x16 -1.00x186  = 0.00
-+1.00x49 -1.00x17  = 0.00
-+1.00x50 -1.00x18  = 0.00
--1.00x19 -1.00x187  = 0.00
--1.00x20 -1.00x188  = 0.00
-+1.00x51 -1.00x21  = 0.00
--1.00x22 -1.00x189  = 0.00
--1.00x23 -1.00x190  = 0.00
--1.00x24 -1.00x191  = 0.00
-+1.00x52 -1.00x25  = 0.00
--1.00x26 -1.00x192  = 0.00
-+1.00x53 -1.00x27 -1.00x193  = 0.00
-+1.00x54 -1.00x28 -1.00x194  = 0.00
-+1.00x55 -1.00x29  = 0.00
--1.00x30 -1.00x195  = 0.00
-+1.00x56 -1.00x31  = 0.00
-+1.00x57 -1.00x32  = 0.00
--1.00x33 -1.00x196  = 0.00
-+1.00x58 -1.00x34  = 0.00
--1.00x35 -1.00x197  = 0.00
--1.00x36 -1.00x198  = 0.00
--1.00x37 -1.00x199  = 0.00
-+1.00x59 -1.00x38  = 0.00
--1.00x39 -1.00x200  = 0.00
--1.00x40 -1.00x201  = 0.00
--1.00x41 -1.00x202  = 0.00
--1.00x42 -1.00x203  = 0.00
--1.00x43 -1.00x204  = 0.00
-+1.00x60 -1.00x44  = 0.00
--1.00x45 -1.00x205  = 0.00
--1.00x61 -1.00x206  = 0.00
-+1.00x82 -1.00x62  = 0.00
-+1.00x83 -1.00x63 -1.00x207  = 0.00
-+1.00x84 -1.00x64  = 0.00
--1.00x65 -1.00x208  = 0.00
-+1.00x85 -1.00x66  = 0.00
-+1.00x86 -1.00x67  = 0.00
--1.00x68 -1.00x209  = 0.00
-+1.00x87 -1.00x69  = 0.00
--1.00x70 -1.00x210  = 0.00
-+1.00x88 -1.00x71  = 0.00
--1.00x72 -1.00x211  = 0.00
-+1.00x89 -1.00x73  = 0.00
--1.00x74 -1.00x212  = 0.00
-+1.00x90 -1.00x75  = 0.00
--1.00x76 -1.00x213  = 0.00
-+1.00x91 -1.00x77  = 0.00
-+1.00x92 -1.00x78  = 0.00
-+1.00x93 -1.00x79  = 0.00
-+1.00x94 -1.00x80  = 0.00
-+1.00x95 -1.00x81  = 0.00
-+1.00x125 -1.00x96  = 0.00
--1.00x97 -1.00x214  = 0.00
-+1.00x126 -1.00x98 -1.00x215  = 0.00
-+1.00x127 -1.00x99  = 0.00
--1.00x100 -1.00x216  = 0.00
-+1.00x128 -1.00x101  = 0.00
-+1.00x129 -1.00x102 -1.00x217  = 0.00
-+1.00x130 -1.00x103  = 0.00
--1.00x104 -1.00x218  = 0.00
-+1.00x131 -1.00x105  = 0.00
-+1.00x132 -1.00x106  = 0.00
--1.00x107 -1.00x219  = 0.00
-+1.00x133 -1.00x108  = 0.00
-+1.00x134 -1.00x109  = 0.00
-+1.00x135 -1.00x110  = 0.00
--1.00x111 -1.00x220  = 0.00
-+1.00x136 -1.00x112  = 0.00
-+1.00x137 -1.00x113  = 0.00
-+1.00x138 -1.00x114  = 0.00
--1.00x115 -1.00x221  = 0.00
-+1.00x139 -1.00x116  = 0.00
-+1.00x140 -1.00x117 -1.00x222  = 0.00
-+1.00x141 -1.00x118  = 0.00
-+1.00x142 -1.00x119  = 0.00
--1.00x120 -1.00x223  = 0.00
-+1.00x143 -1.00x121  = 0.00
-+1.00x144 -1.00x122  = 0.00
--1.00x123 -1.00x224  = 0.00
-+1.00x145 -1.00x124  = 0.00
--1.00x146 -1.00x225  = 0.00
-+1.00x165 -1.00x147 -1.00x226  = 0.00
-+1.00x166 -1.00x148 -1.00x227  = 0.00
-+1.00x167 -1.00x149 -1.00x228  = 0.00
--1.00x150 -1.00x229  = 0.00
-+1.00x168 -1.00x151 -1.00x230  = 0.00
-+1.00x169 -1.00x152 -1.00x231  = 0.00
-+1.00x170 -1.00x153 -1.00x232  = 0.00
-+1.00x171 -1.00x154 -1.00x233  = 0.00
--1.00x155 -1.00x234  = 0.00
-+1.00x172 -1.00x156 -1.00x235  = 0.00
-+1.00x173 -1.00x157 -1.00x236  = 0.00
--1.00x158 -1.00x237  = 0.00
--1.00x159 -1.00x238  = 0.00
--1.00x160 -1.00x239  = 0.00
-+1.00x174 -1.00x161 -1.00x240  = 0.00
-+1.00x175 -1.00x162 -1.00x241  = 0.00
-+1.00x176 -1.00x163 -1.00x242  = 0.00
-+1.00x177 -1.00x164 -1.00x243  = 0.00
-
-Engine::solve: Initial statistics
-
-11:03:26 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 13 milli (00:00:00)
-		Main loop: 0 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 5 milli (00:00:00)
-	Breakdown for main loop:
-		[0.00%] Simplex steps: 0 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.00%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[0.00%] SMT core: 0 milli
-		[0.00%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[0.00%] SoI-based local search: 1 milli
-		[0.00%] Unaccounted for: 0 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 174
-	Number of constraints removed due to variable elimination: 118
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 1
-		0 iterations were simplex steps. Total time: 0 milli. Average: 0.00 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 19 / 19
-		Constraints disabled by valid splits: 0. By SMT-originated splits: 0
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 0. Total visited states: 1. Number of splits: 0. Number of pops: 0
-	Max stack depth: 0
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 0.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 114. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 87
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 0 / 0
-		[0.00%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.00%] Post-Pop hook: 0 milli
-		[0.00%] Pop : 0 milli
-		[0.00%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
----
-Set constriant: Position: (4, 5)
-Stack depth: 1
-Verified unsat!
-
-Engine::solve: unsat query
-
-11:03:26 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 15 milli (00:00:00)
-		Main loop: 2 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 5 milli (00:00:00)
-	Breakdown for main loop:
-		[84.75%] Simplex steps: 1 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[1.38%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[0.78%] SMT core: 0 milli
-		[70.74%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[97.56%] SoI-based local search: 2 milli
-		[850080372060347904.00%] Unaccounted for: 0 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 174
-	Number of constraints removed due to variable elimination: 118
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 3
-		44 iterations were simplex steps. Total time: 1 milli. Average: 0.02 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 11 / 19
-		Constraints disabled by valid splits: 7. By SMT-originated splits: 1
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 1. Total visited states: 3. Number of splits: 1. Number of pops: 1
-	Max stack depth: 1
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 7.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 121. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 87
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 1 / 1
-		[0.14%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.05%] Post-Pop hook: 0 milli
-		[0.00%] Pop : 0 milli
-		[0.18%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [0] verified unsat,
-Enforce active Position: (4, 5)(4, 5, Relu inactive)
-
-Set constriant: Position: (3, 10)
-Stack depth: 1
-Set constriant: Position: (4, 2)
-Stack depth: 2
-Set constriant: Position: (4, 3)
-Stack depth: 3
-Set constriant: Position: (4, 5)
-Stack depth: 4
-Set constriant: Position: (4, 18)
-Stack depth: 5
-Verified unsat!
-
-Engine::solve: unsat query
-
-11:03:26 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 18 milli (00:00:00)
-		Main loop: 5 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 4 milli (00:00:00)
-	Breakdown for main loop:
-		[66.83%] Simplex steps: 3 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.60%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[2.40%] SMT core: 0 milli
-		[30.49%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[55.87%] SoI-based local search: 2 milli
-		[366370289448054656.00%] Unaccounted for: 0 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 174
-	Number of constraints removed due to variable elimination: 118
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 9
-		64 iterations were simplex steps. Total time: 3 milli. Average: 0.05 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 7 / 19
-		Constraints disabled by valid splits: 7. By SMT-originated splits: 5
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 5. Total visited states: 9. Number of splits: 6. Number of pops: 2
-	Max stack depth: 5
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 17.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 131. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 87
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 6 / 6
-		[1.07%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.02%] Post-Pop hook: 0 milli
-		[0.22%] Pop : 0 milli
-		[1.31%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [1] verified unsat,
-Enforce active Position: (3, 10)(3, 10, Relu active)
-(4, 2, Relu inactive)
-(4, 3, Relu inactive)
-(4, 5, Relu active)
-(4, 18, Relu active)
-
-Set constriant: Position: (3, 10)
-Stack depth: 1
-Set constriant: Position: (4, 2)
-Stack depth: 2
-Set constriant: Position: (4, 3)
-Stack depth: 3
-Set constriant: Position: (4, 5)
-Stack depth: 4
-Verified unsat!
-
-Engine::solve: unsat query
-
-11:03:26 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 19 milli (00:00:00)
-		Main loop: 7 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 4 milli (00:00:00)
-	Breakdown for main loop:
-		[60.57%] Simplex steps: 4 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.42%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[2.47%] SMT core: 0 milli
-		[21.51%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[47.39%] SoI-based local search: 3 milli
-		[15.04%] Unaccounted for: 1 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 174
-	Number of constraints removed due to variable elimination: 118
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 14
-		70 iterations were simplex steps. Total time: 4 milli. Average: 0.06 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 8 / 19
-		Constraints disabled by valid splits: 7. By SMT-originated splits: 4
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 4. Total visited states: 14. Number of splits: 10. Number of pops: 3
-	Max stack depth: 5
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 25.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 139. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 87
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 10 / 10
-		[1.01%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.01%] Post-Pop hook: 0 milli
-		[0.27%] Pop : 0 milli
-		[1.29%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [2] verified unsat,
-Need 1 less verified info!
-Enforce active Position: (3, 10)(3, 10, Relu inactive)
-(4, 2, Relu inactive)
-(4, 3, Relu inactive)
-(4, 5, Relu active)
-(4, 18, Relu active)
-
-Set constriant: Position: (4, 2)
-Stack depth: 1
-Set constriant: Position: (4, 3)
-Stack depth: 2
-Verified unsat!
-
-Engine::solve: unsat query
-
-11:03:26 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 20 milli (00:00:00)
-		Main loop: 8 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 4 milli (00:00:00)
-	Breakdown for main loop:
-		[58.11%] Simplex steps: 4 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.35%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[2.40%] SMT core: 0 milli
-		[18.05%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[43.78%] SoI-based local search: 3 milli
-		[21.09%] Unaccounted for: 1 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 174
-	Number of constraints removed due to variable elimination: 118
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 17
-		77 iterations were simplex steps. Total time: 4 milli. Average: 0.05 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 10 / 19
-		Constraints disabled by valid splits: 7. By SMT-originated splits: 2
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 2. Total visited states: 17. Number of splits: 12. Number of pops: 4
-	Max stack depth: 5
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 29.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 143. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 87
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 12 / 12
-		[0.93%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.01%] Post-Pop hook: 0 milli
-		[0.27%] Pop : 0 milli
-		[1.21%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [3] verified unsat,
-Need 2 less verified info!
-Enforce active Position: (4, 2)(4, 2, Relu inactive)
-(4, 3, Relu active)
-(4, 5, Relu active)
-(4, 18, Relu active)
-
-Set constriant: Position: (4, 2)
-Stack depth: 1
-Verified unsat!
-
-Engine::solve: unsat query
-
-11:03:26 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 22 milli (00:00:00)
-		Main loop: 10 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 3 milli (00:00:00)
-	Breakdown for main loop:
-		[57.83%] Simplex steps: 5 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.30%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[2.16%] SMT core: 0 milli
-		[15.28%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[39.37%] SoI-based local search: 3 milli
-		[24.42%] Unaccounted for: 2 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 174
-	Number of constraints removed due to variable elimination: 118
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 19
-		97 iterations were simplex steps. Total time: 5 milli. Average: 0.05 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 11 / 19
-		Constraints disabled by valid splits: 7. By SMT-originated splits: 1
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 1. Total visited states: 19. Number of splits: 13. Number of pops: 5
-	Max stack depth: 5
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 31.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 145. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 87
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 13 / 13
-		[0.80%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.01%] Post-Pop hook: 0 milli
-		[0.23%] Pop : 0 milli
-		[1.04%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [4] verified unsat,
-Need 2 less verified info!
-Enforce active Position: (4, 2)(4, 2, Relu active)
-(4, 5, Relu active)
-(4, 18, Relu active)
-
-Set constriant: Position: (4, 5)
-Stack depth: 1
-Set constriant: Position: (4, 18)
-Stack depth: 2
-Verified unsat!
-
-Engine::solve: unsat query
-
-11:03:26 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 23 milli (00:00:00)
-		Main loop: 11 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 3 milli (00:00:00)
-	Breakdown for main loop:
-		[56.49%] Simplex steps: 6 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.25%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[2.07%] SMT core: 0 milli
-		[13.01%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[36.47%] SoI-based local search: 4 milli
-		[28.17%] Unaccounted for: 3 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 174
-	Number of constraints removed due to variable elimination: 118
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 22
-		105 iterations were simplex steps. Total time: 6 milli. Average: 0.06 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 10 / 19
-		Constraints disabled by valid splits: 7. By SMT-originated splits: 2
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 2. Total visited states: 22. Number of splits: 15. Number of pops: 6
-	Max stack depth: 5
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 35.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 149. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 87
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 15 / 15
-		[0.74%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.01%] Post-Pop hook: 0 milli
-		[0.23%] Pop : 0 milli
-		[0.97%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [5] verified unsat,
-Enforce active Position: (4, 5)(4, 5, Relu active)
-(4, 18, Relu inactive)
-
-Presearch tree path: [6], current search tree path [6]
-[0] path need extra info, [3] path need less
-UNKNOWN EXIT CODE! (this should not happen)
+Branching heuristics set to LargestInterval
+Enqueue: 3, reason: -1
+Enqueue: 6, reason: -1
+Enqueue: 10, reason: -1
+Enqueue: 11, reason: -1
+Enqueue: -15, reason: -1
+Enqueue: -16, reason: -1
+Enqueue: 17, reason: -1
+Init done!
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Gurobi check:  3  6  10  11 -15 -16  17 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17 -0 
+====Pick next lit: 18====
+Enqueue: -18, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 
+Level 2: -18(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 
+Level 2: -18(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17 -0 -18 
+Is infeasible!
+Slack: Length from [9] to [2]
+Record stack: [1]
+Total path: 1, learnt num: 1, success rate: 1.000000
+Should back track to 1
+Enqueue: 18, reason: 0
+18 0 
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Gurobi check:  3  6  10  11 -15 -16  17 -0  18 
+====Pick next lit: 14====
+Enqueue: -14, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17 -0  18 -14 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17 -0  18 -14 -13 
+====Pick next lit: 12====
+Enqueue: -12, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17 -0  18 -14 -13 -12 
+====Pick next lit: 9====
+Enqueue: -9, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+Level 5: -9(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+Level 5: -9(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17 -0  18 -14 -13 -12 -9 
+Is infeasible!
+Slack: Length from [13] to [1]
+Record stack: [2]
+Total path: 2, learnt num: 2, success rate: 1.000000
+Should back track to 0
+Enqueue: 9, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+propagate success, result: -1, is undef: 1
+No conflict!
+--------------------
+Simplify clause [0], size: 2: 18 0 
+Trim clause...
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Gurobi check:  3  6  10  11 -15 -16  17  9 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 
+Propagate: Enqueue: 18, reason: 0
+18 0 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -0  18 
+====Pick next lit: 14====
+Enqueue: -14, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -0  18 -14 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -0  18 -14 -13 
+====Pick next lit: 12====
+Enqueue: -12, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -0  18 -14 -13 -12 
+====Pick next lit: 8====
+Enqueue: -8, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+Level 5: -8(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 
+Level 2: -14(-1) implied: 
+Level 3: -13(-1) implied: 
+Level 4: -12(-1) implied: 
+Level 5: -8(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -0  18 -14 -13 -12 -8 
+Is infeasible!
+Slack: Length from [14] to [3]
+Record stack: [3]
+Total path: 3, learnt num: 3, success rate: 1.000000
+Should back track to 1
+Enqueue: 8, reason: 4
+8 0 -9 
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 8(4) 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 
+Level 1: -0(-1) implied: 18(0) 8(4) 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -0  18  8 
+Is infeasible!
+Slack: Length from [11] to [1]
+Record stack: [4]
+Total path: 4, learnt num: 4, success rate: 1.000000
+Should back track to 0
+Enqueue: -8, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 
+Propagate: Enqueue: 0, reason: 4
+0 8 -9 
+propagate success, result: -1, is undef: 1
+No conflict!
+--------------------
+Simplify clause [0], size: 2: 18 0 
+Remove clause...
+Success remove...
+--------------------
+Simplify clause [4], size: 3: 0 8 -9 
+Remove clause...
+Success remove...
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 
+====Pick next lit: 1====
+Enqueue: -1, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 -1 
+====Pick next lit: 18====
+Enqueue: 18, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 -1  18 
+====Pick next lit: 14====
+Enqueue: -14, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 -1  18 -14 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 -1  18 -14 -13 
+====Pick next lit: 12====
+Enqueue: -12, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 -1  18 -14 -13 -12 
+====Pick next lit: 7====
+Enqueue: -7, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 -1  18 -14 -13 -12 -7 
+====Pick next lit: 5====
+Enqueue: -5, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+Level 7: -5(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+Level 7: -5(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0 -1  18 -14 -13 -12 -7 -5 
+Is infeasible!
+Slack: Length from [17] to [2]
+Record stack: [5]
+Total path: 5, learnt num: 5, success rate: 1.000000
+Should back track to 0
+Enqueue: 5, reason: 0
+5 -9 
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+propagate success, result: -1, is undef: 1
+No conflict!
+--------------------
+Simplify clause [0], size: 2: 5 -9 
+Remove clause...
+Success remove...
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 
+====Pick next lit: 1====
+Enqueue: -1, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 -1 
+====Pick next lit: 18====
+Enqueue: 18, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 -1  18 
+====Pick next lit: 14====
+Enqueue: -14, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 -1  18 -14 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 -1  18 -14 -13 
+====Pick next lit: 12====
+Enqueue: -12, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 -1  18 -14 -13 -12 
+====Pick next lit: 7====
+Enqueue: -7, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 -1  18 -14 -13 -12 -7 
+====Pick next lit: 4====
+Enqueue: -4, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+Level 7: -4(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 
+Level 1: -1(-1) implied: 
+Level 2: 18(-1) implied: 
+Level 3: -14(-1) implied: 
+Level 4: -13(-1) implied: 
+Level 5: -12(-1) implied: 
+Level 6: -7(-1) implied: 
+Level 7: -4(-1) implied: 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5 -1  18 -14 -13 -12 -7 -4 
+Is infeasible!
+Slack: Length from [18] to [2]
+Record stack: [6]
+Total path: 6, learnt num: 6, success rate: 1.000000
+Should back track to 0
+Enqueue: 4, reason: 0
+4 -9 
+------ Before propagate:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 4 
+propagate success, result: -1, is undef: 1
+No conflict!
+--------------------
+Simplify clause [0], size: 2: 4 -9 
+Remove clause...
+Success remove...
+------ Before check:
+Dump trail:
+Level 0: 3 6 10 11 -15 -16 17 9 -8 0 5 4 
+Gurobi check:  3  6  10  11 -15 -16  17  9 -8  0  5  4 
+Total path: 6, learnt num: 6, success rate: 1.000000
+Search path num: [6]
+unsat
+Total time: 0.146427 seconds

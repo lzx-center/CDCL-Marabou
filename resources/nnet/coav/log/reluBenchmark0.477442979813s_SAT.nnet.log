@@ -15,658 +15,300 @@ Input bounds:
 	x5: [  0.1642,   0.1892] 
 
 Using Gurobi to solve LP...
-x0 [0.113466, 0.138466]
-x1 [0.442962, 0.467962]
-x2 [0.159912, 0.184912]
-x3 [0.401945, 0.426945]
-x4 [0.067382, 0.092382]
-x5 [0.164219, 0.189219]
-x6 [0.259262, 0.361825]
-x7 [-0.513908, -0.305121]
-x8 [-0.010596, -0.008751]
-x9 [0.184405, 0.366683]
-x10 [0.528237, 0.729684]
-x11 [-0.033583, 0.058214]
-x12 [-0.007618, -0.006669]
-x13 [-0.441775, -0.378646]
-x14 [-0.394658, -0.237415]
-x15 [-0.015727, -0.013908]
-x16 [-0.023763, -0.021305]
-x17 [-0.546475, -0.405088]
-x18 [1.087690, 1.228842]
-x19 [-0.085691, -0.073987]
-x20 [-0.115253, 0.004467]
-x21 [0.336884, 0.555234]
-x22 [-0.135881, -0.104302]
-x23 [-0.570518, -0.487552]
-x24 [-0.711110, -0.614722]
-x25 [0.219415, 0.413476]
-x26 [-0.013877, -0.012190]
-x27 [0.005174, 0.193190]
-x28 [0.266510, 0.486425]
-x29 [0.011059, 0.154684]
-x30 [-0.008220, -0.005961]
-x31 [-0.382422, -0.298739]
-x32 [0.173137, 0.425635]
-x33 [-0.004023, -0.002856]
-x34 [-0.177325, -0.025755]
-x35 [0.085816, 0.225768]
-x36 [-0.291401, -0.128054]
-x37 [-0.019693, -0.017960]
-x38 [-0.099188, 0.162381]
-x39 [-0.507300, -0.455823]
-x40 [-0.452776, -0.300976]
-x41 [-0.015851, -0.014008]
-x42 [-0.013555, -0.011957]
-x43 [-0.753160, -0.562162]
-x44 [-0.320192, -0.161052]
-x45 [0.305223, 0.441617]
-x46 [0.259262, 0.361825]
-x47 [0.184405, 0.366683]
-x48 [0.528237, 0.729684]
-x49 [0.000000, 0.058214]
-x50 [1.087690, 1.228842]
-x51 [0.000000, 0.004467]
-x52 [0.336884, 0.555234]
-x53 [0.219415, 0.413476]
-x54 [0.005174, 0.193190]
-x55 [0.266510, 0.486425]
-x56 [0.011059, 0.154684]
-x57 [0.173137, 0.425635]
-x58 [0.085816, 0.225768]
-x59 [0.000000, 0.162381]
-x60 [0.305223, 0.441617]
-x61 [0.259262, 0.361825]
-x62 [-0.366683, -0.184405]
-x63 [0.000000, 0.182279]
-x64 [0.499682, 0.724075]
-x65 [0.000000, 0.058214]
-x66 [1.087690, 1.228842]
-x67 [-0.555234, -0.333391]
-x68 [0.000000, 0.218350]
-x69 [-0.413476, -0.219415]
-x70 [0.000000, 0.194061]
-x71 [-0.193190, -0.005174]
-x72 [0.000000, 0.188016]
-x73 [0.119166, 0.468025]
-x74 [0.000000, 0.143625]
-x75 [0.173137, 0.425635]
-x76 [-0.225768, -0.085816]
-x77 [0.000000, 0.139952]
-x78 [0.000000, 0.162381]
-x79 [-0.441617, -0.305223]
-x80 [0.000000, 0.136393]
-x81 [0.259262, 0.361825]
-x82 [0.000000, 0.182279]
-x83 [0.499682, 0.724075]
-x84 [0.000000, 0.058214]
-x85 [1.087690, 1.228842]
-x86 [0.000000, 0.218350]
-x87 [0.000000, 0.194061]
-x88 [0.000000, 0.188016]
-x89 [0.119166, 0.468025]
-x90 [0.000000, 0.143625]
-x91 [0.173137, 0.425635]
-x92 [0.000000, 0.139952]
-x93 [0.000000, 0.162381]
-x94 [0.000000, 0.136393]
-x95 [-0.082954, 0.152952]
-x96 [0.000000, 0.182279]
-x97 [-0.463455, -0.243377]
-x98 [0.000000, 0.201448]
-x99 [0.528237, 0.729684]
-x100 [-1.228842, -1.087690]
-x101 [0.000000, 0.141152]
-x102 [0.540729, 0.883684]
-x103 [0.000000, 0.218350]
-x104 [0.336884, 0.555234]
-x105 [-0.413476, -0.219415]
-x106 [0.000000, 0.194061]
-x107 [0.066381, 0.368147]
-x108 [0.000000, 0.188016]
-x109 [-0.441959, -0.112613]
-x110 [0.000000, 0.219915]
-x111 [0.266510, 0.486425]
-x112 [-0.425635, -0.173137]
-x113 [0.000000, 0.252498]
-x114 [-0.021234, 0.308422]
-x115 [0.000000, 0.139952]
-x116 [0.085816, 0.225768]
-x117 [-0.162381, 0.000000]
-x118 [0.000000, 0.162381]
-x119 [0.000000, 0.162381]
-x120 [-0.441617, -0.305223]
-x121 [0.000000, 0.136393]
-x122 [0.000000, 0.152952]
-x123 [0.000000, 0.182279]
-x124 [0.000000, 0.201448]
-x125 [0.528237, 0.729684]
-x126 [0.000000, 0.141152]
-x127 [0.540729, 0.883684]
-x128 [0.000000, 0.218350]
-x129 [0.336884, 0.555234]
-x130 [0.000000, 0.194061]
-x131 [0.066381, 0.368147]
-x132 [0.000000, 0.188016]
-x133 [0.000000, 0.000000]
-x134 [0.000000, 0.219915]
-x135 [0.266510, 0.486425]
-x136 [0.000000, 0.252498]
-x137 [0.000000, 0.308422]
-x138 [0.000000, 0.139952]
-x139 [0.085816, 0.225768]
-x140 [0.000000, 0.162381]
-x141 [0.000000, 0.162381]
-x142 [0.000000, 0.136393]
-x143 [-0.012448, -0.005069]
-x144 [0.845616, 1.213259]
-x145 [0.556157, 0.952012]
-x146 [-0.379743, 0.643248]
-x147 [-0.016270, -0.003078]
-x148 [-2.553145, 0.850144]
-x149 [2.670671, 3.408331]
-x150 [-1.105755, -0.517117]
-x151 [-0.286995, 1.560380]
-x152 [-0.018152, -0.013291]
-x153 [-0.916910, -0.293895]
-x154 [-0.991469, -0.676341]
-x155 [-0.021653, -0.016631]
-x156 [-0.037037, -0.034002]
-x157 [-0.021960, -0.013355]
-x158 [-0.322321, 0.691683]
-x159 [-0.532982, -0.364136]
-x160 [0.028886, 0.130864]
-x161 [1.451782, 2.459287]
-x162 [0.000000, 0.000000]
-x163 [0.845616, 1.213259]
-x164 [0.556157, 0.952012]
-x165 [0.000000, 0.643248]
-x166 [0.000000, 0.000000]
-x167 [0.000000, 0.850144]
-x168 [2.670671, 3.408331]
-x169 [0.000000, 0.000000]
-x170 [0.000000, 1.560380]
-x171 [0.000000, 0.000000]
-x172 [0.000000, 0.691683]
-x173 [0.000000, 0.000000]
-x174 [0.028886, 0.130864]
-x175 [1.451782, 2.459287]
-x176 [-2.577606, 0.000000]
-x177 [0.305121, 0.513908]
-x178 [0.008751, 0.010596]
-x179 [0.000000, 0.033583]
-x180 [0.006669, 0.007618]
-x181 [0.378646, 0.441775]
-x182 [0.237415, 0.394658]
-x183 [0.013908, 0.015727]
-x184 [0.021305, 0.023763]
-x185 [0.405088, 0.546475]
-x186 [0.073987, 0.085691]
-x187 [0.000000, 0.115253]
-x188 [0.104302, 0.135881]
-x189 [0.487552, 0.570518]
-x190 [0.614722, 0.711110]
-x191 [0.012190, 0.013877]
-x192 [0.005961, 0.008220]
-x193 [0.298739, 0.382422]
-x194 [0.002856, 0.004023]
-x195 [0.025755, 0.177325]
-x196 [0.128054, 0.291401]
-x197 [0.017960, 0.019693]
-x198 [0.000000, 0.099188]
-x199 [0.455823, 0.507300]
-x200 [0.300976, 0.452776]
-x201 [0.014008, 0.015851]
-x202 [0.011957, 0.013555]
-x203 [0.562162, 0.753160]
-x204 [0.161052, 0.320192]
-x205 [0.184405, 0.366683]
-x206 [0.332417, 0.555234]
-x207 [0.219415, 0.413476]
-x208 [0.005174, 0.193190]
-x209 [0.085816, 0.225768]
-x210 [0.305223, 0.441617]
-x211 [0.000000, 0.107422]
-x212 [0.103339, 0.603494]
-x213 [0.000000, 0.058214]
-x214 [1.087690, 1.228842]
-x215 [0.219415, 0.413476]
-x216 [0.000000, 0.624876]
-x217 [0.000000, 0.143625]
-x218 [0.173137, 0.425635]
-x219 [0.000000, 0.052631]
-x220 [0.000000, 0.162381]
-x221 [0.305223, 0.441617]
-x222 [0.000000, 0.030321]
-x223 [0.000000, 0.785926]
-x224 [0.000000, 0.834821]
-x225 [0.000000, 1.952990]
-x226 [0.000000, 0.024926]
-x227 [0.000000, 4.318366]
-x228 [0.000000, 2.280163]
-x229 [0.000000, 2.007025]
-x230 [0.000093, 0.033090]
-x231 [0.014411, 1.275371]
-x232 [0.000000, 1.779345]
-x233 [0.006761, 0.035335]
-x234 [0.019023, 0.055092]
-x235 [0.004558, 0.030816]
-x236 [0.000000, 0.931122]
-x237 [0.000000, 1.003086]
-x238 [0.000000, 0.032345]
--1.00x6 -0.98x0 +0.43x1 -0.75x2 +0.32x3 +0.46x4 +1.16x5  = 0.01
--1.00x7 -0.40x0 -1.74x1 -1.63x2 +1.80x3 +1.16x4 -1.63x5  = -0.16
--1.00x8 -0.00x0 -0.01x1 -0.02x2 -0.01x3 +0.02x4 +0.01x5  = -0.00
--1.00x9 -1.92x0 -0.57x1 +0.23x2 -2.40x3 -1.23x4 -0.95x5  = -2.00
--1.00x10 -1.24x0 +1.17x1 -2.16x2 -0.40x3 -2.68x4 -0.41x5  = -1.08
--1.00x11 -0.58x0 +0.18x1 +0.40x2 -0.64x3 +1.38x4 -0.48x5  = -0.17
--1.00x12 -0.00x0 -0.01x1 -0.01x2 -0.01x3 +0.01x4 +0.00x5  = -0.00
--1.00x13 +1.29x0 -0.30x1 +0.09x2 +0.65x3 +0.15x4 +0.04x5  = 0.74
--1.00x14 +1.93x0 +0.69x1 -0.75x2 -1.22x3 -1.64x4 +0.06x5  = 0.12
--1.00x15 +0.01x0 +0.00x1 -0.02x2 -0.02x3 -0.00x4 -0.02x5  = -0.00
--1.00x16 -0.01x0 -0.02x1 -0.02x2 -0.02x3 +0.02x4 -0.02x5  = -0.00
--1.00x17 -0.61x0 -0.09x1 +0.18x2 +0.97x3 +2.60x4 -1.21x5  = 0.78
--1.00x18 +0.07x0 +0.86x1 +1.35x2 -0.75x3 -0.68x4 +1.93x5  = -0.55
--1.00x19 +0.15x0 -0.12x1 +0.03x2 +0.04x3 +0.10x4 +0.03x5  = 0.08
--1.00x20 -0.55x0 +1.87x1 -0.82x2 -1.11x3 -0.21x4 +0.22x5  = 0.26
--1.00x21 +2.15x0 -2.95x1 -1.73x2 +1.43x3 +0.21x4 +0.26x5  = -1.16
--1.00x22 -0.42x0 +0.01x1 +0.07x2 +0.08x3 -0.57x4 -0.11x5  = 0.05
--1.00x23 +1.08x0 -0.20x1 -0.71x2 -0.83x3 -0.24x4 +0.25x5  = 0.13
--1.00x24 -0.66x0 +1.39x1 -0.19x2 -0.06x3 +0.47x4 -1.09x5  = 1.00
--1.00x25 -0.87x0 -0.91x1 +3.01x2 +2.13x3 +0.13x4 +0.70x5  = 0.70
--1.00x26 -0.01x0 -0.01x1 -0.01x2 -0.02x3 +0.01x4 -0.00x5  = -0.00
--1.00x27 +3.25x0 -1.45x1 -0.36x2 -1.20x3 -0.56x4 +0.69x5  = -0.84
--1.00x28 -2.52x0 +2.05x1 -2.31x2 -0.89x3 -0.31x4 -0.71x5  = -0.68
--1.00x29 -0.29x0 -0.72x1 +2.45x2 +1.97x3 +0.28x4 +0.03x5  = 0.82
--1.00x30 -0.02x0 +0.01x1 +0.00x2 -0.02x3 -0.02x4 +0.02x5  = 0.00
--1.00x31 +1.76x0 +0.17x1 +0.08x2 +0.26x3 -0.28x4 -0.80x5  = 0.60
--1.00x32 +2.78x0 -1.68x1 +2.93x2 +1.18x3 +0.53x4 +1.00x5  = 0.50
--1.00x33 -0.01x0 +0.01x1 -0.00x2 -0.01x3 -0.01x4 +0.01x5  = 0.00
--1.00x34 +0.39x0 +1.46x1 -0.47x2 +0.31x3 +2.41x4 -1.03x5  = 0.87
--1.00x35 -0.71x0 +0.26x1 +1.01x2 -2.72x3 -0.65x4 +0.25x5  = -1.09
--1.00x36 +0.90x0 +2.39x1 +0.88x2 -0.73x3 +0.91x4 +0.71x5  = 1.46
--1.00x37 +0.00x0 -0.02x1 -0.02x2 -0.01x3 -0.01x4 -0.01x5  = -0.00
--1.00x38 +1.85x0 -1.05x1 +5.47x2 +1.35x3 -0.03x4 +0.71x5  = 1.35
--1.00x39 +0.22x0 -0.28x1 -0.40x2 +0.40x3 +0.35x4 -0.41x5  = 0.43
--1.00x40 -0.43x0 +4.04x1 +1.05x2 -0.45x3 -0.10x4 -0.00x5  = 2.15
--1.00x41 +0.00x0 -0.02x1 -0.01x2 -0.01x3 -0.02x4 +0.02x5  = 0.00
--1.00x42 +0.00x0 -0.00x1 -0.02x2 +0.01x3 +0.03x4 -0.00x5  = 0.01
--1.00x43 +2.25x0 -0.52x1 -2.48x2 +1.03x3 -0.83x4 +0.53x5  = 0.73
--1.00x44 +0.32x0 -1.25x1 +2.67x2 +0.63x3 -0.01x4 -1.48x5  = 0.17
--1.00x45 +0.34x0 -2.12x1 +0.36x2 +0.28x3 +0.03x4 +2.33x5  = -0.70
--1.00x61 +1.00x46  = 0.00
- = 0.00
--1.00x62 -1.00x47  = -0.00
--1.00x63 +1.00x47  = 0.18
--1.00x64 +1.00x48 -1.00x49  = -0.00
--1.00x65 +1.00x49  = -0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x66 +1.00x50  = 0.00
- = 0.00
--1.00x67 +1.00x51 -1.00x52  = -0.00
--1.00x68 +1.00x52  = 0.34
- = 0.00
- = 0.00
--1.00x69 -1.00x53  = -0.00
--1.00x70 +1.00x53  = 0.22
--1.00x71 -1.00x54  = -0.00
--1.00x72 +1.00x54  = 0.01
--1.00x73 +1.00x55 -1.00x56  = -0.00
--1.00x74 +1.00x56  = 0.01
- = 0.00
- = 0.00
--1.00x75 +1.00x57  = 0.00
- = 0.00
--1.00x76 -1.00x58  = -0.00
--1.00x77 +1.00x58  = 0.09
- = 0.00
- = 0.00
--1.00x78 +1.00x59  = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x79 -1.00x60  = -0.00
--1.00x80 +1.00x60  = 0.31
--1.00x95 +1.00x81 -1.00x82  = 0.18
--1.00x96 +1.00x82  = -0.00
--1.00x97 +1.00x82 -1.00x83 -1.00x84  = -0.18
--1.00x98 +1.00x83 +1.00x84  = 0.53
--1.00x99 +1.00x83 +1.00x84  = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x100 -1.00x85  = 0.00
--1.00x101 +1.00x85  = 1.09
--1.00x102 +1.00x85 -1.00x86  = 0.34
--1.00x103 +1.00x86  = -0.00
--1.00x104 +1.00x86  = -0.34
- = 0.00
--1.00x105 -1.00x87  = 0.22
--1.00x106 +1.00x87  = -0.00
--1.00x107 +1.00x87 -1.00x88  = -0.21
--1.00x108 +1.00x88  = -0.00
--1.00x109 +1.00x88 -1.00x89 -1.00x90  = 0.01
--1.00x110 +1.00x89 +1.00x90  = 0.26
--1.00x111 +1.00x89 +1.00x90  = -0.01
- = 0.00
--1.00x112 -1.00x91  = 0.00
--1.00x113 +1.00x91  = 0.17
--1.00x114 +1.00x91 -1.00x92  = 0.09
--1.00x115 +1.00x92  = -0.00
--1.00x116 +1.00x92  = -0.09
- = 0.00
--1.00x117 -1.00x93  = 0.00
--1.00x118 +1.00x93  = -0.00
--1.00x119 +1.00x93  = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x120 -1.00x94  = 0.31
--1.00x121 +1.00x94  = -0.00
--1.00x143 -0.01x122 -0.01x123 -0.01x124 +0.01x125 +0.01x126 -0.00x127 -0.00x128 +0.00x129 -0.00x130 -0.01x131 -0.01x132 -0.01x133 -0.01x134 -0.01x135 +0.01x136 +0.00x137 +0.00x138 -0.01x139 -0.01x140 -0.02x141 +0.00x142  = 0.00
--1.00x144 -0.06x122 -0.06x123 -0.57x124 +1.65x125 -0.99x126 +0.88x127 +0.88x128 -1.50x129 +0.12x130 +1.12x131 +1.12x132 -0.56x133 -0.56x134 -0.48x135 +0.72x136 -0.39x137 -0.39x138 -0.15x139 -0.56x140 -0.36x141 +0.59x142  = 0.01
--1.00x145 -0.44x122 -0.44x123 +0.05x124 +1.33x125 +0.14x126 +0.62x127 +0.62x128 -0.18x129 -1.03x130 +0.04x131 +0.04x132 -0.70x133 -0.70x134 -1.72x135 +0.89x136 +0.25x137 +0.25x138 -0.39x139 +0.01x140 -0.69x141 -0.67x142  = -0.34
--1.00x146 +1.78x122 +1.78x123 +0.08x124 -0.35x125 +0.75x126 +0.95x127 +0.95x128 +0.93x129 -1.70x130 -1.54x131 -1.54x132 -0.17x133 -0.17x134 -0.15x135 -1.46x136 -0.91x137 -0.91x138 +0.67x139 -0.35x140 +0.67x141 -0.76x142  = 0.16
--1.00x147 +0.00x122 +0.00x123 -0.00x124 -0.01x125 +0.01x126 -0.00x127 -0.00x128 -0.01x129 -0.01x130 +0.01x131 +0.01x132 +0.00x133 +0.00x134 -0.00x135 -0.01x136 -0.01x137 -0.01x138 +0.01x139 -0.01x140 -0.01x141 -0.00x142  = -0.00
--1.00x148 -2.13x122 -2.13x123 +0.51x124 -2.15x125 +1.68x126 -2.62x127 -2.62x128 +0.93x129 +1.86x130 +0.70x131 +0.70x132 +0.18x133 +0.18x134 -1.16x135 +1.18x136 +1.37x137 +1.37x138 -2.89x139 +1.53x140 +2.37x141 +2.76x142  = -2.11
--1.00x149 +0.67x122 +0.67x123 +0.46x124 -0.25x125 +1.30x126 +0.86x127 +0.86x128 -1.71x129 +0.28x130 +0.34x131 +0.34x132 -2.51x133 -2.51x134 -1.71x135 +0.34x136 +0.03x137 +0.03x138 +0.42x139 -0.26x140 -1.16x141 -0.25x142  = -3.80
--1.00x150 +0.72x122 +0.72x123 -1.09x124 +0.65x125 -1.28x126 +0.89x127 +0.89x128 -0.32x129 +0.82x130 +1.31x131 +1.31x132 -0.15x133 -0.15x134 -0.32x135 -0.31x136 +0.07x137 +0.07x138 +0.28x139 -0.15x140 +0.40x141 +0.24x142  = 2.11
--1.00x151 +1.86x122 +1.86x123 +0.62x124 +0.46x125 +0.26x126 +1.80x127 +1.80x128 -0.13x129 -0.61x130 -2.74x131 -2.74x132 -0.29x133 -0.29x134 +0.44x135 -1.65x136 -0.60x137 -0.60x138 +0.92x139 -0.54x140 -0.18x141 -1.25x142  = 0.37
--1.00x152 -0.01x122 -0.01x123 -0.00x124 +0.01x125 +0.01x126 -0.01x127 -0.01x128 +0.01x129 +0.00x130 -0.00x131 -0.00x132 -0.00x133 -0.00x134 -0.01x135 -0.01x136 +0.00x137 +0.00x138 -0.01x139 -0.01x140 +0.00x141 -0.01x142  = 0.01
--1.00x153 +0.35x122 +0.35x123 +0.13x124 +0.19x125 -0.48x126 -0.26x127 -0.26x128 +0.60x129 +0.01x130 -0.04x131 -0.04x132 -0.01x133 -0.01x134 -0.02x135 -0.64x136 -0.48x137 -0.48x138 +0.33x139 -0.37x140 -0.38x141 -0.68x142  = 0.58
--1.00x154 +0.34x122 +0.34x123 -0.75x124 +0.54x125 -0.97x126 +0.34x127 +0.34x128 -0.19x129 +0.35x130 +0.82x131 +0.82x132 +0.75x133 +0.75x134 +0.02x135 -0.51x136 -0.04x137 -0.04x138 -0.20x139 -0.19x140 +0.40x141 -0.31x142  = 1.53
--1.00x155 -0.00x122 -0.00x123 -0.01x124 -0.00x125 +0.00x126 -0.01x127 -0.01x128 -0.00x129 -0.00x130 +0.01x131 +0.01x132 -0.01x133 -0.01x134 -0.00x135 -0.00x136 -0.01x137 -0.01x138 +0.01x139 -0.01x140 -0.01x141 +0.01x142  = 0.01
--1.00x156 -0.01x122 -0.01x123 -0.01x124 -0.01x125 +0.00x126 -0.01x127 -0.01x128 -0.01x129 -0.01x130 +0.00x131 +0.00x132 -0.01x133 -0.01x134 -0.00x135 -0.01x136 -0.01x137 -0.01x138 -0.00x139 +0.01x140 -0.01x141 +0.01x142  = 0.01
--1.00x157 +0.00x122 +0.00x123 +0.01x124 -0.01x125 -0.01x126 +0.01x127 +0.01x128 -0.00x129 -0.01x130 -0.00x131 -0.00x132 +0.00x133 +0.00x134 -0.00x135 -0.00x136 -0.01x137 -0.01x138 +0.00x139 -0.01x140 +0.00x141 -0.00x142  = 0.02
--1.00x158 +0.81x122 +0.81x123 +1.07x124 +0.44x125 -0.18x126 -0.24x127 -0.24x128 -0.47x129 +0.16x130 -0.40x131 -0.40x132 +0.20x133 +0.20x134 +0.93x135 -0.31x136 -0.71x137 -0.71x138 -0.41x139 -0.04x140 -0.02x141 -0.40x142  = -0.11
--1.00x159 +0.43x122 +0.43x123 +0.34x124 -0.05x125 -0.12x126 -0.23x127 -0.23x128 +0.09x129 +0.28x130 -0.35x131 -0.35x132 -0.23x133 -0.23x134 +0.05x135 -0.13x136 -0.28x137 -0.28x138 -0.06x139 +0.37x140 +0.53x141 -0.24x142  = 0.20
--1.00x160 +0.05x122 +0.05x123 -0.02x124 -0.07x125 +0.15x126 -0.03x127 -0.03x128 -0.00x129 -0.00x130 -0.03x131 -0.03x132 -0.03x133 -0.03x134 -0.09x135 +0.03x136 +0.09x137 +0.09x138 +0.04x139 +0.07x140 +0.03x141 +0.03x142  = -0.14
--1.00x161 -0.99x122 -0.99x123 +0.66x124 -0.71x125 +1.46x126 +0.32x127 +0.32x128 +0.69x129 +0.18x130 +0.18x131 +0.18x132 +1.37x133 +1.37x134 +1.05x135 -0.50x136 +0.25x137 +0.25x138 -0.32x139 -0.54x140 -1.23x141 -1.18x142  = -1.37
--1.00x176 +0.03x162 +4.01x163 +3.90x164 -5.95x165 +0.01x166 -9.17x167 +6.42x168 +3.98x169 -6.95x170 +2.86x171 -2.86x172 -1.68x173 -0.34x174 -4.46x175  = -0.21
-+1.00x46 -1.00x6  = 0.00
--1.00x7 -1.00x177  = 0.00
--1.00x8 -1.00x178  = 0.00
-+1.00x47 -1.00x9  = 0.00
-+1.00x48 -1.00x10  = 0.00
-+1.00x49 -1.00x11 -1.00x179  = 0.00
--1.00x12 -1.00x180  = 0.00
--1.00x13 -1.00x181  = 0.00
--1.00x14 -1.00x182  = 0.00
--1.00x15 -1.00x183  = 0.00
--1.00x16 -1.00x184  = 0.00
--1.00x17 -1.00x185  = 0.00
-+1.00x50 -1.00x18  = 0.00
--1.00x19 -1.00x186  = 0.00
-+1.00x51 -1.00x20 -1.00x187  = 0.00
-+1.00x52 -1.00x21  = 0.00
--1.00x22 -1.00x188  = 0.00
--1.00x23 -1.00x189  = 0.00
--1.00x24 -1.00x190  = 0.00
-+1.00x53 -1.00x25  = 0.00
--1.00x26 -1.00x191  = 0.00
-+1.00x54 -1.00x27  = 0.00
-+1.00x55 -1.00x28  = 0.00
-+1.00x56 -1.00x29  = 0.00
--1.00x30 -1.00x192  = 0.00
--1.00x31 -1.00x193  = 0.00
-+1.00x57 -1.00x32  = 0.00
--1.00x33 -1.00x194  = 0.00
--1.00x34 -1.00x195  = 0.00
-+1.00x58 -1.00x35  = 0.00
--1.00x36 -1.00x196  = 0.00
--1.00x37 -1.00x197  = 0.00
-+1.00x59 -1.00x38 -1.00x198  = 0.00
--1.00x39 -1.00x199  = 0.00
--1.00x40 -1.00x200  = 0.00
--1.00x41 -1.00x201  = 0.00
--1.00x42 -1.00x202  = 0.00
--1.00x43 -1.00x203  = 0.00
--1.00x44 -1.00x204  = 0.00
-+1.00x60 -1.00x45  = 0.00
-+1.00x81 -1.00x61  = 0.00
--1.00x62 -1.00x205  = 0.00
-+1.00x82 -1.00x63  = 0.00
-+1.00x83 -1.00x64  = 0.00
-+1.00x84 -1.00x65  = 0.00
-+1.00x85 -1.00x66  = 0.00
--1.00x67 -1.00x206  = 0.00
-+1.00x86 -1.00x68  = 0.00
--1.00x69 -1.00x207  = 0.00
-+1.00x87 -1.00x70  = 0.00
--1.00x71 -1.00x208  = 0.00
-+1.00x88 -1.00x72  = 0.00
-+1.00x89 -1.00x73  = 0.00
-+1.00x90 -1.00x74  = 0.00
-+1.00x91 -1.00x75  = 0.00
--1.00x76 -1.00x209  = 0.00
-+1.00x92 -1.00x77  = 0.00
-+1.00x93 -1.00x78  = 0.00
--1.00x79 -1.00x210  = 0.00
-+1.00x94 -1.00x80  = 0.00
-+1.00x122 -1.00x95 -1.00x211  = 0.00
-+1.00x123 -1.00x96  = 0.00
--1.00x97 -1.00x212  = 0.00
-+1.00x124 -1.00x98 -1.00x213  = 0.00
-+1.00x125 -1.00x99  = 0.00
--1.00x100 -1.00x214  = 0.00
-+1.00x126 -1.00x101  = 0.00
-+1.00x127 -1.00x102  = 0.00
-+1.00x128 -1.00x103  = 0.00
-+1.00x129 -1.00x104  = 0.00
--1.00x105 -1.00x215  = 0.00
-+1.00x130 -1.00x106  = 0.00
-+1.00x131 -1.00x107  = 0.00
-+1.00x132 -1.00x108  = 0.00
-+1.00x133 -1.00x109 -1.00x216  = 0.00
-+1.00x134 -1.00x110 -1.00x217  = 0.00
-+1.00x135 -1.00x111  = 0.00
--1.00x112 -1.00x218  = 0.00
-+1.00x136 -1.00x113  = 0.00
-+1.00x137 -1.00x114 -1.00x219  = 0.00
-+1.00x138 -1.00x115  = 0.00
-+1.00x139 -1.00x116  = 0.00
--1.00x117 -1.00x220  = 0.00
-+1.00x140 -1.00x118  = 0.00
-+1.00x141 -1.00x119  = 0.00
--1.00x120 -1.00x221  = 0.00
-+1.00x142 -1.00x121  = 0.00
-+1.00x162 -1.00x143 -1.00x222  = 0.00
-+1.00x163 -1.00x144 -1.00x223  = 0.00
-+1.00x164 -1.00x145 -1.00x224  = 0.00
-+1.00x165 -1.00x146 -1.00x225  = 0.00
-+1.00x166 -1.00x147 -1.00x226  = 0.00
-+1.00x167 -1.00x148 -1.00x227  = 0.00
-+1.00x168 -1.00x149  = 0.00
-+1.00x169 -1.00x150 -1.00x228  = 0.00
-+1.00x170 -1.00x151 -1.00x229  = 0.00
--1.00x152 -1.00x230  = 0.00
--1.00x153 -1.00x231  = 0.00
-+1.00x171 -1.00x154 -1.00x232  = 0.00
--1.00x155 -1.00x233  = 0.00
--1.00x156 -1.00x234  = 0.00
--1.00x157 -1.00x235  = 0.00
-+1.00x172 -1.00x158 -1.00x236  = 0.00
-+1.00x173 -1.00x159 -1.00x237  = 0.00
-+1.00x174 -1.00x160 -1.00x238  = 0.00
-+1.00x175 -1.00x161  = 0.00
-
-Engine::solve: Initial statistics
-
-11:08:06 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 12 milli (00:00:00)
-		Main loop: 0 milli (00:00:00)
-		Preprocessing time: 7 milli (00:00:00)
-		Unknown: 4 milli (00:00:00)
-	Breakdown for main loop:
-		[0.00%] Simplex steps: 0 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.00%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[0.00%] SMT core: 0 milli
-		[0.00%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[0.00%] SoI-based local search: 1 milli
-		[0.00%] Unaccounted for: 0 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 179
-	Number of constraints removed due to variable elimination: 117
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 1
-		0 iterations were simplex steps. Total time: 0 milli. Average: 0.00 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 20 / 20
-		Constraints disabled by valid splits: 0. By SMT-originated splits: 0
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 0. Total visited states: 1. Number of splits: 0. Number of pops: 0
-	Max stack depth: 0
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 0.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 120. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 100
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 0 / 0
-		[0.00%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.00%] Post-Pop hook: 0 milli
-		[0.00%] Pop : 0 milli
-		[0.00%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
----
-adjustAssignmentToSatisfyNonLinearConstraints
-
-Engine::solve: sat assignment found
-
-11:08:06 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 15 milli (00:00:00)
-		Main loop: 2 milli (00:00:00)
-		Preprocessing time: 7 milli (00:00:00)
-		Unknown: 5 milli (00:00:00)
-	Breakdown for main loop:
-		[85.24%] Simplex steps: 1 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[1.51%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[0.00%] SMT core: 0 milli
-		[64.03%] Symbolic Bound Tightening: 1 milli
-		[37.87%] SoI-based local search: 0 milli
-		[78.92%] SoI-based local search: 1 milli
-		[793749744996107904.00%] Unaccounted for: 0 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 179
-	Number of constraints removed due to variable elimination: 117
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 2
-		48 iterations were simplex steps. Total time: 1 milli. Average: 0.02 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 9 / 20
-		Constraints disabled by valid splits: 11. By SMT-originated splits: 0
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 0. Total visited states: 1. Number of splits: 0. Number of pops: 0
-	Max stack depth: 0
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 5.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 125. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 100
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 1 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 54 milli [6.14%]
-	Total time obtaining current assignment: 89 milli [10.11%]
-	Total time getting SoI phase pattern : 5 milli [0.22%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 0 / 0
-		[0.00%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.00%] Post-Pop hook: 0 milli
-		[0.00%] Pop : 0 milli
-		[0.00%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [0] verified sat,
-
+Branching heuristics set to LargestInterval
+Enqueue: 4, reason: -1
+Enqueue: -5, reason: -1
+Enqueue: 6, reason: -1
+Enqueue: -8, reason: -1
+Enqueue: 9, reason: -1
+Enqueue: 10, reason: -1
+Enqueue: -12, reason: -1
+Enqueue: -14, reason: -1
+Enqueue: -16, reason: -1
+Enqueue: -18, reason: -1
+Enqueue: 19, reason: -1
+Init done!
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 
+Level 1: -0(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 
+Level 1: -0(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19 -0 
+====Pick next lit: 17====
+Enqueue: -17, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 
+Level 1: -0(-1) implied: 
+Level 2: -17(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 
+Level 1: -0(-1) implied: 
+Level 2: -17(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19 -0 -17 
+Is infeasible!
+Slack: Length from [13] to [1]
+Record stack: [1]
+Total path: 1, learnt num: 1, success rate: 1.000000
+Should back track to 0
+Enqueue: 17, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 
+Level 1: -0(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 
+Level 1: -0(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17 -0 
+====Pick next lit: 15====
+Enqueue: -15, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 
+Level 1: -0(-1) implied: 
+Level 2: -15(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 
+Level 1: -0(-1) implied: 
+Level 2: -15(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17 -0 -15 
+Is infeasible!
+Slack: Length from [14] to [1]
+Record stack: [2]
+Total path: 2, learnt num: 2, success rate: 1.000000
+Should back track to 0
+Enqueue: 15, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+Level 1: -0(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+Level 1: -0(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -0 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+Level 1: -0(-1) implied: 
+Level 2: -13(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+Level 1: -0(-1) implied: 
+Level 2: -13(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -0 -13 
+Is infeasible!
+Slack: Length from [15] to [2]
+Record stack: [3]
+Total path: 3, learnt num: 3, success rate: 1.000000
+Should back track to 1
+Enqueue: 13, reason: 0
+13 0 
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+Level 1: -0(-1) implied: 13(0) 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 
+Level 1: -0(-1) implied: 13(0) 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -0  13 
+Is infeasible!
+Slack: Length from [15] to [1]
+Record stack: [4]
+Total path: 4, learnt num: 4, success rate: 1.000000
+Should back track to 0
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 
+Propagate: Enqueue: 0, reason: 0
+0 13 
+propagate success, result: -1, is undef: 1
+No conflict!
+--------------------
+Simplify clause [0], size: 2: 0 13 
+Remove clause...
+Success remove...
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0 
+====Pick next lit: 1====
+Enqueue: -1, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 
+Level 1: -1(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 
+Level 1: -1(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0 -1 
+====Pick next lit: 11====
+Enqueue: -11, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 
+Level 1: -1(-1) implied: 
+Level 2: -11(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 
+Level 1: -1(-1) implied: 
+Level 2: -11(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0 -1 -11 
+Is infeasible!
+Slack: Length from [17] to [1]
+Record stack: [5]
+Total path: 5, learnt num: 5, success rate: 1.000000
+Should back track to 0
+Enqueue: 11, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0  11 
+====Pick next lit: 1====
+Enqueue: -1, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0  11 -1 
+====Pick next lit: 7====
+Enqueue: -7, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+Level 2: -7(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+Level 2: -7(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0  11 -1 -7 
+====Pick next lit: 3====
+Enqueue: -3, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+Level 2: -7(-1) implied: 
+Level 3: -3(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+Level 2: -7(-1) implied: 
+Level 3: -3(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0  11 -1 -7 -3 
+====Pick next lit: 2====
+Enqueue: -2, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+Level 2: -7(-1) implied: 
+Level 3: -3(-1) implied: 
+Level 4: -2(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 4 -5 6 -8 9 10 -12 -14 -16 -18 19 17 15 -13 0 11 
+Level 1: -1(-1) implied: 
+Level 2: -7(-1) implied: 
+Level 3: -3(-1) implied: 
+Level 4: -2(-1) implied: 
+Gurobi check:  4 -5  6 -8  9  10 -12 -14 -16 -18  19  17  15 -13  0  11 -1 -7 -3 -2 
+Total path: 5, learnt num: 5, success rate: 1.000000
+Search path num: [5]
 sat
 Input assignment:
 	x0 = 0.113466
-	x1 = 0.467962
+	x1 = 0.467739
 	x2 = 0.159912
 	x3 = 0.401945
-	x4 = 0.080897
-	x5 = 0.164219
+	x4 = 0.067382
+	x5 = 0.170738
 
 Output:
 	y0 = -0.000000
 
+Total time: 0.113916 seconds

@@ -4,4 +4,6 @@ Total number of variables: 281
 Property: /home/center/CDCL-Marabou/resources/properties/builtin_property.txt
 
 Engine::processInputQuery: Input query (before preprocessing): 138 equations, 281 variables
+Search path num: [0]
 unsat
+Total time: 0.010036 seconds

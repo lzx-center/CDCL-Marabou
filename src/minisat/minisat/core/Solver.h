@@ -71,7 +71,7 @@ public:
     bool    okay         () const;                  // FALSE means solver is in a conflicting state
 
     bool    implies      (const vec<Lit>& assumps, vec<Lit>& out);
-
+    void    encodeGurobiImply(Minisat::Lit lit);
     // Iterate over clauses and top-level assignments:
     ClauseIterator clausesBegin() const;
     ClauseIterator clausesEnd()   const;
@@ -106,6 +106,7 @@ public:
     int     nFreeVars  ()      const;
     void    printStats ()      const;       // Print some current statistics to standard output.
     void    uncheckedEnqueue (Lit p, CRef from = CRef_Undef);// Enqueue a literal. Assumes value of literal is undefined.
+    void    addLearntClauseWithoutEnqueue(vec<Lit>& learnt);
 
     // Resource contraints:
     //
@@ -403,7 +404,6 @@ inline void     Solver::toDimacs     (const char* file){ vec<Lit> as; toDimacs(f
 inline void     Solver::toDimacs     (const char* file, Lit p){ vec<Lit> as; as.push(p); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q){ vec<Lit> as; as.push(p); as.push(q); toDimacs(file, as); }
 inline void     Solver::toDimacs     (const char* file, Lit p, Lit q, Lit r){ vec<Lit> as; as.push(p); as.push(q); as.push(r); toDimacs(file, as); }
-
 
 
 //=================================================================================================

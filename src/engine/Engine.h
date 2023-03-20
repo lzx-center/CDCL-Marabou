@@ -79,7 +79,7 @@ public:
     Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
     Map<Position, Minisat::Lit> _positionToLit;
     Map<Minisat::Lit, Position> _litToPosition;
-
+    int _total_num = 0, _learnt_num = 0;
 
     /*
     Get Context reference
@@ -90,6 +90,17 @@ public:
        Checks whether the current bounds are consistent. Exposed for the SmtCore.
      */
     bool consistentBounds() const;
+
+    /*
+  Collect all violated piecewise linear constraints.
+*/
+    void collectViolatedPlConstraints();
+
+    /*
+      Return true iff all piecewise linear constraints hold.
+    */
+    bool allPlConstraintsHold();
+
     //sat related
     bool gurobiSolve( unsigned timeoutInSeconds = 0 );
     unsigned int analysisBacktrackLevel(std::vector<PathElement> &path,
@@ -101,6 +112,8 @@ public:
     unsigned int backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit);
     void initEngine();
     void restart();
+
+    double dumpLearntSuccessRate();
 
     PhaseStatus getPhaseStatusByLit(Minisat::Lit lit);
     CaseSplitType getCaseSplitTypeByLit(Minisat::Lit lit);
@@ -295,6 +308,7 @@ public:
      */
     void resetSmtCore();
     void resetExitCode();
+    void setExitCode(Engine::ExitCode exitCode);
     void resetBoundTighteners();
 
     /*
@@ -592,15 +606,7 @@ private:
      */
     bool allVarsWithinBounds() const;
 
-    /*
-      Collect all violated piecewise linear constraints.
-    */
-    void collectViolatedPlConstraints();
 
-    /*
-      Return true iff all piecewise linear constraints hold.
-    */
-    bool allPlConstraintsHold();
 
     /*
       Select a currently-violated LP constraint for fixing

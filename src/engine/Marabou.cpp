@@ -210,18 +210,25 @@ void Marabou::solveQuery()
     }
     bool check = Options::get()->getBool(Options::CHECK);
     if ( _engine.processInputQuery( _inputQuery ) ) {
-        if (check) {
-//             _engine.ClauseLearning();
-//            _solver.solve();
-//            _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
-           _engine.gurobiCheckSolve(Options::get()->getInt( Options::TIMEOUT ));
-        } else {
-//            _engine.gurobiSolve(Options::get()->getInt( Options::TIMEOUT ));
-            _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
-        }
         bool learn_clause = Options::get()->getBool(Options::LEARN_CLAUSE);
         if (learn_clause) {
-            _engine.ClauseLearning();
+            _engine.gurobiCheckSolve(Options::get()->getInt( Options::TIMEOUT ));
+//            _engine.checkSolve(Options::get()->getInt(Options::TIMEOUT));
+        } else {
+            if (check) {
+//             _engine.ClauseLearning();
+                auto result = _solver.solve();
+                if (result) {
+                    _engine.setExitCode(Engine::SAT);
+                } else {
+                    _engine.setExitCode(Engine::UNSAT);
+                }
+//            _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
+//           _engine.gurobiCheckSolve(Options::get()->getInt( Options::TIMEOUT ));
+            } else {
+//            _engine.gurobiSolve(Options::get()->getInt( Options::TIMEOUT ));
+                _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
+            }
         }
     }
 

@@ -15,4 +15,7 @@ Input bounds:
 	x5: [  0.1335,   0.2304] 
 
 Using Gurobi to solve LP...
+Branching heuristics set to LargestInterval
+Search path num: [0]
 unsat
+Total time: 0.011923 seconds

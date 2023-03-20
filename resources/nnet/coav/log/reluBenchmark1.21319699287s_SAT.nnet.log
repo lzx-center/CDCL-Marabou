@@ -15,699 +15,1031 @@ Input bounds:
 	x5: [ -0.3186,  -0.2686] 
 
 Using Gurobi to solve LP...
-x0 [0.336183, 0.386183]
-x1 [0.282937, 0.332937]
-x2 [0.094209, 0.144209]
-x3 [0.511218, 0.561218]
-x4 [-0.121774, -0.071774]
-x5 [-0.318642, -0.268642]
-x6 [-0.634908, -0.429781]
-x7 [0.408249, 0.825822]
-x8 [-0.019438, -0.015749]
-x9 [0.083866, 0.448424]
-x10 [0.695269, 1.098164]
-x11 [-0.358956, -0.175362]
-x12 [-0.009551, -0.007654]
-x13 [-0.096272, 0.029987]
-x14 [0.030602, 0.345088]
-x15 [-0.005954, -0.002317]
-x16 [-0.021810, -0.016894]
-x17 [-0.527302, -0.244529]
-x18 [-0.046770, 0.235535]
-x19 [-0.066992, -0.043583]
-x20 [-0.740026, -0.500586]
-x21 [1.273563, 1.710264]
-x22 [-0.093259, -0.030102]
-x23 [-0.465169, -0.299238]
-x24 [-0.689280, -0.496506]
-x25 [-0.201887, 0.186234]
-x26 [-0.018585, -0.015210]
-x27 [0.534276, 0.910308]
-x28 [-0.334106, 0.105724]
-x29 [0.021848, 0.309097]
-x30 [-0.023364, -0.018846]
-x31 [0.418382, 0.585748]
-x32 [0.374324, 0.879320]
-x33 [-0.012231, -0.009897]
-x34 [-0.255237, 0.047904]
-x35 [-0.575293, -0.295388]
-x36 [-1.145627, -0.818932]
-x37 [-0.011767, -0.008301]
-x38 [-0.093269, 0.429869]
-x39 [-0.240203, -0.137249]
-x40 [-1.317860, -1.014260]
-x41 [-0.018794, -0.015107]
-x42 [-0.014949, -0.011754]
-x43 [-0.089138, 0.292857]
-x44 [0.492126, 0.810407]
-x45 [-0.454808, -0.182021]
-x46 [0.408249, 0.825822]
-x47 [0.083866, 0.448424]
-x48 [0.695269, 1.098164]
-x49 [0.000000, 0.029987]
-x50 [0.030602, 0.345088]
-x51 [0.000000, 0.235535]
-x52 [1.273563, 1.710264]
-x53 [0.000000, 0.186234]
-x54 [0.534276, 0.910308]
-x55 [0.000000, 0.105724]
-x56 [0.021848, 0.309097]
-x57 [0.418382, 0.585748]
-x58 [0.374324, 0.879320]
-x59 [0.000000, 0.047904]
-x60 [0.000000, 0.429869]
-x61 [0.000000, 0.292857]
-x62 [0.492126, 0.810407]
-x63 [-0.825822, -0.408249]
-x64 [0.000000, 0.417573]
-x65 [-0.448424, -0.083866]
-x66 [0.000000, 0.364557]
-x67 [0.695269, 1.098164]
-x68 [-0.029987, 0.000000]
-x69 [0.000000, 0.029987]
-x70 [0.030602, 0.345088]
-x71 [0.000000, 0.235535]
-x72 [-1.710264, -1.273563]
-x73 [0.000000, 0.436700]
-x74 [-0.186234, 0.000000]
-x75 [0.000000, 0.186234]
-x76 [-0.910308, -0.534276]
-x77 [0.000000, 0.376032]
-x78 [-0.309097, 0.069196]
-x79 [0.000000, 0.287250]
-x80 [-0.585748, -0.418382]
-x81 [0.000000, 0.167366]
-x82 [0.374324, 0.879320]
-x83 [0.000000, 0.047904]
-x84 [0.000000, 0.429869]
-x85 [-0.292857, 0.000000]
-x86 [0.000000, 0.292857]
-x87 [0.492126, 0.810407]
-x88 [0.000000, 0.417573]
-x89 [0.000000, 0.364557]
-x90 [0.695269, 1.098164]
-x91 [0.000000, 0.029987]
-x92 [0.030602, 0.345088]
-x93 [0.000000, 0.235535]
-x94 [0.000000, 0.436700]
-x95 [0.000000, 0.186234]
-x96 [0.000000, 0.376032]
-x97 [0.000000, 0.069196]
-x98 [0.000000, 0.287250]
-x99 [0.000000, 0.167366]
-x100 [0.374324, 0.879320]
-x101 [0.000000, 0.047904]
-x102 [0.000000, 0.429869]
-x103 [0.000000, 0.292857]
-x104 [0.492126, 0.810407]
-x105 [0.055796, 0.645985]
-x106 [0.000000, 0.364557]
-x107 [-0.850649, -0.410493]
-x108 [0.000000, 0.402896]
-x109 [0.665282, 1.098164]
-x110 [0.000000, 0.029987]
-x111 [-0.345088, -0.016493]
-x112 [0.000000, 0.314487]
-x113 [0.030602, 0.345088]
-x114 [-0.235535, 0.000000]
-x115 [0.000000, 0.235535]
-x116 [-1.710264, -1.054023]
-x117 [0.000000, 0.436700]
-x118 [1.273563, 1.710264]
-x119 [-0.186234, 0.000000]
-x120 [0.000000, 0.186234]
-x121 [-0.910308, -0.386778]
-x122 [0.000000, 0.376032]
-x123 [0.244043, 0.851162]
-x124 [0.000000, 0.293188]
-x125 [-0.547260, -0.120384]
-x126 [0.000000, 0.167366]
-x127 [-0.356178, 0.106664]
-x128 [0.000000, 0.504996]
-x129 [0.350980, 0.879320]
-x130 [0.000000, 0.047904]
-x131 [0.000000, 0.047904]
-x132 [-0.429869, 0.000000]
-x133 [0.000000, 0.429869]
-x134 [0.000000, 0.429869]
-x135 [-0.292857, 0.000000]
-x136 [0.000000, 0.292857]
-x137 [-0.810407, -0.267493]
-x138 [0.000000, 0.318280]
-x139 [0.055796, 0.645985]
-x140 [0.000000, 0.364557]
-x141 [0.000000, 0.402896]
-x142 [0.665282, 1.098164]
-x143 [0.000000, 0.029987]
-x144 [0.000000, 0.314487]
-x145 [0.030602, 0.345088]
-x146 [0.000000, 0.235535]
-x147 [0.000000, 0.436700]
-x148 [1.273563, 1.710264]
-x149 [0.000000, 0.186234]
-x150 [0.000000, 0.376032]
-x151 [0.244043, 0.851162]
-x152 [0.000000, 0.293188]
-x153 [0.000000, 0.167366]
-x154 [0.000000, 0.106664]
-x155 [0.000000, 0.504996]
-x156 [0.350980, 0.879320]
-x157 [0.000000, 0.047904]
-x158 [0.000000, 0.047904]
-x159 [0.000000, 0.429869]
-x160 [0.000000, 0.429869]
-x161 [0.000000, 0.292857]
-x162 [0.000000, 0.318280]
-x163 [-0.039044, -0.019125]
-x164 [1.121707, 2.032848]
-x165 [0.362715, 1.470512]
-x166 [-1.095698, 0.889069]
-x167 [-0.052873, -0.029243]
-x168 [-3.355624, 1.349370]
-x169 [-1.391651, 0.082154]
-x170 [0.226069, 1.683957]
-x171 [-2.228604, 0.688652]
-x172 [-0.039417, -0.018584]
-x173 [-0.720862, 0.391970]
-x174 [-0.004071, 0.830251]
-x175 [-0.047215, -0.031113]
-x176 [-0.080646, -0.057257]
-x177 [-0.019330, -0.003610]
-x178 [-0.749052, 0.609262]
-x179 [-0.694288, -0.231415]
-x180 [-0.165634, -0.009898]
-x181 [-0.020216, 1.618692]
-x182 [0.000000, 0.000000]
-x183 [1.121707, 2.032848]
-x184 [0.362715, 1.470512]
-x185 [0.000000, 0.889069]
-x186 [0.000000, 1.349370]
-x187 [0.000000, 0.082154]
-x188 [0.226069, 1.683957]
-x189 [0.000000, 0.688652]
-x190 [0.000000, 0.391970]
-x191 [0.000000, 0.830251]
-x192 [0.000000, 0.000000]
-x193 [0.000000, 0.609262]
-x194 [0.000000, 0.000000]
-x195 [0.000000, 0.000000]
-x196 [0.000000, 1.618692]
-x197 [-6.596983, 0.000000]
-x198 [0.429781, 0.634908]
-x199 [0.015749, 0.019438]
-x200 [0.175362, 0.358956]
-x201 [0.007654, 0.009551]
-x202 [0.000000, 0.096272]
-x203 [0.002317, 0.005954]
-x204 [0.016894, 0.021810]
-x205 [0.244529, 0.527302]
-x206 [0.000000, 0.046770]
-x207 [0.043583, 0.066992]
-x208 [0.500586, 0.740026]
-x209 [0.030102, 0.093259]
-x210 [0.299238, 0.465169]
-x211 [0.496506, 0.689280]
-x212 [0.000000, 0.201887]
-x213 [0.015210, 0.018585]
-x214 [0.000000, 0.334106]
-x215 [0.018846, 0.023364]
-x216 [0.009897, 0.012231]
-x217 [0.000000, 0.255237]
-x218 [0.295388, 0.575293]
-x219 [0.818932, 1.145627]
-x220 [0.008301, 0.011767]
-x221 [0.000000, 0.093269]
-x222 [0.137249, 0.240203]
-x223 [1.014260, 1.317860]
-x224 [0.015107, 0.018794]
-x225 [0.011754, 0.014949]
-x226 [0.000000, 0.089138]
-x227 [0.182021, 0.454808]
-x228 [0.408249, 0.825822]
-x229 [0.083866, 0.448424]
-x230 [0.000000, 0.029987]
-x231 [1.273563, 1.710264]
-x232 [0.000000, 0.186234]
-x233 [0.534276, 0.910308]
-x234 [0.000000, 0.309097]
-x235 [0.418382, 0.585748]
-x236 [0.000000, 0.292857]
-x237 [0.000000, 0.040174]
-x238 [0.246845, 1.014298]
-x239 [0.000615, 0.345088]
-x240 [0.000000, 0.235535]
-x241 [1.038029, 1.710264]
-x242 [0.000000, 0.186234]
-x243 [0.348042, 0.910308]
-x244 [0.025408, 0.563901]
-x245 [0.000000, 0.460938]
-x246 [0.000000, 0.429869]
-x247 [0.000000, 0.292857]
-x248 [0.199269, 0.810407]
-x249 [0.000000, 0.064329]
-x250 [0.000000, 0.972350]
-x251 [0.000000, 1.174760]
-x252 [0.000000, 3.794619]
-x253 [0.017921, 0.068574]
-x254 [0.000000, 6.919566]
-x255 [0.000000, 4.088460]
-x256 [0.000000, 1.208677]
-x257 [0.000000, 4.947084]
-x258 [0.002866, 0.058196]
-x259 [0.000000, 1.478586]
-x260 [0.000000, 1.481535]
-x261 [0.017643, 0.063153]
-x262 [0.036493, 0.104690]
-x263 [0.000000, 0.035428]
-x264 [0.000000, 1.788914]
-x265 [0.000000, 1.547581]
-x266 [0.000000, 0.267095]
-x267 [0.000000, 2.467440]
--1.00x6 -0.98x0 +0.43x1 -0.75x2 +0.32x3 +0.46x4 +1.16x5  = 0.01
--1.00x7 -0.40x0 -1.74x1 -1.63x2 +1.80x3 +1.16x4 -1.63x5  = -0.16
--1.00x8 -0.00x0 -0.01x1 -0.02x2 -0.01x3 +0.02x4 +0.01x5  = -0.00
--1.00x9 -1.92x0 -0.57x1 +0.23x2 -2.40x3 -1.23x4 -0.95x5  = -2.00
--1.00x10 -1.24x0 +1.17x1 -2.16x2 -0.40x3 -2.68x4 -0.41x5  = -1.08
--1.00x11 -0.58x0 +0.18x1 +0.40x2 -0.64x3 +1.38x4 -0.48x5  = -0.17
--1.00x12 -0.00x0 -0.01x1 -0.01x2 -0.01x3 +0.01x4 +0.00x5  = -0.00
--1.00x13 +1.29x0 -0.30x1 +0.09x2 +0.65x3 +0.15x4 +0.04x5  = 0.74
--1.00x14 +1.93x0 +0.69x1 -0.75x2 -1.22x3 -1.64x4 +0.06x5  = 0.12
--1.00x15 +0.01x0 +0.00x1 -0.02x2 -0.02x3 -0.00x4 -0.02x5  = -0.00
--1.00x16 -0.01x0 -0.02x1 -0.02x2 -0.02x3 +0.02x4 -0.02x5  = -0.00
--1.00x17 -0.61x0 -0.09x1 +0.18x2 +0.97x3 +2.60x4 -1.21x5  = 0.78
--1.00x18 +0.07x0 +0.86x1 +1.35x2 -0.75x3 -0.68x4 +1.93x5  = -0.55
--1.00x19 +0.15x0 -0.12x1 +0.03x2 +0.04x3 +0.10x4 +0.03x5  = 0.08
--1.00x20 -0.55x0 +1.87x1 -0.82x2 -1.11x3 -0.21x4 +0.22x5  = 0.26
--1.00x21 +2.15x0 -2.95x1 -1.73x2 +1.43x3 +0.21x4 +0.26x5  = -1.16
--1.00x22 -0.42x0 +0.01x1 +0.07x2 +0.08x3 -0.57x4 -0.11x5  = 0.05
--1.00x23 +1.08x0 -0.20x1 -0.71x2 -0.83x3 -0.24x4 +0.25x5  = 0.13
--1.00x24 -0.66x0 +1.39x1 -0.19x2 -0.06x3 +0.47x4 -1.09x5  = 1.00
--1.00x25 -0.87x0 -0.91x1 +3.01x2 +2.13x3 +0.13x4 +0.70x5  = 0.70
--1.00x26 -0.01x0 -0.01x1 -0.01x2 -0.02x3 +0.01x4 -0.00x5  = -0.00
--1.00x27 +3.25x0 -1.45x1 -0.36x2 -1.20x3 -0.56x4 +0.69x5  = -0.84
--1.00x28 -2.52x0 +2.05x1 -2.31x2 -0.89x3 -0.31x4 -0.71x5  = -0.68
--1.00x29 -0.29x0 -0.72x1 +2.45x2 +1.97x3 +0.28x4 +0.03x5  = 0.82
--1.00x30 -0.02x0 +0.01x1 +0.00x2 -0.02x3 -0.02x4 +0.02x5  = 0.00
--1.00x31 +1.76x0 +0.17x1 +0.08x2 +0.26x3 -0.28x4 -0.80x5  = 0.60
--1.00x32 +2.78x0 -1.68x1 +2.93x2 +1.18x3 +0.53x4 +1.00x5  = 0.50
--1.00x33 -0.01x0 +0.01x1 -0.00x2 -0.01x3 -0.01x4 +0.01x5  = 0.00
--1.00x34 +0.39x0 +1.46x1 -0.47x2 +0.31x3 +2.41x4 -1.03x5  = 0.87
--1.00x35 -0.71x0 +0.26x1 +1.01x2 -2.72x3 -0.65x4 +0.25x5  = -1.09
--1.00x36 +0.90x0 +2.39x1 +0.88x2 -0.73x3 +0.91x4 +0.71x5  = 1.46
--1.00x37 +0.00x0 -0.02x1 -0.02x2 -0.01x3 -0.01x4 -0.01x5  = -0.00
--1.00x38 +1.85x0 -1.05x1 +5.47x2 +1.35x3 -0.03x4 +0.71x5  = 1.35
--1.00x39 +0.22x0 -0.28x1 -0.40x2 +0.40x3 +0.35x4 -0.41x5  = 0.43
--1.00x40 -0.43x0 +4.04x1 +1.05x2 -0.45x3 -0.10x4 -0.00x5  = 2.15
--1.00x41 +0.00x0 -0.02x1 -0.01x2 -0.01x3 -0.02x4 +0.02x5  = 0.00
--1.00x42 +0.00x0 -0.00x1 -0.02x2 +0.01x3 +0.03x4 -0.00x5  = 0.01
--1.00x43 +2.25x0 -0.52x1 -2.48x2 +1.03x3 -0.83x4 +0.53x5  = 0.73
--1.00x44 +0.32x0 -1.25x1 +2.67x2 +0.63x3 -0.01x4 -1.48x5  = 0.17
--1.00x45 +0.34x0 -2.12x1 +0.36x2 +0.28x3 +0.03x4 +2.33x5  = -0.70
--1.00x63 -1.00x46  = -0.00
--1.00x64 +1.00x46  = 0.41
--1.00x65 -1.00x47  = -0.00
--1.00x66 +1.00x47  = 0.08
--1.00x67 +1.00x48  = 0.00
- = 0.00
--1.00x68 -1.00x49  = -0.00
--1.00x69 +1.00x49  = -0.00
--1.00x70 +1.00x50  = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x71 +1.00x51  = 0.00
- = 0.00
--1.00x72 -1.00x52  = -0.00
--1.00x73 +1.00x52  = 1.27
- = 0.00
- = 0.00
--1.00x74 -1.00x53  = -0.00
--1.00x75 +1.00x53  = -0.00
--1.00x76 -1.00x54  = -0.00
--1.00x77 +1.00x54  = 0.53
--1.00x78 +1.00x55 -1.00x56  = -0.00
--1.00x79 +1.00x56  = 0.02
--1.00x80 -1.00x57  = -0.00
--1.00x81 +1.00x57  = 0.42
--1.00x82 +1.00x58  = 0.00
- = 0.00
--1.00x83 +1.00x59  = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x84 +1.00x60  = 0.00
- = 0.00
- = 0.00
- = 0.00
--1.00x85 -1.00x61  = -0.00
--1.00x86 +1.00x61  = -0.00
--1.00x87 +1.00x62  = 0.00
- = 0.00
--1.00x105 +1.00x88 -1.00x89  = -0.32
--1.00x106 +1.00x89  = -0.00
--1.00x107 +1.00x89 -1.00x90  = -0.08
--1.00x108 +1.00x90  = 0.70
--1.00x109 +1.00x90 -1.00x91  = 0.00
--1.00x110 +1.00x91  = -0.00
--1.00x111 +1.00x91 -1.00x92  = 0.00
--1.00x112 +1.00x92  = 0.03
--1.00x113 +1.00x92  = 0.00
- = 0.00
--1.00x114 -1.00x93  = 0.00
--1.00x115 +1.00x93  = -0.00
--1.00x116 +1.00x93 -1.00x94  = 1.27
--1.00x117 +1.00x94  = -0.00
--1.00x118 +1.00x94  = -1.27
- = 0.00
--1.00x119 -1.00x95  = 0.00
--1.00x120 +1.00x95  = -0.00
--1.00x121 +1.00x95 -1.00x96  = 0.53
--1.00x122 +1.00x96  = -0.00
--1.00x123 +1.00x96 -1.00x97 -1.00x98  = -0.51
--1.00x124 +1.00x97 +1.00x98  = -0.00
--1.00x125 +1.00x97 +1.00x98 -1.00x99  = 0.40
--1.00x126 +1.00x99  = -0.00
--1.00x127 +1.00x99 -1.00x100  = -0.42
--1.00x128 +1.00x100  = 0.37
--1.00x129 +1.00x100 -1.00x101  = 0.00
--1.00x130 +1.00x101  = -0.00
--1.00x131 +1.00x101  = 0.00
- = 0.00
--1.00x132 -1.00x102  = 0.00
--1.00x133 +1.00x102  = -0.00
--1.00x134 +1.00x102  = 0.00
- = 0.00
--1.00x135 -1.00x103  = 0.00
--1.00x136 +1.00x103  = -0.00
--1.00x137 +1.00x103 -1.00x104  = 0.00
--1.00x138 +1.00x104  = 0.49
--1.00x163 -0.01x139 -0.01x140 -0.01x141 +0.01x142 +0.01x143 -0.00x144 -0.01x145 +0.01x146 -0.00x147 +0.00x148 -0.00x149 -0.01x150 -0.01x151 -0.01x152 -0.01x153 +0.01x154 +0.01x155 +0.00x156 +0.00x157 -0.01x158 -0.01x159 -0.02x160 -0.01x161 +0.00x162  = 0.02
--1.00x164 -0.06x139 -0.06x140 -0.57x141 +1.65x142 +1.65x143 -0.10x144 +0.24x145 -0.99x146 +0.88x147 -1.50x148 +0.12x149 +1.12x150 -0.56x151 -0.56x152 -0.48x153 +0.72x154 +0.72x155 -0.39x156 -0.39x157 -0.15x158 -0.56x159 -0.36x160 +0.60x161 +0.59x162  = -2.59
--1.00x165 -0.44x139 -0.44x140 +0.05x141 +1.33x142 +1.33x143 -0.03x144 +0.18x145 +0.14x146 +0.62x147 -0.18x148 -1.03x149 +0.04x150 -0.70x151 -0.70x152 -1.72x153 +0.89x154 +0.89x155 +0.25x156 +0.25x157 -0.39x158 +0.01x159 -0.69x160 -0.01x161 -0.67x162  = -0.55
--1.00x166 +1.78x139 +1.78x140 +0.08x141 -0.35x142 -0.35x143 -0.09x144 -0.14x145 +0.75x146 +0.95x147 +0.93x148 -1.70x149 -1.54x150 -0.17x151 -0.17x152 -0.15x153 -1.46x154 -1.46x155 -0.91x156 -0.91x157 +0.67x158 -0.35x159 +0.67x160 +1.62x161 -0.76x162  = 1.08
--1.00x167 +0.00x139 +0.00x140 -0.00x141 -0.01x142 -0.01x143 +0.00x144 -0.01x145 +0.01x146 -0.00x147 -0.01x148 -0.01x149 +0.01x150 +0.00x151 +0.00x152 -0.00x153 -0.01x154 -0.01x155 -0.01x156 -0.01x157 +0.01x158 -0.01x159 -0.01x160 -0.00x161 -0.00x162  = 0.01
--1.00x168 -2.13x139 -2.13x140 +0.51x141 -2.15x142 -2.15x143 +1.05x144 +1.92x145 +1.68x146 -2.62x147 +0.93x148 +1.86x149 +0.70x150 +0.18x151 +0.18x152 -1.16x153 +1.18x154 +1.18x155 +1.37x156 +1.37x157 -2.89x158 +1.53x159 +2.37x160 -2.04x161 +2.76x162  = 1.77
--1.00x169 +0.67x139 +0.67x140 +0.46x141 -0.25x142 -0.25x143 +0.22x144 +0.29x145 +1.30x146 +0.86x147 -1.71x148 +0.28x149 +0.34x150 -2.51x151 -2.51x152 -1.71x153 +0.34x154 +0.34x155 +0.03x156 +0.03x157 +0.42x158 -0.26x159 -1.16x160 -0.06x161 -0.25x162  = -3.25
--1.00x170 +0.72x139 +0.72x140 -1.09x141 +0.65x142 +0.65x143 -0.34x144 +0.37x145 -1.28x146 +0.89x147 -0.32x148 +0.82x149 +1.31x150 -0.15x151 -0.15x152 -0.32x153 -0.31x154 -0.31x155 +0.07x156 +0.07x157 +0.28x158 -0.15x159 +0.40x160 +1.37x161 +0.24x162  = -0.24
--1.00x171 +1.86x139 +1.86x140 +0.62x141 +0.46x142 +0.46x143 -0.55x144 -0.73x145 +0.26x146 +1.80x147 -0.13x148 -0.61x149 -2.74x150 -0.29x151 -0.29x152 +0.44x153 -1.65x154 -1.65x155 -0.60x156 -0.60x157 +0.92x158 -0.54x159 -0.18x160 +1.37x161 -1.25x162  = 0.64
--1.00x172 -0.01x139 -0.01x140 -0.00x141 +0.01x142 +0.01x143 -0.00x144 +0.01x145 +0.01x146 -0.01x147 +0.01x148 +0.00x149 -0.00x150 -0.00x151 -0.00x152 -0.01x153 -0.01x154 -0.01x155 +0.00x156 +0.00x157 -0.01x158 -0.01x159 +0.00x160 -0.00x161 -0.01x162  = 0.03
--1.00x173 +0.35x139 +0.35x140 +0.13x141 +0.19x142 +0.19x143 -0.13x144 -0.14x145 -0.48x146 -0.26x147 +0.60x148 +0.01x149 -0.04x150 -0.01x151 -0.01x152 -0.02x153 -0.64x154 -0.64x155 -0.48x156 -0.48x157 +0.33x158 -0.37x159 -0.38x160 +0.03x161 -0.68x162  = 0.58
--1.00x174 +0.34x139 +0.34x140 -0.75x141 +0.54x142 +0.54x143 -0.57x144 +0.17x145 -0.97x146 +0.34x147 -0.19x148 +0.35x149 +0.82x150 +0.75x151 +0.75x152 +0.02x153 -0.51x154 -0.51x155 -0.04x156 -0.04x157 -0.20x158 -0.19x159 +0.40x160 +0.59x161 -0.31x162  = 0.32
--1.00x175 -0.00x139 -0.00x140 -0.01x141 -0.00x142 -0.00x143 -0.00x144 -0.01x145 +0.00x146 -0.01x147 -0.00x148 -0.00x149 +0.01x150 -0.01x151 -0.01x152 -0.00x153 -0.00x154 -0.00x155 -0.01x156 -0.01x157 +0.01x158 -0.01x159 -0.01x160 -0.00x161 +0.01x162  = 0.02
--1.00x176 -0.01x139 -0.01x140 -0.01x141 -0.01x142 -0.01x143 -0.01x144 -0.00x145 +0.00x146 -0.01x147 -0.01x148 -0.01x149 +0.00x150 -0.01x151 -0.01x152 -0.00x153 -0.01x154 -0.01x155 -0.01x156 -0.01x157 -0.00x158 +0.01x159 -0.01x160 -0.01x161 +0.01x162  = 0.02
--1.00x177 +0.00x139 +0.00x140 +0.01x141 -0.01x142 -0.01x143 -0.01x144 -0.01x145 -0.01x146 +0.01x147 -0.00x148 -0.01x149 -0.00x150 +0.00x151 +0.00x152 -0.00x153 -0.00x154 -0.00x155 -0.01x156 -0.01x157 +0.00x158 -0.01x159 +0.00x160 -0.01x161 -0.00x162  = -0.01
--1.00x178 +0.81x139 +0.81x140 +1.07x141 +0.44x142 +0.44x143 -0.05x144 -0.29x145 -0.18x146 -0.24x147 -0.47x148 +0.16x149 -0.40x150 +0.20x151 +0.20x152 +0.93x153 -0.31x154 -0.31x155 -0.71x156 -0.71x157 -0.41x158 -0.04x159 -0.02x160 -0.13x161 -0.40x162  = -0.20
--1.00x179 +0.43x139 +0.43x140 +0.34x141 -0.05x142 -0.05x143 +0.03x144 -0.37x145 -0.12x146 -0.23x147 +0.09x148 +0.28x149 -0.35x150 -0.23x151 -0.23x152 +0.05x153 -0.13x154 -0.13x155 -0.28x156 -0.28x157 -0.06x158 +0.37x159 +0.53x160 +0.42x161 -0.24x162  = 0.50
--1.00x180 +0.05x139 +0.05x140 -0.02x141 -0.07x142 -0.07x143 -0.02x144 -0.02x145 +0.15x146 -0.03x147 -0.00x148 -0.00x149 -0.03x150 -0.03x151 -0.03x152 -0.09x153 +0.03x154 +0.03x155 +0.09x156 +0.09x157 +0.04x158 +0.07x159 +0.03x160 -0.09x161 +0.03x162  = 0.09
--1.00x181 -0.99x139 -0.99x140 +0.66x141 -0.71x142 -0.71x143 +0.24x144 -0.24x145 +1.46x146 +0.32x147 +0.69x148 +0.18x149 +0.18x150 +1.37x151 +1.37x152 +1.05x153 -0.50x154 -0.50x155 +0.25x156 +0.25x157 -0.32x158 -0.54x159 -1.23x160 -0.84x161 -1.18x162  = -0.11
--1.00x197 +0.03x182 +4.01x183 +3.90x184 -5.95x185 -9.17x186 +6.42x187 +3.98x188 -6.95x189 -2.18x190 +2.86x191 +0.01x192 -2.86x193 -1.68x194 -0.34x195 -4.46x196  = -0.21
--1.00x6 -1.00x198  = 0.00
-+1.00x46 -1.00x7  = 0.00
--1.00x8 -1.00x199  = 0.00
-+1.00x47 -1.00x9  = 0.00
-+1.00x48 -1.00x10  = 0.00
--1.00x11 -1.00x200  = 0.00
--1.00x12 -1.00x201  = 0.00
-+1.00x49 -1.00x13 -1.00x202  = 0.00
-+1.00x50 -1.00x14  = 0.00
--1.00x15 -1.00x203  = 0.00
--1.00x16 -1.00x204  = 0.00
--1.00x17 -1.00x205  = 0.00
-+1.00x51 -1.00x18 -1.00x206  = 0.00
--1.00x19 -1.00x207  = 0.00
--1.00x20 -1.00x208  = 0.00
-+1.00x52 -1.00x21  = 0.00
--1.00x22 -1.00x209  = 0.00
--1.00x23 -1.00x210  = 0.00
--1.00x24 -1.00x211  = 0.00
-+1.00x53 -1.00x25 -1.00x212  = 0.00
--1.00x26 -1.00x213  = 0.00
-+1.00x54 -1.00x27  = 0.00
-+1.00x55 -1.00x28 -1.00x214  = 0.00
-+1.00x56 -1.00x29  = 0.00
--1.00x30 -1.00x215  = 0.00
-+1.00x57 -1.00x31  = 0.00
-+1.00x58 -1.00x32  = 0.00
--1.00x33 -1.00x216  = 0.00
-+1.00x59 -1.00x34 -1.00x217  = 0.00
--1.00x35 -1.00x218  = 0.00
--1.00x36 -1.00x219  = 0.00
--1.00x37 -1.00x220  = 0.00
-+1.00x60 -1.00x38 -1.00x221  = 0.00
--1.00x39 -1.00x222  = 0.00
--1.00x40 -1.00x223  = 0.00
--1.00x41 -1.00x224  = 0.00
--1.00x42 -1.00x225  = 0.00
-+1.00x61 -1.00x43 -1.00x226  = 0.00
-+1.00x62 -1.00x44  = 0.00
--1.00x45 -1.00x227  = 0.00
--1.00x63 -1.00x228  = 0.00
-+1.00x88 -1.00x64  = 0.00
--1.00x65 -1.00x229  = 0.00
-+1.00x89 -1.00x66  = 0.00
-+1.00x90 -1.00x67  = 0.00
--1.00x68 -1.00x230  = 0.00
-+1.00x91 -1.00x69  = 0.00
-+1.00x92 -1.00x70  = 0.00
-+1.00x93 -1.00x71  = 0.00
--1.00x72 -1.00x231  = 0.00
-+1.00x94 -1.00x73  = 0.00
--1.00x74 -1.00x232  = 0.00
-+1.00x95 -1.00x75  = 0.00
--1.00x76 -1.00x233  = 0.00
-+1.00x96 -1.00x77  = 0.00
-+1.00x97 -1.00x78 -1.00x234  = 0.00
-+1.00x98 -1.00x79  = 0.00
--1.00x80 -1.00x235  = 0.00
-+1.00x99 -1.00x81  = 0.00
-+1.00x100 -1.00x82  = 0.00
-+1.00x101 -1.00x83  = 0.00
-+1.00x102 -1.00x84  = 0.00
--1.00x85 -1.00x236  = 0.00
-+1.00x103 -1.00x86  = 0.00
-+1.00x104 -1.00x87  = 0.00
-+1.00x139 -1.00x105 -1.00x237  = 0.00
-+1.00x140 -1.00x106  = 0.00
--1.00x107 -1.00x238  = 0.00
-+1.00x141 -1.00x108  = 0.00
-+1.00x142 -1.00x109  = 0.00
-+1.00x143 -1.00x110  = 0.00
--1.00x111 -1.00x239  = 0.00
-+1.00x144 -1.00x112  = 0.00
-+1.00x145 -1.00x113  = 0.00
--1.00x114 -1.00x240  = 0.00
-+1.00x146 -1.00x115  = 0.00
--1.00x116 -1.00x241  = 0.00
-+1.00x147 -1.00x117  = 0.00
-+1.00x148 -1.00x118  = 0.00
--1.00x119 -1.00x242  = 0.00
-+1.00x149 -1.00x120  = 0.00
--1.00x121 -1.00x243  = 0.00
-+1.00x150 -1.00x122  = 0.00
-+1.00x151 -1.00x123  = 0.00
-+1.00x152 -1.00x124  = 0.00
--1.00x125 -1.00x244  = 0.00
-+1.00x153 -1.00x126  = 0.00
-+1.00x154 -1.00x127 -1.00x245  = 0.00
-+1.00x155 -1.00x128  = 0.00
-+1.00x156 -1.00x129  = 0.00
-+1.00x157 -1.00x130  = 0.00
-+1.00x158 -1.00x131  = 0.00
--1.00x132 -1.00x246  = 0.00
-+1.00x159 -1.00x133  = 0.00
-+1.00x160 -1.00x134  = 0.00
--1.00x135 -1.00x247  = 0.00
-+1.00x161 -1.00x136  = 0.00
--1.00x137 -1.00x248  = 0.00
-+1.00x162 -1.00x138  = 0.00
-+1.00x182 -1.00x163 -1.00x249  = 0.00
-+1.00x183 -1.00x164 -1.00x250  = 0.00
-+1.00x184 -1.00x165 -1.00x251  = 0.00
-+1.00x185 -1.00x166 -1.00x252  = 0.00
--1.00x167 -1.00x253  = 0.00
-+1.00x186 -1.00x168 -1.00x254  = 0.00
-+1.00x187 -1.00x169 -1.00x255  = 0.00
-+1.00x188 -1.00x170 -1.00x256  = 0.00
-+1.00x189 -1.00x171 -1.00x257  = 0.00
--1.00x172 -1.00x258  = 0.00
-+1.00x190 -1.00x173 -1.00x259  = 0.00
-+1.00x191 -1.00x174 -1.00x260  = 0.00
--1.00x175 -1.00x261  = 0.00
--1.00x176 -1.00x262  = 0.00
-+1.00x192 -1.00x177 -1.00x263  = 0.00
-+1.00x193 -1.00x178 -1.00x264  = 0.00
-+1.00x194 -1.00x179 -1.00x265  = 0.00
-+1.00x195 -1.00x180 -1.00x266  = 0.00
-+1.00x196 -1.00x181 -1.00x267  = 0.00
-
-Engine::solve: Initial statistics
-
-11:03:18 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 13 milli (00:00:00)
-		Main loop: 0 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 5 milli (00:00:00)
-	Breakdown for main loop:
-		[0.00%] Simplex steps: 0 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.00%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[0.00%] SMT core: 0 milli
-		[0.00%] Symbolic Bound Tightening: 1 milli
-		[0.00%] SoI-based local search: 0 milli
-		[0.00%] SoI-based local search: 1 milli
-		[0.00%] Unaccounted for: 0 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 150
-	Number of constraints removed due to variable elimination: 112
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 1
-		0 iterations were simplex steps. Total time: 0 milli. Average: 0.00 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 25 / 25
-		Constraints disabled by valid splits: 0. By SMT-originated splits: 0
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 0. Total visited states: 1. Number of splits: 0. Number of pops: 0
-	Max stack depth: 0
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 0.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 150. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 82
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 0. Number of accepted update: 0 [0.00%]
-	Total time (% of local search time) updating SoI phase pattern : 0 milli [0.00%]
-	Total time obtaining current assignment: 0 milli [0.00%]
-	Total time getting SoI phase pattern : 0 milli [0.00%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 0 / 0
-		[0.00%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.00%] Post-Pop hook: 0 milli
-		[0.00%] Pop : 0 milli
-		[0.00%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
----
-adjustAssignmentToSatisfyNonLinearConstraints
-
-Engine::solve: sat assignment found
-
-11:03:18 Statistics update:
-	--- Time Statistics ---
-	Total time elapsed: 19 milli (00:00:00)
-		Main loop: 5 milli (00:00:00)
-		Preprocessing time: 8 milli (00:00:00)
-		Unknown: 5 milli (00:00:00)
-	Breakdown for main loop:
-		[82.27%] Simplex steps: 4 milli
-		[0.00%] Explicit-basis bound tightening: 0 milli
-		[0.00%] Constraint-matrix bound tightening: 0 milli
-		[0.00%] Degradation checking: 0 milli
-		[0.00%] Precision restoration: 0 milli
-		[0.00%] Statistics handling: 0 milli
-		[0.00%] Constraint-fixing steps: 0 milli
-		[0.52%] Valid case splits: 0 milli. Average per split: 0.00 milli
-		[0.00%] Applying stored bound-tightening: 0 milli
-		[0.00%] SMT core: 0 milli
-		[25.64%] Symbolic Bound Tightening: 1 milli
-		[70.26%] SoI-based local search: 4 milli
-		[35.22%] SoI-based local search: 2 milli
-		[307907595955759488.00%] Unaccounted for: 0 milli
-	--- Preprocessor Statistics ---
-	Number of preprocessor bound-tightening loop iterations: 6
-	Number of eliminated variables: 150
-	Number of constraints removed due to variable elimination: 112
-	Number of equations removed due to variable elimination: 0
-	--- Engine Statistics ---
-	Number of main loop iterations: 2
-		105 iterations were simplex steps. Total time: 4 milli. Average: 0.04 milli.
-		0 iterations were constraint-fixing steps. Total time: 0 milli. Average: 0.00 milli
-	Number of active piecewise-linear constraints: 17 / 25
-		Constraints disabled by valid splits: 8. By SMT-originated splits: 0
-	Last reported degradation: 0.0000000000. Max degradation so far: 0.0000000000. Restorations so far: 0
-	Number of simplex pivots we attempted to skip because of instability: 0.
-	Unstable pivots performed anyway: 0
-	--- Tableau Statistics ---
-	Total number of pivots performed: 0
-		Real pivots: 0. Degenerate: 0 (0.00%)
-		Degenerate pivots by request (e.g., to fix a PL constraint): 0 (0.00%)
-		Average time per pivot: 0.00 milli
-	Total number of fake pivots performed: 0
-	Total number of rows added: 0. Number of merged columns: 0
-	Current tableau dimensions: M = 0, N = 0
-	--- SMT Core Statistics ---
-	Total depth is 0. Total visited states: 1. Number of splits: 0. Number of pops: 0
-	Max stack depth: 0
-	--- Bound Tightening Statistics ---
-	Number of tightened bounds: 4.
-		Number of rows examined by row tightener: 0. Consequent tightenings: 0
-		Number of explicit basis matrices examined by row tightener: 0. Consequent tightenings: 0
-		Number of bound tightening rounds on the entire constraint matrix: 0. Consequent tightenings: 0
-		Number of bound notifications sent to PL constraints: 154. Tightenings proposed: 0
-	--- Basis Factorization statistics ---
-	Number of basis refactorizations: 0
-	--- Projected Steepest Edge Statistics ---
-	Number of iterations: 0.
-	Number of resets to reference space: 0. Avg. iterations per reset: 0
-	--- SBT ---
-	Number of tightened bounds: 82
-	--- SoI-based local search ---
-	Number of proposed phase pattern update: 4. Number of accepted update: 5 [125.00%]
-	Total time (% of local search time) updating SoI phase pattern : 60 milli [1.43%]
-	Total time obtaining current assignment: 491 milli [11.67%]
-	Total time getting SoI phase pattern : 36 milli [0.60%]
-	--- Context dependent statistics ---
-	Number of pushes / pops: 0 / 0
-		[0.00%] Pre-Push hook: 0 milli
-		[0.00%] Push : 0 milli
-		[0.00%] Post-Pop hook: 0 milli
-		[0.00%] Pop : 0 milli
-		[0.00%] Total context-switching time: 0 milli
-	--- Proof Certificate ---
-	Number of certified leaves: 0
-	Number of leaves to delegate: 0
-
-Path [0] verified sat,
-
+Branching heuristics set to LargestInterval
+Enqueue: 8, reason: -1
+Enqueue: -10, reason: -1
+Enqueue: 11, reason: -1
+Enqueue: 12, reason: -1
+Enqueue: 16, reason: -1
+Enqueue: -20, reason: -1
+Enqueue: -22, reason: -1
+Enqueue: -23, reason: -1
+Init done!
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 
+Level 1: -0(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 
+Level 1: -0(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23 -0 
+====Pick next lit: 24====
+Enqueue: -24, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 
+Level 1: -0(-1) implied: 
+Level 2: -24(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 
+Level 1: -0(-1) implied: 
+Level 2: -24(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23 -0 -24 
+Is infeasible!
+Slack: Length from [10] to [1]
+Record stack: [1]
+Total path: 1, learnt num: 1, success rate: 1.000000
+Should back track to 0
+Enqueue: 24, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+Level 1: -0(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+Level 1: -0(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24 -0 
+====Pick next lit: 21====
+Enqueue: -21, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24 -0 -21 
+====Pick next lit: 19====
+Enqueue: -19, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -19(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -19(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24 -0 -21 -19 
+Is infeasible!
+Slack: Length from [12] to [1]
+Record stack: [2]
+Total path: 2, learnt num: 2, success rate: 1.000000
+Should back track to 0
+Enqueue: 19, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 
+====Pick next lit: 0====
+Enqueue: -0, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 
+====Pick next lit: 21====
+Enqueue: -21, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 
+====Pick next lit: 18====
+Enqueue: -18, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 
+====Pick next lit: 17====
+Enqueue: -17, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17 
+====Pick next lit: 15====
+Enqueue: -15, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 
+Level 5: -15(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 
+Level 5: -15(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17 -15 
+====Pick next lit: 14====
+Enqueue: -14, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 
+Level 5: -15(-1) implied: 
+Level 6: -14(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 
+Level 5: -15(-1) implied: 
+Level 6: -14(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17 -15 -14 
+Is infeasible!
+Slack: Length from [16] to [2]
+Record stack: [3]
+Total path: 3, learnt num: 3, success rate: 1.000000
+Should back track to 4
+Enqueue: 14, reason: 0
+14 17 
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14 -13 
+====Pick next lit: 15====
+Enqueue: -15, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14 -13 -15 
+====Pick next lit: 9====
+Enqueue: -9, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14 -13 -15 -9 
+====Pick next lit: 7====
+Enqueue: -7, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+Level 8: -7(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+Level 8: -7(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14 -13 -15 -9 -7 
+====Pick next lit: 6====
+Enqueue: -6, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+Level 8: -7(-1) implied: 
+Level 9: -6(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+Level 8: -7(-1) implied: 
+Level 9: -6(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14 -13 -15 -9 -7 -6 
+====Pick next lit: 5====
+Enqueue: -5, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+Level 8: -7(-1) implied: 
+Level 9: -6(-1) implied: 
+Level 10: -5(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 
+Level 5: -13(-1) implied: 
+Level 6: -15(-1) implied: 
+Level 7: -9(-1) implied: 
+Level 8: -7(-1) implied: 
+Level 9: -6(-1) implied: 
+Level 10: -5(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14 -13 -15 -9 -7 -6 -5 
+Is infeasible!
+Slack: Length from [21] to [2]
+Record stack: [4]
+Total path: 4, learnt num: 4, success rate: 1.000000
+Should back track to 4
+Enqueue: 5, reason: 4
+5 -14 
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 
+====Pick next lit: 4====
+Enqueue: -4, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13 
+====Pick next lit: 15====
+Enqueue: -15, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13 -15 
+====Pick next lit: 9====
+Enqueue: -9, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13 -15 -9 
+====Pick next lit: 7====
+Enqueue: -7, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13 -15 -9 -7 
+====Pick next lit: 6====
+Enqueue: -6, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -6(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -6(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13 -15 -9 -7 -6 
+Is infeasible!
+Slack: Length from [22] to [6]
+Record stack: [5]
+Total path: 5, learnt num: 5, success rate: 1.000000
+Should back track to 6
+Enqueue: 6, reason: 8
+6 13 -5 -14 17 21 
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13  6 
+====Pick next lit: 15====
+Enqueue: -15, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13  6 -15 
+====Pick next lit: 9====
+Enqueue: -9, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13  6 -15 -9 
+====Pick next lit: 7====
+Enqueue: -7, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13  6 -15 -9 -7 
+====Pick next lit: 3====
+Enqueue: -3, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13  6 -15 -9 -7 -3 
+====Pick next lit: 2====
+Enqueue: -2, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Level 11: -2(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Level 11: -2(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13  6 -15 -9 -7 -3 -2 
+====Pick next lit: 1====
+Enqueue: -1, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Level 11: -2(-1) implied: 
+Level 12: -1(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Level 11: -2(-1) implied: 
+Level 12: -1(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5 -4 -13  6 -15 -9 -7 -3 -2 -1 
+Is infeasible!
+Slack: Length from [25] to [2]
+Record stack: [6]
+Total path: 6, learnt num: 6, success rate: 1.000000
+Should back track to 4
+Enqueue: 1, reason: 16
+1 -14 
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 
+====Pick next lit: 4====
+Enqueue: -4, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 -4 
+====Pick next lit: 13====
+Enqueue: -13, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 
+Propagate: Enqueue: 6, reason: 8
+6 13 -5 -14 17 21 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 -4 -13  6 
+====Pick next lit: 15====
+Enqueue: -15, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 -4 -13  6 -15 
+====Pick next lit: 9====
+Enqueue: -9, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 -4 -13  6 -15 -9 
+====Pick next lit: 7====
+Enqueue: -7, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 -4 -13  6 -15 -9 -7 
+====Pick next lit: 3====
+Enqueue: -3, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 -4 -13  6 -15 -9 -7 -3 
+====Pick next lit: 2====
+Enqueue: -2, reason: -1
+------ Before propagate:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Level 11: -2(-1) implied: 
+propagate success, result: -1, is undef: 1
+No conflict!
+------ Before check:
+Dump trail:
+Level 0: 8 -10 11 12 16 -20 -22 -23 24 19 
+Level 1: -0(-1) implied: 
+Level 2: -21(-1) implied: 
+Level 3: -18(-1) implied: 
+Level 4: -17(-1) implied: 14(0) 5(4) 1(16) 
+Level 5: -4(-1) implied: 
+Level 6: -13(-1) implied: 6(8) 
+Level 7: -15(-1) implied: 
+Level 8: -9(-1) implied: 
+Level 9: -7(-1) implied: 
+Level 10: -3(-1) implied: 
+Level 11: -2(-1) implied: 
+Gurobi check:  8 -10  11  12  16 -20 -22 -23  24  19 -0 -21 -18 -17  14  5  1 -4 -13  6 -15 -9 -7 -3 -2 
+Total path: 6, learnt num: 6, success rate: 1.000000
+Search path num: [6]
 sat
 Input assignment:
-	x0 = 0.386183
-	x1 = 0.282937
+	x0 = 0.383108
+	x1 = 0.332937
 	x2 = 0.144209
-	x3 = 0.511791
+	x3 = 0.511218
 	x4 = -0.071774
 	x5 = -0.268642
 
 Output:
-	y0 = -0.000000
+	y0 = 0.000000
 
+Total time: 0.169227 seconds

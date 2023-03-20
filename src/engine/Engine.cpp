@@ -139,8 +139,6 @@ bool Engine::solve(unsigned timeoutInSeconds) {
         auto pos = plConstraint->getPosition();
         positionToConstraint[pos] = plConstraint;
     }
-    printf("Origin bound:\n");
-    _boundManager.dump();
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
         auto pos = plConstraint->getPosition();
         CaseSplitType type = CaseSplitType::UNKNOWN;
@@ -271,6 +269,7 @@ bool Engine::solve(unsigned timeoutInSeconds) {
                         printf("\nEngine::solve: sat assignment found\n");
                         _statistics.print();
                     }
+                    _smtCore._searchPath._paths.clear();
                     _smtCore.recordStackInfo();
                     _exitCode = Engine::SAT;
 
@@ -313,10 +312,6 @@ bool Engine::solve(unsigned timeoutInSeconds) {
             auto& searchPath = getSearchPath();
             auto& back = searchPath._paths.back();
             std::vector<PathElement> new_path;
-
-            backToOriginState();
-            conflictClauseLearning(back, initial_lower, initial_upper, new_path);
-            backToCurrentState();
 
             searchPath._learnt.push_back(std::move(new_path));
             if (!_smtCore.popSplit()) {
@@ -3837,9 +3832,6 @@ void Engine::performBoundTightening() {
 }
 
 bool Engine::checkFeasible() {
-    if (!_tableau->allBoundsValid()) {
-        return false;
-    }
     LinearExpression costFunction;
 
     informLPSolverOfBounds();
@@ -3935,17 +3927,17 @@ bool Engine::applyValidConstraintCaseSplitsWithSat() {
             PhaseStatus status = constraint->getPhaseStatus();
             auto pos = constraint->getPosition();
             Minisat::Lit lit = getLitByPosition(pos);
-            printf("applyValidConstraintCaseSplitsWithSat::position: ");
-            pos.dump();
-            printf(" Lit val: %d\n", Minisat::var(lit));
             if (status == PhaseStatus::RELU_PHASE_INACTIVE) {
-                _solver->uncheckedEnqueue(~lit);
+                lit = ~lit;
             } else if (status == PhaseStatus::RELU_PHASE_ACTIVE) {
-                _solver->uncheckedEnqueue(lit);
             } else {
                 printf("Unsupported!\n");
                 exit(-1);
             }
+            printf("applyValidConstraintCaseSplitsWithSat::position: ");
+            pos.dump();
+            printf(" Lit val: %d\n", Minisat::var(lit));
+            _solver->encodeGurobiImply(lit);
         }
     return appliedSplit;
 }
@@ -4243,44 +4235,81 @@ void Engine::performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitT
 
 bool Engine::gurobiCheckSolve(unsigned int timeoutInSeconds) {
     initEngine();
+    bool goOn = true;
     auto pre_search_tree = getPreSearchPath();
     int success = 0, total = pre_search_tree._paths.size();
-    _smtCore.pushEmptyStack();
+//    _smtCore.pushEmptyStack();
     for (auto& path : pre_search_tree._paths) {
-        _smtCore.emptyStackClear();
+//        _smtCore.emptyStackClear();
         backToInitial();
         for (auto& element : path) {
             auto position = element._caseSplit._position;
             auto type = element._caseSplit._type;
             auto constraint = getConstraintByPosition(position);
-            auto splits = constraint->getCaseSplits();
-            PiecewiseLinearCaseSplit split;
-            for (auto& s : splits) {
-                if (type == s.getType()) {
-                    break;
+            if (!constraint->phaseFixed()) {
+                auto splits = constraint->getCaseSplits();
+                PiecewiseLinearCaseSplit split;
+                for (auto& s : splits) {
+                    if (type == s.getType()) {
+                        split = s;
+                        break;
+                    }
                 }
+                constraint->setActiveConstraint(false);;
+                applySplit(split);
             }
-            constraint->setActiveConstraint(false);;
-            printf("Apply: "); element._caseSplit.dump();
-            printf("\n");
-            applySplit(split);
-            performBoundTighteningAfterCaseSplit();
-            informLPSolverOfBounds();
         }
+        performBoundTighteningAfterCaseSplit();
+        informLPSolverOfBounds();
+
         printf("===================\n");
         dumpSearchPath(path);
-        printf("-------------------\n");
-        _smtCore.printSimpleStackInfo();
+//        printf("-------------------\n");
+//        _smtCore.printSimpleStackInfo();
 
         if (checkFeasible()) {
             printf("Can not judge!\n");
+            collectViolatedPlConstraints();
+            // If all constraints are satisfied, we are possibly done
+            if (allPlConstraintsHold()) {
+                printf("Satisfy!!!\n");
+            }
+            if (goOn) {
+                while (true) {
+                    // Perform any SmtCore-initiated case splits
+                    if (_smtCore.needToSplit()) {
+                        _smtCore.performSplit();
+                        performBoundTighteningWithoutEnqueue();
+                        continue;
+                    }
+
+                    if (!checkFeasible()) {
+                        if (!processUnSat()) {
+                            return false;
+                        }
+                    }
+
+                    if (allVarsWithinBounds()) {
+                        // The linear portion of the problem has been solved.
+                        // Check the status of the PL constraints
+                        bool solutionFound = gurobiBranch();
+                        if (solutionFound) {
+                            _smtCore.recordStackInfo();
+                            _exitCode = Engine::SAT;
+                            return true;
+                        } else
+                            continue;
+                    }
+                    continue;
+                }
+            }
         } else {
             success ++;
             printf("Success judge!\n");
         }
-//        std::vector<PathElement> new_path;
-//        backToOriginState();
-//        conflictClauseLearning(path, new_path);
+        std::vector<PathElement> new_path;
+        backToOriginState();
+        conflictClauseLearning(path, new_path);
     }
     printf("Total %d, success: %d, success rate: %f\n", total, success, 1.0 * success / total);
     return false;
@@ -4391,7 +4420,6 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &path, std::vector<
     {
         unsigned int slackNum = 0;
         for (auto &element : path) {
-
             PiecewiseLinearCaseSplit split;
             auto pos = element.getPosition();
             auto type = element.getType();
@@ -4500,8 +4528,11 @@ bool Engine::conflictClauseLearning(Minisat::vec<Minisat::Lit> &trail,
         pathElement._caseSplit = getCaseSplitTypeInfoByLit(trail[i]);
         path.push_back(std::move(pathElement));
     }
+    _total_num ++;
+    backToInitial();
     auto learn = conflictClauseLearning(path, learnt_clause);
     if (learn) {
+        _learnt_num ++;
         std::map<Position, int> counter;
         for (auto& info : learnt_clause) {
             counter[info.getPosition()] ++;
@@ -4512,6 +4543,8 @@ bool Engine::conflictClauseLearning(Minisat::vec<Minisat::Lit> &trail,
             }
         }
     }
+    _smtCore._searchPath._paths.push_back(std::move(path));
+    printf("Record stack: [%d]\n", _smtCore._searchPath._paths.size());
     return learn;
 }
 
@@ -4526,10 +4559,21 @@ int Engine::analyzeBackTrackLevel( Minisat::vec<int>& trail_lim,
         }
     } else {
         if (learnt.size() == 1) {
-            backtrack_level = 0;
+            if (trail_lim.size()) {
+                backtrack_level = 0;
+            } else {
+                backtrack_level = -1;
+            }
         } else {
             if(_solver->level(Minisat::var(learnt[0])) ==
                     _solver->level(Minisat::var(learnt[1])) ) {
+
+                printf("Learnt clause: ");
+                for (int i = 0; i < learnt.size(); ++ i) {
+                    printf("%s%d ", Minisat::sign(learnt[i]) ? "-" : "", Minisat::var(learnt[i]));
+                }
+                printf("\n");
+                _solver->addLearntClauseWithoutEnqueue(learnt);
                 learnt.clear();
                 for (int i = trail_lim.size() - 1; i >= 0; -- i) {
                     learnt.push(~trail[trail_lim[i]]);
@@ -4539,5 +4583,15 @@ int Engine::analyzeBackTrackLevel( Minisat::vec<int>& trail_lim,
             }
         }
     }
+    dumpLearntSuccessRate();
     return backtrack_level;
+}
+
+void Engine::setExitCode(Engine::ExitCode exitCode) {
+    _exitCode = exitCode;
+}
+
+double Engine::dumpLearntSuccessRate() {
+    printf("Total path: %d, learnt num: %d, success rate: %f\n", _total_num, _learnt_num, 1.0 * _learnt_num / _total_num);
+    return 0;
 }

@@ -303,10 +303,17 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
     //
     out_learnt.push();      // (leave room for the asserting literal)
     int index   = trail.size() - 1;
-
+    dumpTrail("In analyze:");
     do{
         assert(confl != CRef_Undef); // (otherwise should be UIP)
         Clause& c = ca[confl];
+
+        printf("--------------------\n");
+        printf("conflict clause [%d]: ", confl);
+        for (int i = 0; i < c.size(); ++ i) {
+            printf(sign(c[i]) ? "-%d " : "%d ", var(c[i]));
+        }
+        printf("\n");
 
         if (c.learnt())
             claBumpActivity(c);
@@ -321,6 +328,8 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
                     pathC++;
                 else
                     out_learnt.push(q);
+                printf("Seen: Lit [%d], decision level: %d, reason %d, current level: %d, pathC %d\n",
+                       var(q), level(var(q)), reason(var(q)), decisionLevel(), pathC);
             }
         }
         
@@ -486,10 +495,15 @@ void Solver::analyzeFinal(Lit p, LSet& out_conflict)
 
 void Solver::uncheckedEnqueue(Lit p, CRef from)
 {
-    if (sign(p))
-        printf("Enqueue: -%d\n", var(p));
-    else
-        printf("Enqueue: %d\n", var(p));
+    printf(sign(p) ? "Enqueue: -%d, reason: %d\n"  :"Enqueue: %d, reason: %d\n", var(p), from);
+    if (from != CRef_Undef) {
+        Clause& c = ca[from];
+        for (int i = 0; i < c.size(); ++ i) {
+            Lit lit = c[i];
+            printf(sign(lit) ? "-%d " : "%d ", var(lit) );
+        }
+        printf("\n");
+    }
 
     assert(value(p) == l_Undef);
     if (value(p) != l_Undef) {
@@ -559,9 +573,10 @@ CRef Solver::propagate()
                 // Copy the remaining watches:
                 while (i < end)
                     *j++ = *i++;
-            }else
+            }else {
+                printf("Propagate: ");
                 uncheckedEnqueue(first, cr);
-
+            }
         NextClause:;
         }
         ws.shrink(i - j);
@@ -612,9 +627,18 @@ void Solver::removeSatisfied(vec<CRef>& cs)
     int i, j;
     for (i = j = 0; i < cs.size(); i++){
         Clause& c = ca[cs[i]];
-        if (satisfied(c))
+        printf("--------------------\n");
+        printf("Simplify clause [%d], size: %d: ", cs[i], c.size());
+        for (int i = 0; i < c.size(); ++ i) {
+            printf(sign(c[i]) ? "-%d " : "%d ", var(c[i]));
+        }
+        printf("\n");
+        if (satisfied(c)) {
+            printf("Remove clause...\n");
             removeClause(cs[i]);
-        else{
+            printf("Success remove...\n");
+        } else{
+            printf("Trim clause...\n");
             // Trim clause:
             assert(value(c[0]) == l_Undef && value(c[1]) == l_Undef);
             for (int k = 2; k < c.size(); k++)
@@ -661,10 +685,10 @@ void Solver::dumpTrail() {
     }
     for (int i = 0; i < trail_lim.size(); ++ i) {
         printf("Level %d: ", i + 1 );
-        printf(sign(trail[trail_lim[i]]) ? "-%d " : "%d ", var(trail[trail_lim[i]]));
+        printf(sign(trail[trail_lim[i]]) ? "-%d(%d) " : "%d(%d) ", var(trail[trail_lim[i]]), reason(var(trail[trail_lim[i]])) );
         printf("implied: ");
         for (int j = trail_lim[i] + 1; j < (i == trail_lim.size() - 1 ? trail.size() : trail_lim[i + 1]); ++ j) {
-            printf(sign(trail[j]) ? "-%d " : "%d ", var(trail[j]));
+            printf(sign(trail[j]) ? "-%d(%d) " : "%d(%d) ", var(trail[j]), reason(var(trail[j])));
         }
         printf("\n");
     }
@@ -690,6 +714,7 @@ bool Solver::simplify()
 
     // Remove satisfied clauses:
     removeSatisfied(learnts);
+
     if (remove_satisfied){       // Can be turned off.
         removeSatisfied(clauses);
 
@@ -751,9 +776,8 @@ lbool Solver::search(int nof_conflicts)
     for (;;){
         engine_ptr->gurobiPropagate(trail);
         dumpTrail("Before propagate");
-        int origin_head = qhead;
         CRef confl = propagate();
-        int after_head = qhead;
+        printf("propagate success, result: %d, is undef: %d\n", confl, confl == CRef_Undef);
         if (confl != CRef_Undef){
             perform_split = false;
             printf("Conflict found!\n");
@@ -790,30 +814,32 @@ lbool Solver::search(int nof_conflicts)
                            (int)max_learnts, nLearnts(), (double)learnts_literals/nLearnts(), progressEstimate()*100);
             }
         }else{
+            printf("No conflict!\n");
             // NO CONFLICT
             if ((nof_conflicts >= 0 && conflictC >= nof_conflicts) || !withinBudget()){
                 // Reached bound on number of conflicts:
+                printf("progressEstimate!\n");
                 progress_estimate = progressEstimate();
                 cancelUntil(0);
                 return l_Undef;
             }
-
             // Simplify the set of problem clauses:
-            if (decisionLevel() == 0 && !simplify())
+            if (decisionLevel() == 0 && !simplify()) {
+                printf("Can not simplify!\n");
                 return l_False;
+            }
 
             if (learnts.size()-nAssigns() >= max_learnts)
                 // Reduce the set of learnt clauses:
                 reduceDB();
 
             Lit next = lit_Undef;
-
-
             //marabou: check feasible
             dumpTrail("Before check");
-
             bool feasible = engine_ptr->gurobiCheck(trail, trail.size());
             if (!feasible) {
+                if (trail_lim.size() == 0)
+                    return l_False;
                 printf("Is infeasible!\n");
                 vec<Lit> learnt;
                 auto backtrack_level = engine_ptr->analyzeBackTrackLevel(trail_lim, trail, learnt);
@@ -835,8 +861,13 @@ lbool Solver::search(int nof_conflicts)
                 varDecayActivity();
                 claDecayActivity();
                 continue;
+            } else {
+                engine_ptr->collectViolatedPlConstraints();
+                // If all constraints are satisfied, we are possibly done
+                if (engine_ptr->allPlConstraintsHold()) {
+                    return l_True;
+                }
             }
-
 
             // else check if there is a solution when branching
             while (decisionLevel() < assumptions.size()){
@@ -963,6 +994,7 @@ lbool Solver::solve_()
         ok = false;
 
     cancelUntil(0);
+    engine_ptr->dumpLearntSuccessRate();
     return status;
 }
 
@@ -1146,4 +1178,29 @@ void Solver::garbageCollect()
         printf("|  Garbage collection:   %12d bytes => %12d bytes             |\n", 
                ca.size()*ClauseAllocator::Unit_Size, to.size()*ClauseAllocator::Unit_Size);
     to.moveTo(ca);
+}
+
+void Solver::encodeGurobiImply(Minisat::Lit lit) {
+    vec<Lit> learnt;
+    learnt.push(lit);
+    for (int i = trail_lim.size() - 1; i >= 0; -- i) {
+        learnt.push(~trail[trail_lim[i]]);
+    }
+
+    if (learnt.size() == 1) {
+        uncheckedEnqueue(learnt[0]);
+    } else {
+        CRef cr = ca.alloc(learnt, true);
+        learnts.push(cr);
+        attachClause(cr);
+        claBumpActivity(ca[cr]);
+        uncheckedEnqueue(learnt[0], cr);
+    }
+}
+
+void Solver::addLearntClauseWithoutEnqueue(vec<Lit>& learnt) {
+    CRef cr = ca.alloc(learnt, true);
+    learnts.push(cr);
+    attachClause(cr);
+    claBumpActivity(ca[cr]);
 }
