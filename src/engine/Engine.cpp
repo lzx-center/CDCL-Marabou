@@ -34,6 +34,8 @@
 #include "Vector.h"
 #include <random>
 
+std::map<std::string, long long> CenterStatics::_functionTime;
+std::map<int, int> CenterStatics::_backTrackStatics;
 Engine::Engine()
         : _context(), _boundManager(_context), _tableau(_boundManager), _preprocessedQuery(nullptr),
           _rowBoundTightener(*_tableau), _smtCore(this), _numPlConstraintsDisabledByValidSplits(0),
@@ -137,7 +139,7 @@ bool Engine::solve(unsigned timeoutInSeconds) {
     for (auto &plConstraint: _plConstraints) {
         plConstraint->registerBoundManager(&_boundManager);
         auto pos = plConstraint->getPosition();
-        positionToConstraint[pos] = plConstraint;
+        _positionToConstraint[pos] = plConstraint;
     }
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
         auto pos = plConstraint->getPosition();
@@ -383,6 +385,7 @@ void Engine::mainLoopStatistics() {
 }
 
 void Engine::performBoundTighteningAfterCaseSplit() {
+    CenterStatics time("performBoundTighteningAfterCaseSplit");
     // Tighten bounds of a first hidden layer with MILP solver
     performMILPSolverBoundedTighteningForSingleLayer(1);
     do {
@@ -2768,7 +2771,7 @@ bool Engine::checkSolve(unsigned timeoutInSeconds) {
     // Register the boundManager with all the PL constraints
     for (auto &plConstraint: _plConstraints) {
         plConstraint->registerBoundManager(&_boundManager);
-        positionToConstraint[plConstraint->getPosition()] = plConstraint;
+        _positionToConstraint[plConstraint->getPosition()] = plConstraint;
     }
 
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
@@ -3039,7 +3042,7 @@ void Engine::LearnClause() {
     // Register the boundManager with all the PL constraints
     for (auto &plConstraint: _plConstraints) {
         plConstraint->registerBoundManager(&_boundManager);
-        positionToConstraint[plConstraint->getPosition()] = plConstraint;
+        _positionToConstraint[plConstraint->getPosition()] = plConstraint;
     }
 
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
@@ -3141,7 +3144,7 @@ bool Engine::checkSolve2(unsigned int timeoutInSeconds) {
     // Register the boundManager with all the PL constraints
     for (auto &plConstraint: _plConstraints) {
         plConstraint->registerBoundManager(&_boundManager);
-        positionToConstraint[plConstraint->getPosition()] = plConstraint;
+        _positionToConstraint[plConstraint->getPosition()] = plConstraint;
     }
 
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
@@ -3273,7 +3276,7 @@ bool Engine::ClauseLearning() {
     // Register the boundManager with all the PL constraints
     for (auto &plConstraint: _plConstraints) {
         plConstraint->registerBoundManager(&_boundManager);
-        positionToConstraint[plConstraint->getPosition()] = plConstraint;
+        _positionToConstraint[plConstraint->getPosition()] = plConstraint;
     }
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
         auto pos = plConstraint->getPosition();
@@ -3520,8 +3523,8 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &origin_path, std::
 
 PiecewiseLinearConstraint *Engine::getConstraintByPosition(Position position) {
     if (position._layer) {
-        if (positionToConstraint.exists(position))
-            return positionToConstraint[position];
+        if (_positionToConstraint.exists(position))
+            return _positionToConstraint[position];
         else {
             printf("Position not exists!\n");
             return (PiecewiseLinearConstraint*) nullptr;
@@ -3682,7 +3685,7 @@ void Engine::initEngine() {
         _positionToLit[position] = var;
         _litToPosition[var] = position;
         _litToPosition[~var] = position;
-        positionToConstraint[plConstraint->getPosition()] = plConstraint;
+        _positionToConstraint[plConstraint->getPosition()] = plConstraint;
         if (plConstraint->isActive() and plConstraint->phaseFixed()) {
             if (plConstraint->getPhaseStatus() == PhaseStatus::RELU_PHASE_ACTIVE) {
                 _solver->addClause(var);
@@ -3820,6 +3823,7 @@ bool Engine::processUnSat() {
 
 
 void Engine::performBoundTightening() {
+    CenterStatics time("performBoundTightening");
     performMILPSolverBoundedTighteningForSingleLayer(1);
     do {
         performSymbolicBoundTightening();
@@ -4350,6 +4354,7 @@ PiecewiseLinearCaseSplit Engine::getCaseSplit(CaseSplitTypeInfo info) {
 }
 
 bool Engine::gurobiCheck(Minisat::vec<Minisat::Lit> &vec, int last) {
+    CenterStatics time("gurobiCheck");
     backToInitial();
     printf("Gurobi check: ");
     for (int i = 0; i < last; ++ i) {
@@ -4359,10 +4364,16 @@ bool Engine::gurobiCheck(Minisat::vec<Minisat::Lit> &vec, int last) {
     printf("\n");
     performBoundTighteningAfterCaseSplit();
     informLPSolverOfBounds();
-    return checkFeasible();
+    bool feasible = checkFeasible();
+//    _gurobi->getConflict();
+//    if (!feasible) {
+//        _gurobi->getIIS();
+//    }
+    return feasible;
 }
 
 void Engine::gurobiPropagate(Minisat::vec<Minisat::Lit> &vec) {
+    CenterStatics time("gurobiPropagate");
     backToInitial();
     for (int i = 0; i < vec.size(); ++ i) {
         performSplitByLit(vec[i]);
@@ -4551,7 +4562,9 @@ bool Engine::conflictClauseLearning(Minisat::vec<Minisat::Lit> &trail,
 int Engine::analyzeBackTrackLevel( Minisat::vec<int>& trail_lim,
                                    Minisat::vec<Minisat::Lit>& trail,
                                    Minisat::vec<Minisat::Lit>& learnt) {
-    bool success = conflictClauseLearning(trail, learnt);
+    CenterStatics time("analyzeBackTrackLevel");
+    bool success;
+    success = conflictClauseLearning(trail, learnt);
     int backtrack_level = trail_lim.size() - 1;
     if (!success) {
         for (int i = trail_lim.size() - 1; i >= 0; -- i) {
@@ -4595,3 +4608,20 @@ double Engine::dumpLearntSuccessRate() {
     printf("Total path: %d, learnt num: %d, success rate: %f\n", _total_num, _learnt_num, 1.0 * _learnt_num / _total_num);
     return 0;
 }
+
+Minisat::Lit Engine::addInputSplitLit() {
+    unsigned inputVariableWithLargestInterval = 0;
+    double largestIntervalSoFar = 0;
+    for (const auto &variable: _preprocessedQuery->getInputVariables()) {
+        double interval = _tableau->getUpperBound(variable) -
+                          _tableau->getLowerBound(variable);
+        if (interval > largestIntervalSoFar) {
+            inputVariableWithLargestInterval = variable;
+            largestIntervalSoFar = interval;
+        }
+    }
+    Position pos(0, inputVariableWithLargestInterval);
+
+    return Minisat::Lit();
+}
+

@@ -26,7 +26,6 @@
 #include "PropertyParser.h"
 #include "MarabouError.h"
 #include "QueryLoader.h"
-
 #ifdef _WIN32
 #undef ERROR
 #endif
@@ -217,21 +216,28 @@ void Marabou::solveQuery()
         } else {
             if (check) {
 //             _engine.ClauseLearning();
-                auto result = _solver.solve();
-                if (result) {
+                _solver.setConfBudget(-1);
+                Minisat::vec<Minisat::Lit> dummy; // 存储结果
+                auto ret = _solver.solveLimited(dummy);
+                if (ret == Minisat::l_True) {
                     _engine.setExitCode(Engine::SAT);
-                } else {
+                    printf("Satisfiable!\n");
+                } else if (ret == Minisat::l_False) {
                     _engine.setExitCode(Engine::UNSAT);
+                    printf("Unsatisfiable!\n");
+                } else {
+                    _engine.setExitCode(Engine::TIMEOUT);
+                    printf("Timeout!\n");
                 }
 //            _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
 //           _engine.gurobiCheckSolve(Options::get()->getInt( Options::TIMEOUT ));
             } else {
-//            _engine.gurobiSolve(Options::get()->getInt( Options::TIMEOUT ));
-                _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
+                _engine.gurobiSolve(Options::get()->getInt( Options::TIMEOUT ));
+//                _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
             }
         }
     }
-
+    CenterStatics::printStatics();
     if ( _engine.getExitCode() == Engine::SAT )
         _engine.extractSolution( _inputQuery );
 

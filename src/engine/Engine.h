@@ -44,7 +44,9 @@
 #include "SumOfInfeasibilitiesManager.h"
 #include "SymbolicBoundTighteningType.h"
 #include "minisat/core/Solver.h"
-
+#include "map"
+#include "string"
+#include <chrono>
 #include <context/context.h>
 #include <atomic>
 
@@ -61,6 +63,42 @@ class String;
 
 using CVC4::context::Context;
 
+class CenterStatics {
+    static std::map<std::string, long long> _functionTime;
+    static std::map<int, int> _backTrackStatics;
+    std::chrono::high_resolution_clock::time_point _start;
+    std::string _str;
+public:
+    explicit CenterStatics(const std::string& s) {
+        if (!s.empty()) {
+            _str = s;
+            _start = std::chrono::high_resolution_clock::now();
+        }
+    };
+
+    ~CenterStatics() {
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - _start);
+        _functionTime[_str] += duration.count();
+    };
+    static void recordBackTrackLevel(int n) {
+        _backTrackStatics[n] ++;
+    }
+
+    static void printStatics() {
+        for(auto& item : _functionTime) {
+            printf("function [%s] : %f s\n", item.first.c_str(), 1.0 * item.second / 1000000);
+        }
+
+        printf("Back track level statics:\n");
+        for(auto& item : _backTrackStatics) {
+            printf("Step %d : %d\n", item.first, item.second);
+        }
+    }
+};
+
+
+
 class Engine : public IEngine, public SignalHandler::Signalable
 {
 public:
@@ -76,7 +114,8 @@ public:
       Attempt to find a feasible solution for the input within a time limit
       (a timeout of 0 means no time limit). Returns true if found, false if infeasible.
     */
-    Map<Position, PiecewiseLinearConstraint *> positionToConstraint;
+    Map<Position, PiecewiseLinearConstraint *> _positionToConstraint;
+    Map<Position, Map<int, Minisat::Lit>> _inputPositionToLit;
     Map<Position, Minisat::Lit> _positionToLit;
     Map<Minisat::Lit, Position> _litToPosition;
     int _total_num = 0, _learnt_num = 0;
@@ -785,6 +824,7 @@ private:
     */
     PiecewiseLinearConstraint *getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithLargestInterval);
     PiecewiseLinearConstraint *pickSplitPLConstraintBasedOnIntervalWidth();
+    Minisat::Lit addInputSplitLit();
 
     bool verifyPath(std::vector<PathElement>& path);
     void LearnClause();

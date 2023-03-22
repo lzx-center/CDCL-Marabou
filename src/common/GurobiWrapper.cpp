@@ -393,6 +393,46 @@ void GurobiWrapper::log( const String &message )
         printf( "GurobiWrapper: %s\n", message.ascii() );
 }
 
+void GurobiWrapper::getIIS() {
+    computeIIS();
+    int numConstrs = _model->get(GRB_IntAttr_NumConstrs);
+    int numVars = _model->get(GRB_IntAttr_NumVars);
+    GRBConstr* constrs = _model->getConstrs();
+    GRBVar* vars = _model->getVars();
+    for (int i = 0; i < numConstrs; ++i) {
+        if (constrs[i].get(GRB_IntAttr_IISConstr) == 1) {
+            std::cout << "冲突约束: " << constrs[i].get(GRB_StringAttr_ConstrName) << std::endl;
+            // 遍历变量以找到与冲突约束相关的变量
+            for (int j = 0; j < numVars; ++j) {
+                double coeff = _model->getCoeff(constrs[i], vars[j]);
+                if (coeff != 0.0) {
+                    std::cout << "  变量: " << vars[j].get(GRB_StringAttr_VarName)
+                              << ", 系数: " << coeff << std::endl;
+                }
+            }
+        }
+    }
+}
+
+void GurobiWrapper::getConflict() {
+    int numConstrs = _model->get(GRB_IntAttr_NumConstrs);
+    int numVars = _model->get(GRB_IntAttr_NumVars);
+    GRBConstr* constrs = _model->getConstrs();
+    GRBVar* vars = _model->getVars();
+    for (int i = 0; i < numConstrs; ++i) {
+        // 遍历变量以找到与冲突约束相关的变量
+        for (int j = 0; j < numVars; ++j) {
+            double coeff = _model->getCoeff(constrs[i], vars[j]);
+            double varVal = vars[j].get(GRB_DoubleAttr_X);
+            if (coeff > 0 && varVal < vars[i].get(GRB_DoubleAttr_LB)) {
+                printf("%s conflict!\n", vars[i].get(GRB_StringAttr_VarName).c_str());
+            } else if (coeff < 0 && varVal > vars[i].get(GRB_DoubleAttr_UB)) {
+                printf("%s conflict!\n", vars[i].get(GRB_StringAttr_VarName).c_str());
+            }
+        }
+    }
+}
+
 #endif // ENABLE_GUROBI
 
 //

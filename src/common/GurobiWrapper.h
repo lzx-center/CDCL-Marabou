@@ -99,6 +99,12 @@ public:
         return _model->get( GRB_DoubleAttr_ObjVal );
     }
 
+    void getIIS();
+    void getConflict();
+
+    void computeIIS() {
+        _model->computeIIS();
+    }
     // Set a cutoff value for the objective function. For example, if
     // maximizing x with cutoff value 0, Gurobi will return the
     // optimal value if greater than 0, and 0 if the optimal value is

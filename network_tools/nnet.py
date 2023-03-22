@@ -322,6 +322,34 @@ class NNet(nn.Module):
                         equation.lhs[index] = 1 if op == "+" else -1
                     self.property_equation.append(equation)
 
+    def dump_property(self, prop_path, lower=None, upper=None):
+        if lower is None:
+            lower = self.norm_mins
+        if upper is None:
+            upper = self.norm_maxes
+        with open(prop_path, "w+") as f:
+            for i in range(len(lower)):
+                print(f"x{i} >= {lower[i]}", file=f)
+                print(f"x{i} <= {upper[i]}", file=f)
+            for equation in self.property_equation:
+                s = ''
+                if len(equation.lhs) == 1:
+                    for index, coeff in equation.lhs.items():
+                        if coeff > 0:
+                            s += f"y{index} "
+                        else:
+                            s += f'-y{index} '
+                else:
+                    for index, coeff in equation.lhs.items():
+                        if coeff > 0:
+                            s += f"+y{index} "
+                        else:
+                            s += f'-y{index} '
+                s += equation.type
+                s += ' '
+                s += str(equation.scalar)
+                print(s, file=f)
+
     def evaluate_state(self, inputs, normalize_input=False, undo_normalize_output=False):
         numLayers = self.numLayers
         inputSize = self.inputSize
@@ -692,6 +720,28 @@ class NNet(nn.Module):
             back_info.clac_bounds_via_symbol()
             node_infos[node_name_back] = back_info
             print(back_info)
+
+    def recursive_split(self, input_lower, input_upper, depth=10, domains=[]):
+        if depth == 0:
+            domains.append(([val for val in input_lower], [val for val in input_upper]))
+            return
+
+        max_interval, index = input_upper[0] - input_lower[0], 0
+
+        for i in range(1, len(input_lower)):
+            interval = input_upper[i] - input_lower[i]
+            if max_interval < interval:
+                max_interval = interval
+                index = i
+        lower = [val for val in input_lower]
+        upper = [val for val in input_upper]
+
+        mid = (lower[index] + upper[index]) / 2
+        upper[index] = mid
+        self.recursive_split(lower, upper, depth - 1, domains)
+        upper[index] = input_upper[index]
+        lower[index] = mid
+        self.recursive_split(lower, upper, depth - 1, domains)
 
 
 if __name__ == "__main__":

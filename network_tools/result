@@ -1,0 +1,7 @@
+/home/center/CDCL-Marabou/sat_example/prop2/acas_property_2/sub169.txt.log
+------------------------------------------------------------
+net: ACASXU_experimental_v2a_2_4.nnet
+property: acas_property_2.txt
+Total time: 13.027480 seonds(00:00:13:027)
+results:sat
+timeout: 0
