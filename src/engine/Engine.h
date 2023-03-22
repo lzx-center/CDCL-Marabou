@@ -119,6 +119,7 @@ public:
     Map<Position, Minisat::Lit> _positionToLit;
     Map<Minisat::Lit, Position> _litToPosition;
     int _total_num = 0, _learnt_num = 0;
+    std::vector<CenterStackEntry> _centerStack = {CenterStackEntry()};
 
     /*
     Get Context reference
@@ -135,6 +136,12 @@ public:
 */
     void collectViolatedPlConstraints();
 
+    void updateCenterStack();
+    void newDecisionLevel();
+    void recordSplit(PiecewiseLinearCaseSplit& split);
+    void backTrack(int level);
+    void dumpCenterStack();
+    size_t getDecisionLevel();
     /*
       Return true iff all piecewise linear constraints hold.
     */
@@ -156,6 +163,7 @@ public:
 
     PhaseStatus getPhaseStatusByLit(Minisat::Lit lit);
     CaseSplitType getCaseSplitTypeByLit(Minisat::Lit lit);
+    PiecewiseLinearCaseSplit getCaseSplitByInfo(CaseSplitTypeInfo& info);
     Minisat::Lit getLitByCaseSplitTypeInfo(CaseSplitTypeInfo &type_info);
     bool applyValidConstraintCaseSplitsWithSat();
     void performPropagatedSplit(Minisat::vec<Minisat::Lit> &vec);
@@ -177,10 +185,14 @@ public:
     void backToCurrentState();
     void backToOriginState();
     void backToInitial();
+    bool gurobiCheck(std::vector<PathElement> &path);
     bool gurobiCheck(Minisat::vec<Minisat::Lit> &vec, int last);
     void gurobiPropagate(Minisat::vec<Minisat::Lit>& vec);
 
     bool processUnSat();
+    bool centerUnSat();
+    void recordStackInfo();
+
     int learnClauseAndGetBackLevel(Minisat::vec<Minisat::Lit> &vec);
     unsigned int getStackDepth();
     bool gurobiBranch();
@@ -191,6 +203,7 @@ public:
     bool solve( unsigned timeoutInSeconds = 0 );
     bool checkSolve2(unsigned timeoutInSeconds = 0);
     bool checkSolve(unsigned  timeoutInSeconds = 0);
+    bool centerSolve(unsigned int timeoutInSeconds);
 
     PiecewiseLinearConstraint* getConstraintByPosition(Position pos);
 
@@ -208,6 +221,8 @@ public:
 
     bool conflictClauseLearning(Minisat::vec<Minisat::Lit> &trail,
                                 Minisat::vec<Minisat::Lit> &learnt);
+
+    bool binaryConflictClauseLearning(std::vector<PathElement> &path, std::vector<PathElement> &newPath);
 
     int analyzeBackTrackLevel(Minisat::vec<int>& trail_lim,
                               Minisat::vec<Minisat::Lit>& trail,

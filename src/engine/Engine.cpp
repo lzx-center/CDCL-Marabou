@@ -1750,6 +1750,7 @@ bool Engine::applyValidConstraintCaseSplit(PiecewiseLinearConstraint *constraint
         PiecewiseLinearCaseSplit validSplit = constraint->getValidCaseSplit();
         _smtCore.recordImpliedValidSplit(validSplit);
         applySplit(validSplit);
+        recordSplit(validSplit);
         if (_soiManager)
             _soiManager->removeCostComponentFromHeuristicCost(constraint);
         ++_numPlConstraintsDisabledByValidSplits;
@@ -2295,7 +2296,7 @@ PiecewiseLinearConstraint *Engine::pickSplitPLConstraint(DivideStrategy
     else if (strategy == DivideStrategy::EarliestReLU)
         candidatePLConstraint = pickSplitPLConstraintBasedOnTopology();
     else if (strategy == DivideStrategy::LargestInterval &&
-             (_smtCore.getStackDepth() %
+             ((_centerStack.size() - 1) %
               GlobalConfiguration::INTERVAL_SPLITTING_FREQUENCY == 0)
             ) {
         // Conduct interval splitting periodically.
@@ -2484,12 +2485,15 @@ bool Engine::performDeepSoILocalSearch() {
     LinearExpression initialPhasePattern =
             _soiManager->getCurrentSoIPhasePattern();
 
+//    printf("performDeepSoILocalSearch...\n");
     if (initialPhasePattern.isZero()) {
         while (!_smtCore.needToSplit())
             _smtCore.reportRejectedPhasePatternProposal();
+//        printf("Found constraint to split...\n");
         return false;
     }
 
+//    printf("Go on local search!\n");
     minimizeHeuristicCost(initialPhasePattern);
     ASSERT(allVarsWithinBounds());
     _soiManager->updateCurrentPhasePatternForSatisfiedPLConstraints();
@@ -2538,6 +2542,7 @@ bool Engine::performDeepSoILocalSearch() {
                 // constraints (those not in the SoI) unsatisfied.
                 // In this case, we bump up the score of PLConstraints not in
                 // the SoI with the hope to branch on them early.
+//                printf("bumpUpPseudoImpactOfPLConstraintsNotInSoI...\n");
                 bumpUpPseudoImpactOfPLConstraintsNotInSoI();
                 while (!_smtCore.needToSplit())
                     _smtCore.reportRejectedPhasePatternProposal();
@@ -2547,6 +2552,7 @@ bool Engine::performDeepSoILocalSearch() {
 
         // No satisfying assignment found for the last accepted phase pattern,
         // propose an update to it.
+//        printf("In finding branch process...\n");
         _soiManager->proposePhasePatternUpdate();
         minimizeHeuristicCost(_soiManager->getCurrentSoIPhasePattern());
         _soiManager->updateCurrentPhasePatternForSatisfiedPLConstraints();
@@ -4623,5 +4629,238 @@ Minisat::Lit Engine::addInputSplitLit() {
     Position pos(0, inputVariableWithLargestInterval);
 
     return Minisat::Lit();
+}
+
+void Engine::updateCenterStack() {
+    std::vector<double> lower(_tableau->getN()),upper(_tableau->getN());
+    for (size_t i = 0; i < _tableau->getN(); ++ i) {
+        lower[i] = _tableau->getLowerBound(i);
+        upper[i] = _tableau->getUpperBound(i);
+    }
+    _centerStack.back().updateBound(lower, upper);
+    _centerStack.back().updateConstraintState(_plConstraints);
+}
+
+void Engine::recordSplit(PiecewiseLinearCaseSplit &split) {
+    _centerStack.back().recordSplit(split);
+    updateCenterStack();
+}
+
+void Engine::backTrack(int level) {
+    while(getDecisionLevel() > (unsigned int)level)
+        _centerStack.pop_back();
+
+    std::vector<double> lower, upper;
+    _centerStack.back().restoreConstraintState(_plConstraints);
+    _centerStack.back().restoreBounds(lower, upper);
+    for (int i = 0; i < lower.size(); ++ i) {
+        _boundManager.enforceUpperBound(i, upper[i]);
+        _boundManager.enforceLowerBound(i, lower[i]);
+    }
+
+}
+
+bool Engine::centerSolve(unsigned int timeoutInSeconds) {
+    initEngine();
+    updateCenterStack();
+    while (true) {
+        dumpCenterStack();
+        _smtCore.printSimpleStackInfo();
+        // Perform any SmtCore-initiated case splits
+        if (_smtCore.needToSplit()) {
+            auto constraint = _smtCore.getConstraintForSplit();
+            _smtCore.setNeedToSplit(false);
+            auto split = constraint->getCaseSplits().front();
+            constraint->setActiveConstraint(false);
+            applySplit(split);
+            newDecisionLevel();
+            recordSplit(split);
+            performBoundTighteningWithoutEnqueue();
+            continue;
+        }
+
+        if (!checkFeasible()) {
+            printf("Check infeasible!\n");
+            if (!centerUnSat()) {
+                _exitCode = ExitCode::UNSAT;
+                return false;
+            }
+            continue;
+        }
+        if (allVarsWithinBounds()) {
+            // The linear portion of the problem has been solved.
+            // Check the status of the PL constraints
+            bool solutionFound = gurobiBranch();
+            if (solutionFound) {
+                recordStackInfo();
+                _exitCode = Engine::SAT;
+                return true;
+            } else
+                continue;
+        }
+        continue;
+    }
+    return false;
+}
+
+void Engine::newDecisionLevel() {
+    _centerStack.emplace_back(CenterStackEntry());
+}
+
+void Engine::dumpCenterStack() {
+    printf("======dumping center stack======\n");
+    for (int i = 0; i < _centerStack.size(); ++ i) {
+        printf("Level: %d: ",  i);
+        _centerStack[i].dump();
+    }
+}
+
+bool Engine::centerUnSat() {
+    _tableau->toggleOptimization(false);
+    recordStackInfo();
+    auto& searchPath = getSearchPath();
+    auto& back = searchPath._paths.back();
+
+    std::vector<PathElement> new_path;
+    bool learn = false;
+    int level = getDecisionLevel() - 1;
+    CaseSplitTypeInfo info;
+    {
+        enforcePushHook();
+//        learn = conflictClauseLearning(back, initial_lower, initial_upper, new_path);
+        if (!back.empty())
+            learn = binaryConflictClauseLearning(back, new_path);
+        enforcePopHook();
+
+
+        if (learn) {
+            info._position = new_path.back().getPosition();
+            info._type = _smtCore.reverseCaseSplitType(new_path.back().getType());
+            level = analysisBacktrackLevelMarabou(back, new_path);
+            searchPath._learnt.push_back(std::move(new_path));
+        } else {
+            if (back.empty())
+                return false;
+            info._position = back.back().getPosition();
+            info._type = _smtCore.reverseCaseSplitType(back.back().getType());
+        }
+    }
+
+    printf("Should backtrack form level [%d] to level: [%d]\n", getDecisionLevel(), level);
+
+    if (level == -1) {
+        return false;
+    }
+
+    backTrack(level);
+
+    auto constraint = getConstraintByPosition(info._position);
+    PiecewiseLinearCaseSplit split;
+    auto splits = constraint->getCaseSplits();
+    for (auto& s : splits) {
+        if (s.getType() == info._type) {
+            split = s;
+        }
+    }
+    constraint->setActiveConstraint(false);
+    applySplit(split);
+    recordSplit(split);
+    performBoundTighteningAfterCaseSplit();
+    return true;
+}
+
+void Engine::recordStackInfo() {
+    std::vector<PathElement> path;
+    bool skip = true;
+    for (auto& stack : _centerStack) {
+        if (skip) {
+            skip = false;
+            continue;
+        }
+        auto vec = stack.returnSplits();
+        PathElement element;
+        element.setSplit(vec[0].getInfo());
+        for (size_t i = 1; i < vec.size(); ++ i) {
+            element.appendImpliedSplit(vec[i].getInfo());
+        }
+        path.push_back(std::move(element));
+    }
+    auto& searchPath = getSearchPath();
+    searchPath.appendPath(path);
+}
+
+size_t Engine::getDecisionLevel() {
+    return _centerStack.size() - 1;
+}
+
+bool Engine::binaryConflictClauseLearning(std::vector<PathElement> &path, std::vector<PathElement> &newPath) {
+    printf("Path size: %d\n", path.size());
+    CaseSplitTypeInfo back_split;
+    if (path.back()._impliedSplits.empty()) {
+        back_split = path.back()._caseSplit;
+    } else {
+        back_split = path.back()._impliedSplits.back();
+    }
+
+    int l = 0, r = path.size() - 1;
+    PathElement pathElement;
+    pathElement._caseSplit = back_split;
+    while (l < r) {
+        int mid = (l + r) >> 1;
+        printf("l: %d r: %d mid:%d\n", l, r, mid);
+        std::vector<PathElement> for_check;
+        {
+            for_check.insert(for_check.begin(), path.begin(), path.begin() + mid + 1);
+            for_check.push_back(pathElement);
+        }
+
+        if (gurobiCheck(for_check)) {
+            l = mid + 1;
+        } else {
+            r = mid;
+        }
+    }
+    if (l == path.size() - 1)
+        return false;
+
+    for (int i = 0; i <= l; ++ i) {
+        newPath.push_back(path[i]);
+    }
+    newPath.push_back(pathElement);
+
+    return true;
+}
+
+bool Engine::gurobiCheck(std::vector<PathElement> &path) {
+    CenterStatics time("gurobiCheck");
+    backToInitial();
+    printf("gurobi check: ");
+    for (auto& element : path) {
+        auto split = getCaseSplitByInfo(element._caseSplit);
+        applySplit(split);
+        split.getInfo().dump();
+        printf(" ");
+        for (auto& imply : element._impliedSplits) {
+            auto imply_split = getCaseSplitByInfo(imply);
+            applySplit(imply_split);
+            imply_split.getInfo().dump();
+            printf(" ");
+        }
+        performBoundTighteningAfterCaseSplit();
+    }
+    printf("\n");
+    informLPSolverOfBounds();
+    bool feasible = checkFeasible();
+    return feasible;
+}
+
+PiecewiseLinearCaseSplit Engine::getCaseSplitByInfo(CaseSplitTypeInfo& info) {
+    auto constraint = getConstraintByPosition(info._position);
+    auto splits = constraint->getCaseSplits();
+    for (auto& s : splits) {
+        if (s.getType() == info._type) {
+            return s;
+        }
+    }
 }
 

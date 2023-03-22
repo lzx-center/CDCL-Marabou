@@ -51,6 +51,21 @@ public:
     }
 };
 
+class CenterStackEntry {
+private:
+    std::vector<double> _lower, _upper;
+    Map<PiecewiseLinearConstraint *, PiecewiseLinearConstraint *> _plConstraintToState;
+    std::vector<PiecewiseLinearCaseSplit> _caseSplits;
+public:
+    CenterStackEntry() = default;
+    void updateBound(std::vector<double>& lower, std::vector<double>& upper);
+    void updateConstraintState(List<PiecewiseLinearConstraint *>& list);
+    void recordSplit(PiecewiseLinearCaseSplit& split);
+    void restoreConstraintState(List<PiecewiseLinearConstraint *>& list);
+    void restoreBounds(std::vector<double>& lower, std::vector<double>& upper);
+    void dump();
+    std::vector<PiecewiseLinearCaseSplit> returnSplits();
+};
 #endif // __SmtStackEntry_h__
 
 //

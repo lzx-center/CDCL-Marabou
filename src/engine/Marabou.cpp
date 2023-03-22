@@ -211,7 +211,7 @@ void Marabou::solveQuery()
     if ( _engine.processInputQuery( _inputQuery ) ) {
         bool learn_clause = Options::get()->getBool(Options::LEARN_CLAUSE);
         if (learn_clause) {
-            _engine.gurobiCheckSolve(Options::get()->getInt( Options::TIMEOUT ));
+            _engine.centerSolve(Options::get()->getInt( Options::TIMEOUT ));
 //            _engine.checkSolve(Options::get()->getInt(Options::TIMEOUT));
         } else {
             if (check) {
@@ -232,8 +232,8 @@ void Marabou::solveQuery()
 //            _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
 //           _engine.gurobiCheckSolve(Options::get()->getInt( Options::TIMEOUT ));
             } else {
-                _engine.gurobiSolve(Options::get()->getInt( Options::TIMEOUT ));
-//                _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
+//                _engine.gurobiSolve(Options::get()->getInt( Options::TIMEOUT ));
+                _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
             }
         }
     }
