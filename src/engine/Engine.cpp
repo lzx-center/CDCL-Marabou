@@ -3868,6 +3868,7 @@ bool Engine::gurobiBranch() {
     if (allPlConstraintsHold()) {
         return true;
     } else {
+        _smtCore.clearConstraintForSplit();
         return performDeepSoILocalSearch();
     }
 }
@@ -4167,9 +4168,9 @@ Minisat::Lit Engine::getBranchLit() {
     ASSERT(_smtCore.needToSplit());
     auto constraint = _smtCore.getConstraintForSplit();
     ASSERT(constraint);
-    _smtCore.performSplit();
-    CaseSplitTypeInfo info = _smtCore.getActiveCaseSplitInfo();
-    return getLitByCaseSplitTypeInfo(info);
+    printf("Is active: %d, is phase fixed: %d\n", constraint->isActive(), constraint->phaseFixed());
+    auto split = constraint->getCaseSplits().front();
+    return getLitByCaseSplitTypeInfo(split.getInfo());
 }
 
 void Engine::performSplit() {
@@ -4326,20 +4327,22 @@ bool Engine::gurobiCheckSolve(unsigned int timeoutInSeconds) {
 }
 
 void Engine::backToInitial() {
-    restoreState(_initial);
+//    restoreState(_initial);
     for (int i = 0; i < initial_lower.size(); ++ i) {
         _boundManager.enforceUpperBound(i, initial_upper[i]);
         _boundManager.enforceLowerBound(i, initial_lower[i]);
     }
 }
 
-void Engine::performSplitByLit(Minisat::Lit lit) {
+void Engine::performSplitByLit(Minisat::Lit lit, bool record) {
     auto info = getCaseSplitTypeInfoByLit(lit);
     auto constraint = getConstraintByPosition(info._position);
     if (!constraint->phaseFixed()) {
         auto split = getCaseSplit(info);
         constraint->setActiveConstraint(false);
         applySplit(split);
+        if (record)
+            recordSplit(split);
     }
 }
 
@@ -4361,28 +4364,30 @@ PiecewiseLinearCaseSplit Engine::getCaseSplit(CaseSplitTypeInfo info) {
 
 bool Engine::gurobiCheck(Minisat::vec<Minisat::Lit> &vec, int last) {
     CenterStatics time("gurobiCheck");
-    backToInitial();
-    printf("Gurobi check: ");
-    for (int i = 0; i < last; ++ i) {
-        performSplitByLit(vec[i]);
-        printf("%s%d ", Minisat::sign(vec[i]) ? "-" : " ", Minisat::var(vec[i]));
-    }
-    printf("\n");
-    performBoundTighteningAfterCaseSplit();
-    informLPSolverOfBounds();
+//    enforcePushHook();
+////    backToInitial();
+//    printf("Gurobi check: ");
+//    for (int i = 0; i < last; ++ i) {
+//        performSplitByLit(vec[i], false);
+//        printf("%s%d ", Minisat::sign(vec[i]) ? "-" : " ", Minisat::var(vec[i]));
+//    }
+//    printf("\n");
+//    performBoundTighteningAfterCaseSplit();
+//    informLPSolverOfBounds();
     bool feasible = checkFeasible();
 //    _gurobi->getConflict();
 //    if (!feasible) {
 //        _gurobi->getIIS();
 //    }
+//    enforcePopHook();
     return feasible;
 }
 
 void Engine::gurobiPropagate(Minisat::vec<Minisat::Lit> &vec) {
     CenterStatics time("gurobiPropagate");
-    backToInitial();
+//    backToInitial();
     for (int i = 0; i < vec.size(); ++ i) {
-        performSplitByLit(vec[i]);
+        performSplitByLit(vec[i], true);
     }
     performBoundTightening();
 }
@@ -4546,8 +4551,9 @@ bool Engine::conflictClauseLearning(Minisat::vec<Minisat::Lit> &trail,
         path.push_back(std::move(pathElement));
     }
     _total_num ++;
-    backToInitial();
+    enforcePushHook();
     auto learn = conflictClauseLearning(path, learnt_clause);
+    enforcePopHook();
     if (learn) {
         _learnt_num ++;
         std::map<Position, int> counter;
@@ -4704,7 +4710,9 @@ bool Engine::centerSolve(unsigned int timeoutInSeconds) {
 }
 
 void Engine::newDecisionLevel() {
+    printf("newDecisionLevel!\n");
     _centerStack.emplace_back(CenterStackEntry());
+    printf("Hi!\n");
 }
 
 void Engine::dumpCenterStack() {
@@ -4731,7 +4739,6 @@ bool Engine::centerUnSat() {
         if (!back.empty())
             learn = binaryConflictClauseLearning(back, new_path);
         enforcePopHook();
-
 
         if (learn) {
             info._position = new_path.back().getPosition();
@@ -4861,6 +4868,12 @@ PiecewiseLinearCaseSplit Engine::getCaseSplitByInfo(CaseSplitTypeInfo& info) {
         if (s.getType() == info._type) {
             return s;
         }
+    }
+}
+
+void Engine::syncStack(Minisat::vec<Minisat::Lit> &vec) {
+    for (int i = 0; i < vec.size(); ++ i) {
+        performSplitByLit(vec[i], true);
     }
 }
 

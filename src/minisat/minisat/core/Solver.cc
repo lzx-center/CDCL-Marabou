@@ -240,7 +240,9 @@ void Solver::cancelUntil(int level) {
         qhead = trail_lim[level];
         trail.shrink(trail.size() - trail_lim[level]);
         trail_lim.shrink(trail_lim.size() - level);
-    } }
+    }
+    engine_ptr->backTrack(level);
+}
 
 
 //=================================================================================================
@@ -778,6 +780,7 @@ lbool Solver::search(int nof_conflicts)
         engine_ptr->gurobiPropagate(trail);
         CenterStatics::printStatics();
         dumpTrail("Before propagate");
+        engine_ptr->dumpCenterStack();
         CRef confl = propagate();
         printf("propagate success, result: %d, is undef: %d\n", confl, confl == CRef_Undef);
         if (confl != CRef_Undef){
@@ -838,32 +841,13 @@ lbool Solver::search(int nof_conflicts)
             Lit next = lit_Undef;
             //marabou: check feasible
             dumpTrail("Before check");
-            bool feasible = engine_ptr->gurobiCheck(trail, trail.size());
+            engine_ptr->syncStack(trail);
+            engine_ptr->dumpCenterStack();
+            bool feasible = engine_ptr->checkFeasible();
             if (!feasible) {
                 if (trail_lim.size() == 0)
                     return l_False;
                 printf("Is infeasible!\n");
-
-//                int binary_level = 0;
-//                {
-//                    CenterStatics time("BinaryAnalysis");
-//                    int l = 0, r = trail.size() - 1;
-//                    while (l < r) {
-//                        int mid = (l + r) >> 1;
-//                        //check mid
-//                        auto tmp = trail[mid + 1];
-//                        trail[mid + 1] = trail.last();
-//                        bool okay = engine_ptr->gurobiCheck(trail, mid + 2);
-//                        trail[mid + 1] = tmp;
-//                        if (okay) {
-//                            l = mid + 1;
-//                        } else {
-//                            r = mid;
-//                        }
-//                    }
-//                    printf("Binary pos: %d\n", l);
-//                    binary_level = level(var(trail[l]));
-//                }
 
                 vec<Lit> learnt;
                 auto learnt_backtrack_level = engine_ptr->analyzeBackTrackLevel(trail_lim, trail, learnt);
@@ -895,7 +879,6 @@ lbool Solver::search(int nof_conflicts)
                     return l_True;
                 }
             }
-
             // else check if there is a solution when branching
             while (decisionLevel() < assumptions.size()){
                 // Perform user provided assumption:
@@ -903,6 +886,7 @@ lbool Solver::search(int nof_conflicts)
                 if (value(p) == l_True){
                     // Dummy decision level:
                     newDecisionLevel();
+                    engine_ptr->newDecisionLevel();
                 }else if (value(p) == l_False){
                     analyzeFinal(~p, conflict);
                     return l_False;
@@ -917,7 +901,13 @@ lbool Solver::search(int nof_conflicts)
                 decisions++;
                 // next split should be in _constraintForSplit
                 // get the split Lit by marabou and split
-                next = pickBranchLit();
+                bool solutionFound = engine_ptr->gurobiBranch();
+                if (solutionFound) {
+                    return l_True;
+                } else {
+                    next = engine_ptr->getBranchLit();
+                }
+//                next = pickBranchLit();
                 printf("====Pick next lit: %d====\n", var(next));
                 if (next == lit_Undef)
                     // Model found:
@@ -926,7 +916,9 @@ lbool Solver::search(int nof_conflicts)
 
             // Increase decision level and enqueue 'next'
             newDecisionLevel();
+            engine_ptr->newDecisionLevel();
             uncheckedEnqueue(next);
+            printf("Finish.\n");
         }
     }
 }

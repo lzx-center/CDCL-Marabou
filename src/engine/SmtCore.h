@@ -126,6 +126,11 @@ public:
         return _constraintForSplitting;
     }
 
+    void clearConstraintForSplit() {
+        _constraintForSplitting = nullptr;
+        _needToSplit = false;
+    }
+
     CaseSplitType reverseCaseSplitType(CaseSplitType type);
 
 

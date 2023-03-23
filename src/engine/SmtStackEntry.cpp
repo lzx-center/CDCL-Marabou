@@ -9,6 +9,10 @@ void CenterStackEntry::updateBound(std::vector<double>& lower, std::vector<doubl
 }
 
 void CenterStackEntry::updateConstraintState(List<PiecewiseLinearConstraint *> &list) {
+    for (auto& item : _plConstraintToState) {
+        delete item.second;
+    }
+
     for (auto& constraint : list) {
         _plConstraintToState[constraint] = constraint->duplicateConstraint();
     }
@@ -48,3 +52,10 @@ void CenterStackEntry::dump() {
 std::vector<PiecewiseLinearCaseSplit> CenterStackEntry::returnSplits() {
     return _caseSplits;
 }
+
+//CenterStackEntry::~CenterStackEntry() {
+//    for (auto& item : _plConstraintToState) {
+//        delete item.second;
+//    }
+//    _plConstraintToState.clear();
+//}

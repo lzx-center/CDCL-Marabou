@@ -72,6 +72,7 @@ public:
     explicit CenterStatics(const std::string& s) {
         if (!s.empty()) {
             _str = s;
+            printf("In %s\n", s.c_str());
             _start = std::chrono::high_resolution_clock::now();
         }
     };
@@ -172,7 +173,7 @@ public:
     // enqueue
     void performGivenSplit(PiecewiseLinearConstraint *constraint, CaseSplitType type);
     CaseSplitTypeInfo getCaseSplitTypeInfoByLit(Minisat::Lit lit);
-    void performSplitByLit(Minisat::Lit lit);
+    void performSplitByLit(Minisat::Lit lit, bool record);
     PiecewiseLinearCaseSplit getCaseSplit(CaseSplitTypeInfo info);
     void performSplit();
 
@@ -188,6 +189,7 @@ public:
     bool gurobiCheck(std::vector<PathElement> &path);
     bool gurobiCheck(Minisat::vec<Minisat::Lit> &vec, int last);
     void gurobiPropagate(Minisat::vec<Minisat::Lit>& vec);
+    void syncStack(Minisat::vec<Minisat::Lit>& vec);
 
     bool processUnSat();
     bool centerUnSat();
