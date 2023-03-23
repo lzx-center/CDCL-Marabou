@@ -81,6 +81,10 @@ void PiecewiseLinearCaseSplit::updateVariableIndex( unsigned oldIndex, unsigned 
         equation.updateVariableIndex( oldIndex, newIndex );
 }
 
+void PiecewiseLinearCaseSplit::setSplitNum(int num) {
+    _info._splitNum = num;
+}
+
 //
 // Local Variables:
 // compile-command: "make -C ../.. "

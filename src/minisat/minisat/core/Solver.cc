@@ -784,6 +784,7 @@ lbool Solver::search(int nof_conflicts)
         CRef confl = propagate();
         printf("propagate success, result: %d, is undef: %d\n", confl, confl == CRef_Undef);
         if (confl != CRef_Undef){
+            CenterStatics time("Conflict analyze");
             perform_split = false;
             printf("Conflict found!\n");
             // CONFLICT
@@ -792,6 +793,8 @@ lbool Solver::search(int nof_conflicts)
 
             learnt_clause.clear();
             analyze(confl, learnt_clause, backtrack_level);
+            printf("minisat: should backtrack from [%d] to [%d]\n",
+                   decisionLevel(), backtrack_level);
             cancelUntil(backtrack_level);
 
             if (learnt_clause.size() == 1){
@@ -845,6 +848,7 @@ lbool Solver::search(int nof_conflicts)
             engine_ptr->dumpCenterStack();
             bool feasible = engine_ptr->checkFeasible();
             if (!feasible) {
+                CenterStatics time("Infeasible branch");
                 if (trail_lim.size() == 0)
                     return l_False;
                 printf("Is infeasible!\n");
@@ -873,6 +877,7 @@ lbool Solver::search(int nof_conflicts)
                 claDecayActivity();
                 continue;
             } else {
+                CenterStatics time("Feasible branch");
                 engine_ptr->collectViolatedPlConstraints();
                 // If all constraints are satisfied, we are possibly done
                 if (engine_ptr->allPlConstraintsHold()) {

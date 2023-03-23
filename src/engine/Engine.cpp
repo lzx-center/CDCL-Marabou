@@ -1580,6 +1580,7 @@ bool Engine::attemptToMergeVariables(unsigned x1, unsigned x2) {
 void Engine::applySplit(const PiecewiseLinearCaseSplit &split) {
     ENGINE_LOG("");
     ENGINE_LOG("Applying a split. ");
+    CenterStatics time("applySplit");
 
     DEBUG(_tableau->verifyInvariants());
 
@@ -2768,6 +2769,7 @@ Engine::getDisjunctionConstraintBasedOnIntervalWidth(unsigned inputVariableWithL
     splits.append(s2);
     _disjunctionForSplitting = std::unique_ptr<DisjunctionConstraint>
             (new DisjunctionConstraint(splits));
+    _disjunctionForSplitting->setPosition(0, inputVariableWithLargestInterval);
     return _disjunctionForSplitting.get();
 }
 
@@ -3842,6 +3844,7 @@ void Engine::performBoundTightening() {
 }
 
 bool Engine::checkFeasible() {
+    CenterStatics time("checkFeasible");
     LinearExpression costFunction;
 
     informLPSolverOfBounds();
@@ -3863,6 +3866,7 @@ bool Engine::checkFeasible() {
 }
 
 bool Engine::gurobiBranch() {
+    CenterStatics time("gurobiBranch");
     collectViolatedPlConstraints();
     // If all constraints are satisfied, we are possibly done
     if (allPlConstraintsHold()) {
@@ -3877,9 +3881,18 @@ void Engine::learnClauseByGurobi() {
 
 }
 
-Minisat::Lit Engine::getLitByPosition(Position &position) {
+Minisat::Lit Engine::getLitByPosition(Position &position, int split_num) {
     if (_positionToLit.exists(position)) {
         return _positionToLit.at(position);
+    } else if (position._layer == 0) {
+        printf("Trying to get Disjunction!\n");
+        return getLitByInputPosition(position, split_num);
+//        if (_inputPositionToLit[position].size() < split_num) {
+//            printf("Invalid input split num! current max is [%d], request [%d]\n",
+//                   _inputPositionToLit[position].size(), split_num);
+//            exit(-1);
+//        }
+//        return _inputPositionToLit[position].at(split_num - 1);
     }
     printf("Position doesn't have target Lit!\n");
     exit(-1);
@@ -3937,7 +3950,7 @@ bool Engine::applyValidConstraintCaseSplitsWithSat() {
             appliedSplit = true;
             PhaseStatus status = constraint->getPhaseStatus();
             auto pos = constraint->getPosition();
-            Minisat::Lit lit = getLitByPosition(pos);
+            Minisat::Lit lit = getLitByPosition(pos, 0);
             if (status == PhaseStatus::RELU_PHASE_INACTIVE) {
                 lit = ~lit;
             } else if (status == PhaseStatus::RELU_PHASE_ACTIVE) {
@@ -3975,10 +3988,18 @@ PhaseStatus Engine::getPhaseStatusByLit(Minisat::Lit lit) {
 
 CaseSplitType Engine::getCaseSplitTypeByLit(Minisat::Lit lit) {
     CaseSplitType type;
-    if (Minisat::sign(lit)) {
-        type = CaseSplitType::RELU_INACTIVE;
+    if (_litToInputSplitNum.exists(lit)) {
+        if (Minisat::sign(lit)) {
+            type = CaseSplitType::DISJUNCTION_LOWER;
+        } else {
+            type = CaseSplitType::DISJUNCTION_UPPER;
+        }
     } else {
-        type = CaseSplitType::RELU_ACTIVE;
+        if (Minisat::sign(lit)) {
+            type = CaseSplitType::RELU_INACTIVE;
+        } else {
+            type = CaseSplitType::RELU_ACTIVE;
+        }
     }
     return type;
 }
@@ -3986,13 +4007,22 @@ CaseSplitType Engine::getCaseSplitTypeByLit(Minisat::Lit lit) {
 Minisat::Lit Engine::getLitByCaseSplitTypeInfo(CaseSplitTypeInfo &type_info) {
     auto pos = type_info._position;
     auto type = type_info._type;
-    auto lit = getLitByPosition(pos);
+    printf("Get split type: ");
+    type_info.dump();
+    printf("\n");
+    auto lit = getLitByPosition(pos, type_info._splitNum);
     switch (type) {
         case CaseSplitType::RELU_ACTIVE: {
             return lit;
         }
         case CaseSplitType::RELU_INACTIVE: {
             return ~lit;
+        }
+        case CaseSplitType::DISJUNCTION_LOWER : {
+            return getLitByInputPosition(type_info._position, type_info._splitNum);
+        }
+        case CaseSplitType::DISJUNCTION_UPPER : {
+            return ~getLitByInputPosition(type_info._position, type_info._splitNum);
         }
         default: {
             printf("Unsupported casesplit type %s\n",
@@ -4168,7 +4198,15 @@ Minisat::Lit Engine::getBranchLit() {
     ASSERT(_smtCore.needToSplit());
     auto constraint = _smtCore.getConstraintForSplit();
     ASSERT(constraint);
-    printf("Is active: %d, is phase fixed: %d\n", constraint->isActive(), constraint->phaseFixed());
+    String s; constraint->dump(s);
+    if (constraint->getType() == PiecewiseLinearFunctionType::DISJUNCTION) {
+        auto inputIndex = constraint->getPosition()._node;
+        int num = getInputSplitNum(inputIndex) + 1;
+        auto split = constraint->getCaseSplits().front();
+        split.setSplitNum(num);
+        printf("Get split num %d\n", num);
+        return getLitByCaseSplitTypeInfo(split.getInfo());
+    }
     auto split = constraint->getCaseSplits().front();
     return getLitByCaseSplitTypeInfo(split.getInfo());
 }
@@ -4178,7 +4216,7 @@ void Engine::performSplit() {
     auto constraint = _smtCore.getConstraintForSplit();
     printf("perform constraint split: ");
     auto pos = constraint->getPosition(); pos.dump();
-    auto lit = getLitByPosition(pos);
+    auto lit = getLitByPosition(pos, 0);
     printf("Lit -%d", Minisat::var(lit));
     printf("\n");
     _smtCore.performSplit();
@@ -4337,9 +4375,26 @@ void Engine::backToInitial() {
 void Engine::performSplitByLit(Minisat::Lit lit, bool record) {
     auto info = getCaseSplitTypeInfoByLit(lit);
     auto constraint = getConstraintByPosition(info._position);
+
+    if (constraint->getType() == DISJUNCTION) {
+        auto pos = constraint->getPosition();
+        printf("Input [%d], input split num: %d, lit to input split num: %d\n",
+               pos._node, getInputSplitNum(pos._node), _litToInputSplitNum[lit]);
+        if (getInputSplitNum(pos._node) >= _litToInputSplitNum[lit]) {
+            return;
+        } else {
+            auto split = getCaseSplit(info);
+            applySplit(split);
+            if (record)
+                recordSplit(split);
+        }
+        return;
+    }
+
     if (!constraint->phaseFixed()) {
         auto split = getCaseSplit(info);
-        constraint->setActiveConstraint(false);
+        if (constraint->getType() != DISJUNCTION)
+            constraint->setActiveConstraint(false);
         applySplit(split);
         if (record)
             recordSplit(split);
@@ -4347,6 +4402,7 @@ void Engine::performSplitByLit(Minisat::Lit lit, bool record) {
 }
 
 CaseSplitTypeInfo Engine::getCaseSplitTypeInfoByLit(Minisat::Lit lit) {
+    CenterStatics time("getCaseSplitTypeInfoByLit");
     auto type = getCaseSplitTypeByLit(lit);
     auto pos = getPositionByLit(lit);
     return CaseSplitTypeInfo(pos, type);
@@ -4354,10 +4410,12 @@ CaseSplitTypeInfo Engine::getCaseSplitTypeInfoByLit(Minisat::Lit lit) {
 
 PiecewiseLinearCaseSplit Engine::getCaseSplit(CaseSplitTypeInfo info) {
     auto constraint = getConstraintByPosition(info._position);
+    printf("Constraint is nullptr: %d\n", constraint == nullptr);
     auto splits = constraint->getCaseSplits();
     for (auto& split : splits) {
-        if (split.getType() == info._type)
+        if (split.getType() == info._type) {
             return split;
+        }
     }
     exit(-1);
 }
@@ -4575,8 +4633,9 @@ int Engine::analyzeBackTrackLevel( Minisat::vec<int>& trail_lim,
                                    Minisat::vec<Minisat::Lit>& trail,
                                    Minisat::vec<Minisat::Lit>& learnt) {
     CenterStatics time("analyzeBackTrackLevel");
-    bool success;
-    success = conflictClauseLearning(trail, learnt);
+    bool success = false;
+    _smtCore._searchPath._paths.emplace_back();
+//    success = conflictClauseLearning(trail, learnt);
     int backtrack_level = trail_lim.size() - 1;
     if (!success) {
         for (int i = trail_lim.size() - 1; i >= 0; -- i) {
@@ -4638,6 +4697,7 @@ Minisat::Lit Engine::addInputSplitLit() {
 }
 
 void Engine::updateCenterStack() {
+    CenterStatics time("updateCenterStack");
     std::vector<double> lower(_tableau->getN()),upper(_tableau->getN());
     for (size_t i = 0; i < _tableau->getN(); ++ i) {
         lower[i] = _tableau->getLowerBound(i);
@@ -4648,13 +4708,25 @@ void Engine::updateCenterStack() {
 }
 
 void Engine::recordSplit(PiecewiseLinearCaseSplit &split) {
+    auto pos = split.getPosition();
+    if (pos._layer == 0) {
+        _inputSplitNum[pos._node] ++;
+        split.setSplitNum(_inputSplitNum[pos._node]);
+    }
     _centerStack.back().recordSplit(split);
     updateCenterStack();
 }
 
 void Engine::backTrack(int level) {
-    while(getDecisionLevel() > (unsigned int)level)
+    while(getDecisionLevel() > (unsigned int)level) {
+        auto& vec = _centerStack.back().returnSplits();
+        for (auto& split: vec) {
+            auto pos = split.getPosition();
+            if (!pos._layer)
+                _inputSplitNum[pos._node] --;
+        }
         _centerStack.pop_back();
+    }
 
     std::vector<double> lower, upper;
     _centerStack.back().restoreConstraintState(_plConstraints);
@@ -4872,8 +4944,33 @@ PiecewiseLinearCaseSplit Engine::getCaseSplitByInfo(CaseSplitTypeInfo& info) {
 }
 
 void Engine::syncStack(Minisat::vec<Minisat::Lit> &vec) {
+    CenterStatics time("syncStack");
     for (int i = 0; i < vec.size(); ++ i) {
         performSplitByLit(vec[i], true);
     }
+    updateCenterStack();
+}
+
+int Engine::getInputSplitNum(int inputIndex) {
+    return _inputSplitNum[inputIndex];
+}
+
+Minisat::Lit Engine::getLitByInputPosition(Position &pos, int split_num) {
+    printf("Split input %d, split num: %d\n", pos._node, split_num);
+    if (_inputPositionToLit.count(pos)) {
+        if (_inputPositionToLit[pos].size() >= split_num) {
+//            printf("Total size: %d\n",_inputPositionToLit[pos].size());
+            return _inputPositionToLit[pos][split_num - 1];
+        }
+    }
+    printf("Creating new lit for the %d split of input %d\n", split_num, pos._node);
+    Minisat::Lit lit = Minisat::mkLit(_solver->newVar());
+    _inputPositionToLit[pos].push_back(lit);
+    int num = _inputPositionToLit[pos].size();
+    _litToPosition[lit] = pos;
+    _litToPosition[~lit] = pos;
+    _litToInputSplitNum[lit] = num;
+    _litToInputSplitNum[~lit] = num;
+    return lit;
 }
 

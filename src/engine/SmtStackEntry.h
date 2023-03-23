@@ -64,7 +64,7 @@ public:
     void restoreConstraintState(List<PiecewiseLinearConstraint *>& list);
     void restoreBounds(std::vector<double>& lower, std::vector<double>& upper);
     void dump();
-    std::vector<PiecewiseLinearCaseSplit> returnSplits();
+    std::vector<PiecewiseLinearCaseSplit>& returnSplits();
 };
 #endif // __SmtStackEntry_h__
 

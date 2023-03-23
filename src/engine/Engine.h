@@ -116,11 +116,13 @@ public:
       (a timeout of 0 means no time limit). Returns true if found, false if infeasible.
     */
     Map<Position, PiecewiseLinearConstraint *> _positionToConstraint;
-    Map<Position, Map<int, Minisat::Lit>> _inputPositionToLit;
+    std::map<Position, std::vector<Minisat::Lit>> _inputPositionToLit;
     Map<Position, Minisat::Lit> _positionToLit;
     Map<Minisat::Lit, Position> _litToPosition;
+    Map<Minisat::Lit, int> _litToInputSplitNum;
     int _total_num = 0, _learnt_num = 0;
     std::vector<CenterStackEntry> _centerStack = {CenterStackEntry()};
+    std::map<int, int> _inputSplitNum;
 
     /*
     Get Context reference
@@ -143,6 +145,9 @@ public:
     void backTrack(int level);
     void dumpCenterStack();
     size_t getDecisionLevel();
+    int getInputSplitNum(int inputIndex);
+    Minisat::Lit getLitByInputPosition(Position &pos, int split_num);
+
     /*
       Return true iff all piecewise linear constraints hold.
     */
@@ -177,7 +182,7 @@ public:
     PiecewiseLinearCaseSplit getCaseSplit(CaseSplitTypeInfo info);
     void performSplit();
 
-    Minisat::Lit getLitByPosition(Position& position);
+    Minisat::Lit getLitByPosition(Position &position, int split_num);
     Position getPositionByLit(Minisat::Lit lit);
     bool checkFeasible();
     void learnClauseByGurobi();

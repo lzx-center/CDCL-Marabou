@@ -34,6 +34,7 @@ enum CaseSplitType {
 struct CaseSplitTypeInfo {
     Position _position;
     CaseSplitType _type;
+    int _splitNum = 0;
     explicit CaseSplitTypeInfo(int layer=-1, int node=-1, CaseSplitType type=UNKNOWN) : _position(layer, node), _type(type) {}
     explicit CaseSplitTypeInfo(Position position, CaseSplitType type) {
         _position = position;
@@ -63,7 +64,7 @@ struct CaseSplitTypeInfo {
     }
 
     void dump(String& s) const {
-        s += Stringf("(%d, %d, %s)", _position._layer, _position._node, getStringCaseSplitType(_type).ascii());
+        s += Stringf("(%d, %d, %s, %d)", _position._layer, _position._node, getStringCaseSplitType(_type).ascii(), _splitNum);
     }
 
     void dump() const {
@@ -142,6 +143,8 @@ public:
     void setInfo(Position position, CaseSplitType type) {
         _info = CaseSplitTypeInfo(position, type);
     }
+
+    void setSplitNum(int num);
 
     CaseSplitTypeInfo& getInfo() {
         return _info;

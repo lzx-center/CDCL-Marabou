@@ -49,7 +49,7 @@ void CenterStackEntry::dump() {
     printf("\n");
 }
 
-std::vector<PiecewiseLinearCaseSplit> CenterStackEntry::returnSplits() {
+std::vector<PiecewiseLinearCaseSplit>& CenterStackEntry::returnSplits() {
     return _caseSplits;
 }
 
