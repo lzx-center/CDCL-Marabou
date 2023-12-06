@@ -4796,7 +4796,6 @@ bool Engine::centerSolve(unsigned int timeoutInSeconds) {
             } else
                 continue;
         }
-        continue;
     }
     return false;
 }
