@@ -12,8 +12,11 @@ void CenterStackEntry::updateConstraintState(List<PiecewiseLinearConstraint *> &
     for (auto& item : _plConstraintToState) {
         delete item.second;
     }
-
+    total = valid = 0;
     for (auto& constraint : list) {
+        total ++;
+        if (constraint->isActive())
+            valid ++;
         _plConstraintToState[constraint] = constraint->duplicateConstraint();
     }
 }
@@ -51,6 +54,16 @@ void CenterStackEntry::dump() {
 
 std::vector<PiecewiseLinearCaseSplit>& CenterStackEntry::returnSplits() {
     return _caseSplits;
+}
+
+int CenterStackEntry::getLastDisjunctionImplyNum() {
+    int num = 0;
+    for (int i = _caseSplits.size() - 1; i >= 0; -- i) {
+        if (_caseSplits[i].getPosition()._layer == 0)
+            return num;
+        num ++;
+    }
+    return num;
 }
 
 //CenterStackEntry::~CenterStackEntry() {

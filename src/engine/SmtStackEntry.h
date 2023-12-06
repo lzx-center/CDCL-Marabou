@@ -57,9 +57,11 @@ private:
     Map<PiecewiseLinearConstraint *, PiecewiseLinearConstraint *> _plConstraintToState;
     std::vector<PiecewiseLinearCaseSplit> _caseSplits;
 public:
+    int total, valid;
     CenterStackEntry() = default;
     void updateBound(std::vector<double>& lower, std::vector<double>& upper);
     void updateConstraintState(List<PiecewiseLinearConstraint *>& list);
+    int getLastDisjunctionImplyNum();
     void recordSplit(PiecewiseLinearCaseSplit& split);
     void restoreConstraintState(List<PiecewiseLinearConstraint *>& list);
     void restoreBounds(std::vector<double>& lower, std::vector<double>& upper);

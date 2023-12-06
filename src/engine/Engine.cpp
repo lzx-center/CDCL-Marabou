@@ -36,6 +36,7 @@
 
 std::map<std::string, long long> CenterStatics::_functionTime;
 std::map<int, int> CenterStatics::_backTrackStatics;
+std::map<std::string, long long> CenterStatics::_static;
 Engine::Engine()
         : _context(), _boundManager(_context), _tableau(_boundManager), _preprocessedQuery(nullptr),
           _rowBoundTightener(*_tableau), _smtCore(this), _numPlConstraintsDisabledByValidSplits(0),
@@ -137,12 +138,19 @@ bool Engine::solve(unsigned timeoutInSeconds) {
 
     // Register the boundManager with all the PL constraints
     for (auto &plConstraint: _plConstraints) {
+        String s;
+        plConstraint->dump(s);
+        printf("constraint: %s\n", s.ascii());
         plConstraint->registerBoundManager(&_boundManager);
         auto pos = plConstraint->getPosition();
         _positionToConstraint[pos] = plConstraint;
     }
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
         auto pos = plConstraint->getPosition();
+        // dump plConstraint
+        String s;
+        plConstraint->dump(s);
+        printf("Eliminated constraint: %s\n", s.ascii());
         CaseSplitType type = CaseSplitType::UNKNOWN;
         if (plConstraint->getPhaseStatus() == RELU_PHASE_ACTIVE) {
             type = CaseSplitType::RELU_ACTIVE;
@@ -151,7 +159,7 @@ bool Engine::solve(unsigned timeoutInSeconds) {
         } else {
             printf("Can not handle!\n");
         }
-        _smtCore._searchPath.addEliminatedConstraint(pos._layer, pos._node, RELU_ACTIVE);
+        _smtCore._searchPath.addEliminatedConstraint(pos._layer, pos._node, type);
     }
 
     if (_solveWithMILP)
@@ -1971,6 +1979,7 @@ void Engine::performSimulation() {
 }
 
 void Engine::performSymbolicBoundTightening(InputQuery *inputQuery) {
+    CenterStatics time("performSymbolicBoundTightening");
     if (_symbolicBoundTighteningType == SymbolicBoundTighteningType::NONE ||
         (!_networkLevelReasoner))
         return;
@@ -2284,6 +2293,11 @@ PiecewiseLinearConstraint *Engine::pickSplitPLConstraint(DivideStrategy
     ENGINE_LOG(Stringf("Picking a split PLConstraint...").ascii());
 
     PiecewiseLinearConstraint *candidatePLConstraint = NULL;
+    if (_centerStack.back().getLastDisjunctionImplyNum() > 3) {
+        candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
+        return candidatePLConstraint;
+    }
+
     if (strategy == DivideStrategy::PseudoImpact) {
         if (_smtCore.getStackDepth() > 3)
             candidatePLConstraint = _smtCore.getConstraintsWithHighestScore();
@@ -2297,7 +2311,7 @@ PiecewiseLinearConstraint *Engine::pickSplitPLConstraint(DivideStrategy
     else if (strategy == DivideStrategy::EarliestReLU)
         candidatePLConstraint = pickSplitPLConstraintBasedOnTopology();
     else if (strategy == DivideStrategy::LargestInterval &&
-             ((_centerStack.size() - 1) %
+             ((_smtCore.getStackDepth()) %
               GlobalConfiguration::INTERVAL_SPLITTING_FREQUENCY == 0)
             ) {
         // Conduct interval splitting periodically.
@@ -3669,6 +3683,7 @@ void Engine::enforcePushHook() {
 
         constraint->restoreState(_initial._plConstraintToState[constraint]);
     }
+    backToInitial();
 }
 
 void Engine::enforcePopHook() {
@@ -4378,8 +4393,8 @@ void Engine::performSplitByLit(Minisat::Lit lit, bool record) {
 
     if (constraint->getType() == DISJUNCTION) {
         auto pos = constraint->getPosition();
-        printf("Input [%d], input split num: %d, lit to input split num: %d\n",
-               pos._node, getInputSplitNum(pos._node), _litToInputSplitNum[lit]);
+//        printf("Input [%d], input split num: %d, lit to input split num: %d\n",
+//               pos._node, getInputSplitNum(pos._node), _litToInputSplitNum[lit]);
         if (getInputSplitNum(pos._node) >= _litToInputSplitNum[lit]) {
             return;
         } else {
@@ -4405,7 +4420,12 @@ CaseSplitTypeInfo Engine::getCaseSplitTypeInfoByLit(Minisat::Lit lit) {
     CenterStatics time("getCaseSplitTypeInfoByLit");
     auto type = getCaseSplitTypeByLit(lit);
     auto pos = getPositionByLit(lit);
-    return CaseSplitTypeInfo(pos, type);
+    auto caseSplit = CaseSplitTypeInfo(pos, type);
+    if (_litToInputSplitNum.exists(lit)) {
+       caseSplit._splitNum = _litToInputSplitNum.at(lit);
+    }
+
+    return caseSplit;
 }
 
 PiecewiseLinearCaseSplit Engine::getCaseSplit(CaseSplitTypeInfo info) {
@@ -4789,6 +4809,10 @@ void Engine::newDecisionLevel() {
 
 void Engine::dumpCenterStack() {
     printf("======dumping center stack======\n");
+    if (!_centerStack.empty()) {
+        printf("Total: %d, valid split: %d\n",
+               _centerStack.back().total, _centerStack.back().valid);
+    }
     for (int i = 0; i < _centerStack.size(); ++ i) {
         printf("Level: %d: ",  i);
         _centerStack[i].dump();

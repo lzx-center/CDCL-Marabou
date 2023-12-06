@@ -66,13 +66,14 @@ using CVC4::context::Context;
 class CenterStatics {
     static std::map<std::string, long long> _functionTime;
     static std::map<int, int> _backTrackStatics;
+    static std::map<std::string, long long> _static;
     std::chrono::high_resolution_clock::time_point _start;
     std::string _str;
 public:
     explicit CenterStatics(const std::string& s) {
         if (!s.empty()) {
             _str = s;
-            printf("In %s\n", s.c_str());
+//            printf("In %s\n", s.c_str());
             _start = std::chrono::high_resolution_clock::now();
         }
     };
@@ -95,6 +96,15 @@ public:
         for(auto& item : _backTrackStatics) {
             printf("Step %d : %d\n", item.first, item.second);
         }
+
+        printf("Other statics:\n");
+        for(auto& item : _static) {
+            printf("number of {%s} : %lld\n", item.first.c_str(), item.second);
+        }
+    }
+
+    static void increaseStatics(const std::string& s) {
+        _static[s] ++;
     }
 };
 

@@ -83,7 +83,6 @@ class NNet(nn.Module):
             weights = []
             biases = []
             for layernum in range(numLayers):
-
                 previousLayerSize = layerSizes[layernum]
                 currentLayerSize = layerSizes[layernum + 1]
                 weights.append([])

@@ -1,4 +1,7 @@
 import os
+import random
+import time
+from NetAnalysis import deep_poly 
 """
 1: Header text. This can be any number of lines so long as they begin with "//"
 2: Four values: Number of layers, number of inputs, number of outputs, and maximum layer size
@@ -17,8 +20,8 @@ class TestGenerator:
         pass
 
     def generator(self, file_path, property_path=None):
-        layers, inputs, outputs, maximum_layer_size = 2, 2, 2, 2
-        layer_nums = [inputs, 2,outputs]
+        layers, inputs, outputs, maximum_layer_size = 3, 2, 3, 3
+        layer_nums = [inputs,3,3,outputs]
 
         min_val_for_input, max_val_for_input = -1.0, 1.0
         mean_val_for_input, one_val_for_output = 0.0, 0.0
@@ -55,28 +58,42 @@ class TestGenerator:
             for i in range(len(layer_nums) - 1):
                 for h in range(layer_nums[i + 1]):
                     for l in range(layer_nums[i]):
-                        printf(random.uniform(-1, 1), end=",")
+                        printf(f'{random.uniform(-1, 1):.1f}', end=",")
                     printf()
                 for h in range(layer_nums[i + 1]):
-                    printf("0.0,")
+                    printf(f"{random.uniform(-1, 1):.1f},")
                 if property_path is not None:
                     bound = random.uniform(-2, 2)
                     with open(property_path, "w+") as t:
                         def printt(*arg, **kwargs):
                             print(*arg, **kwargs, file=t)
 
-                        printt(f"y0 >= {bound}")
-        command = f"/home/center/Delta-Marabou/Marabou {file_path} {property_path} > ./test.log"
-        print(command)
-        os.system(command)
-        with open("./test.log") as f:
-            unsat = False
-            for line in f.readlines():
-                if "unsat" in line:
-                    unsat = True
-                if "Search Tree" in line:
-                    size = int(line.split(" ")[-1].strip("\n"))
-                    print(size)
-                    if unsat:
-                        return size
-        return 0
+                        printt(f"y0 >= {bound:.1f}\n+y0 -y2 >= 0")
+        
+        return run_exp(file_path, property_path)
+
+def run_exp(file_path, property_path):
+    command = f"/home/center/CDCL-Marabou/build/Marabou {file_path} {property_path} > ./test.log"
+    print(command)
+    os.system(command)
+    with open("./test.log") as f:
+        unsat = False
+        for line in f.readlines():
+            if "unsat" in line:
+                unsat = True
+            if "Search path" in line:
+                size = int(line.split(" ")[-1].strip("\n").strip("[").strip("]"))
+                print(size)
+                return size
+    return 0
+
+if __name__ == "__main__":
+    generator = TestGenerator()
+    # while True:
+    #     sz = generator.generator("./test.txt", "./test.property")
+    #     # time.sleep(0.5)
+    #     if sz > 3:
+    #         if deep_poly("./test.txt", "./test.property"):
+    #             break
+    deep_poly("./test.txt", "./test.property")
+    run_exp("./test.txt", "./test.property")

@@ -68,13 +68,17 @@ class NodeInfo:
         return self.upper_bound
 
     def propagate_to_layer(self, layer=0, node_type=NodeType.input):
-        # print(self.name)
         if layer and layer > self.layer:
             raise Exception("Can not propagate to layer less than current layer")
         if layer and layer == self.layer and self.node_type == NodeType.reluBack:
             raise Exception("Can not progate to itself")
 
         sym_lower, sym_upper = self.symbolic_lower_bound, self.symbolic_upper_bound
+        print("*********"*10)
+        print("Before Calculating Node name: ", self.name)
+        print("Dump Symbolic lower: ", self.dump_symbolic_bound(sym_lower))
+        print("Dump Symbolic upper: ", self.dump_symbolic_bound(sym_upper))
+        print("*********"*10)
         while True:
             t_lower, t_upper = {}, {}
             for node_info, coeff in sym_lower.items():
@@ -98,21 +102,28 @@ class NodeInfo:
                     t_upper[pre_node_info] += coeff * pre_coeff
             sym_lower = t_lower
             sym_upper = t_upper
+            print("*********"*10)
+            print("Calculating Node name: ", self.name)
+            print("Dump Symbolic lower: ", self.dump_symbolic_bound(sym_lower))
+            print("Dump Symbolic upper: ", self.dump_symbolic_bound(sym_upper))
+            print("*********"*10)
             self.calc_bounds_via_symbolic(t_lower, t_upper)
 
+            def end_process(bound):
+                for node_info, coeff in bound.items():
+                    if node_info.node_type == node_type and node_info.layer == layer:
+                        return True
+                if len(bound) == 1:
+                    for node_info, coeff in bound.items():
+                        if node_info.node_type != NodeType.scalar:
+                            return False
+                    return True
+                elif len(bound) == 0:
+                    return True
+                return False
+
             # end propagate judgement
-            break_flag = False
-            if len(sym_upper) == 0 and len(sym_lower) == 0:
-                break_flag = True
-            for node_info, _ in sym_lower.items():
-                if node_info.node_type == node_type and node_info.layer == layer:
-                    break_flag = True
-                    break
-            for node_info, _ in sym_upper.items():
-                if node_info.node_type == node_type and node_info.layer == layer:
-                    break_flag = True
-                    break
-            if break_flag:
+            if end_process(sym_lower) and end_process(sym_upper):
                 break
 
         return sym_lower, sym_upper
@@ -122,12 +133,12 @@ class NodeInfo:
         ret = f"Node name: {self.name}\nNode type: {self.node_type}\nLower bound: {self.lower_bound}\n" \
               f"Upper bound: {self.upper_bound}\n"
         s_lower, s_upper = self.symbolic_lower_bound, self.symbolic_upper_bound
-        # ret += "Symbolic lower: "
-        # for node, coeff in s_lower.items():
-        #     ret += f"{coeff} {node.name} "
-        # ret += "\nSymbolic upper: "
-        # for node, coeff in s_upper.items():
-        #     ret += f"{coeff} {node.name} "
+        ret += "Symbolic lower: "
+        for node, coeff in s_lower.items():
+            ret += f"{coeff} {node.name} "
+        ret += "\nSymbolic upper: "
+        for node, coeff in s_upper.items():
+            ret += f"{coeff} {node.name} "
         ret += f"\nNode status: {self.node_status}"
         return ret
 
@@ -426,10 +437,15 @@ class DeepPolyAnalysis(nnet.NNet):
     def dependency_analysis(self):
         intra_dependencies = self.intra_depends_analysis()
         inter_dependencies = self.inter_depends_analysis()
+        print("Intra dependencies:")
         for intra in intra_dependencies:
             print(intra)
+        print("Inter dependencies:")
         for inter in inter_dependencies:
             print(inter)
+
+        return intra_dependencies
+        
 
     def inter_depends_analysis(self):
         ret = []
@@ -637,8 +653,10 @@ def deep_poly(net_path, property_path):
     #         score = analysis.get_impact_score(equation_node, target_node)
     #         print(target_node.name, score, target_node.node_status)
 
-    # analysis.dependency_analysis()
-
+    intra = analysis.dependency_analysis()
+    if len(intra) > 0:
+        return True
+    return False
 
 if __name__ == "__main__":
     net = "/home/center/CDCL-Marabou/example/test.nnet"

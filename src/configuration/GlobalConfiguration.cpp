@@ -24,7 +24,7 @@ const double GlobalConfiguration::EXPONENTIAL_MOVING_AVERAGE_ALPHA = 0.5;
 
 // Whether to use SoI instead of Reluplex for local search for satisfying assignments
 //to non-linear constraint.
-bool GlobalConfiguration::USE_DEEPSOI_LOCAL_SEARCH = true;
+bool GlobalConfiguration::USE_DEEPSOI_LOCAL_SEARCH = false;
 
 const double GlobalConfiguration::SCORE_BUMP_FOR_PL_CONSTRAINTS_NOT_IN_SOI = 5;
 
@@ -119,8 +119,8 @@ const bool GlobalConfiguration::INPUT_QUERY_LOGGING = false;
 const bool GlobalConfiguration::PROJECTED_STEEPEST_EDGE_LOGGING = false;
 const bool GlobalConfiguration::GAUSSIAN_ELIMINATION_LOGGING = false;
 const bool GlobalConfiguration::QUERY_LOADER_LOGGING = false;
-const bool GlobalConfiguration::SYMBOLIC_BOUND_TIGHTENER_LOGGING = false;
-const bool GlobalConfiguration::NETWORK_LEVEL_REASONER_LOGGING = false;
+const bool GlobalConfiguration::SYMBOLIC_BOUND_TIGHTENER_LOGGING = true;
+const bool GlobalConfiguration::NETWORK_LEVEL_REASONER_LOGGING = true;
 const bool GlobalConfiguration::MPS_PARSER_LOGGING= false;
 const bool GlobalConfiguration::ONNX_PARSER_LOGGING= false;
 const bool GlobalConfiguration::SOI_LOGGING = false;

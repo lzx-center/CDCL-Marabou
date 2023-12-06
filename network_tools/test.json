@@ -1,0 +1,78 @@
+{
+    "data": [
+        [
+            {
+                "split": "(2, 2, Relu inactive, 0)",
+                "implied": []
+            },
+            {
+                "split": "(1, 0, Relu inactive, 0)",
+                "implied": [
+                    "(2, 0, Relu inactive, 0)",
+                    "(2, 1, Relu inactive, 0)",
+                    "(3, 0, Relu inactive, 0)",
+                    "(3, 1, Relu active, 0)",
+                    "(3, 2, Relu active, 0)"
+                ]
+            }
+        ],
+        [
+            {
+                "split": "(2, 2, Relu inactive, 0)",
+                "implied": []
+            },
+            {
+                "split": "(1, 0, Relu active, 0)",
+                "implied": [
+                    "(3, 0, Relu inactive, 0)"
+                ]
+            }
+        ],
+        [
+            {
+                "split": "(2, 2, Relu active, 0)",
+                "implied": [
+                    "(3, 1, Relu inactive, 0)",
+                    "(3, 2, Relu active, 0)"
+                ]
+            },
+            {
+                "split": "(0, 0, Disjunction upper, 0)",
+                "implied": [
+                    "(2, 0, Relu inactive, 0)",
+                    "(2, 1, Relu inactive, 0)"
+                ]
+            }
+        ],
+        [
+            {
+                "split": "(2, 2, Relu active, 0)",
+                "implied": [
+                    "(3, 1, Relu inactive, 0)",
+                    "(3, 2, Relu active, 0)"
+                ]
+            },
+            {
+                "split": "(0, 0, Disjunction lower, 0)",
+                "implied": [
+                    "(2, 0, Relu inactive, 0)",
+                    "(2, 1, Relu inactive, 0)"
+                ]
+            }
+        ]
+    ],
+    "eliminated": [
+        {
+            "split": "(1, 2, Relu inactive, 0)",
+            "implied": []
+        },
+        {
+            "split": "(4, 0, Relu inactive, 0)",
+            "implied": []
+        },
+        {
+            "split": "(4, 1, Relu inactive, 0)",
+            "implied": []
+        }
+    ]
+}

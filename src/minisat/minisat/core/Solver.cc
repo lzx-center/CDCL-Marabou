@@ -305,7 +305,7 @@ void Solver::analyze(CRef confl, vec<Lit>& out_learnt, int& out_btlevel)
     //
     out_learnt.push();      // (leave room for the asserting literal)
     int index   = trail.size() - 1;
-    dumpTrail("In analyze:");
+//    dumpTrail("In analyze:");
     do{
         assert(confl != CRef_Undef); // (otherwise should be UIP)
         Clause& c = ca[confl];
@@ -576,7 +576,7 @@ CRef Solver::propagate()
                 while (i < end)
                     *j++ = *i++;
             }else {
-                printf("Propagate: ");
+                CenterStatics::increaseStatics("Minisat::propagate");
                 uncheckedEnqueue(first, cr);
             }
         NextClause:;
@@ -779,8 +779,8 @@ lbool Solver::search(int nof_conflicts)
     for (;;){
         engine_ptr->gurobiPropagate(trail);
         CenterStatics::printStatics();
-        dumpTrail("Before propagate");
-        engine_ptr->dumpCenterStack();
+//        dumpTrail("Before propagate");
+//        engine_ptr->dumpCenterStack();
         CRef confl = propagate();
         printf("propagate success, result: %d, is undef: %d\n", confl, confl == CRef_Undef);
         if (confl != CRef_Undef){
@@ -822,7 +822,7 @@ lbool Solver::search(int nof_conflicts)
                            (int)max_learnts, nLearnts(), (double)learnts_literals/nLearnts(), progressEstimate()*100);
             }
         }else{
-            printf("No conflict!\n");
+//            printf("No conflict!\n");
             // NO CONFLICT
             if ((nof_conflicts >= 0 && conflictC >= nof_conflicts) || !withinBudget()){
                 // Reached bound on number of conflicts:
@@ -843,9 +843,9 @@ lbool Solver::search(int nof_conflicts)
 
             Lit next = lit_Undef;
             //marabou: check feasible
-            dumpTrail("Before check");
+//            dumpTrail("Before check");
             engine_ptr->syncStack(trail);
-            engine_ptr->dumpCenterStack();
+//            engine_ptr->dumpCenterStack();
             bool feasible = engine_ptr->checkFeasible();
             if (!feasible) {
                 CenterStatics time("Infeasible branch");
