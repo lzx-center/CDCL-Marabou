@@ -6,8 +6,10 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include "SearchPath.h"
+std::mutex mutex;
 
 void SearchPath::appendPath(std::vector<PathElement>& path) {
+    std::lock_guard<std::mutex> lock(mutex);
     _paths.push_back(std::move(path));
 }
 
@@ -240,6 +242,16 @@ void SearchPath::calc() {
         }
         printf("Learnt size %zu, can use time: %d, rate: %f\n", learnt.size(), use_time, 1.0 * use_time / _paths.size());
     }
+}
+
+void SearchPath::safeAppendLearned(std::vector<PathElement> &path) {
+    std::lock_guard<std::mutex> lock(mutex);
+    _learnt.push_back(std::move(path));
+}
+
+std::vector<PathElement> SearchPath::getPath(int index) {
+    std::lock_guard<std::mutex> lock(mutex);
+    return _paths[index];
 }
 
 

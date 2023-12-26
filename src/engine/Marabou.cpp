@@ -57,6 +57,7 @@ Marabou::~Marabou()
 
 void Marabou::run()
 {
+    _engine.createConflictClauseFinder();
     struct timespec start = TimeUtils::sampleMicro();
 
     prepareInputQuery();
@@ -69,6 +70,7 @@ void Marabou::run()
 
     if( Options::get()->getBool( Options::EXPORT_ASSIGNMENT ) )
         exportAssignment();
+    _engine.stopConflictClauseFinder();
 }
 
 void Marabou::prepareInputQuery()
@@ -215,7 +217,6 @@ void Marabou::solveQuery()
 //            _engine.checkSolve(Options::get()->getInt(Options::TIMEOUT));
         } else {
             if (check) {
-//             _engine.ClauseLearning();
                 _solver.setConfBudget(-1);
                 Minisat::vec<Minisat::Lit> dummy; // 存储结果
                 auto ret = _solver.solveLimited(dummy);
@@ -229,10 +230,7 @@ void Marabou::solveQuery()
                     _engine.setExitCode(Engine::TIMEOUT);
                     printf("Timeout!\n");
                 }
-//            _engine.checkSolve(Options::get()->getInt( Options::TIMEOUT ));
-//           _engine.gurobiCheckSolve(Options::get()->getInt( Options::TIMEOUT ));
             } else {
-//                _engine.gurobiSolve(Options::get()->getInt( Options::TIMEOUT ));
                 _engine.solve( Options::get()->getInt( Options::TIMEOUT ) );
             }
         }

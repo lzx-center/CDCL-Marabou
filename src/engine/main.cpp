@@ -105,7 +105,8 @@ int main( int argc, char **argv )
 #ifdef ENABLE_OPENBLAS
 	    openblas_set_num_threads( options->getInt( Options::NUM_BLAS_THREADS ) );
 #endif
-            Marabou().run();
+        Marabou marabou;
+        marabou.run();
 	}
     }
     catch ( const Error &e )

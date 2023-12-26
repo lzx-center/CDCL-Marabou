@@ -8,6 +8,9 @@
 #include "boost/serialization/vector.hpp"
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
+#include "mutex"
+#include "thread"
+
 class PathElement {
 public:
     enum ElementType {
@@ -62,6 +65,9 @@ public:
     }
 
     void appendPath(std::vector<PathElement>& path);
+    std::vector<PathElement> getPath(int index);
+
+    void safeAppendLearned(std::vector<PathElement>& path);
 
     void dump(String& output);
 

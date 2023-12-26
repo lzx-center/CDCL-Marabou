@@ -46,3 +46,5 @@ visualize
 example
 sat_example
 resources
+*.log
+/run_script

@@ -33,7 +33,8 @@
 #include "VariableOutOfBoundDuringOptimizationException.h"
 #include "Vector.h"
 #include <random>
-
+#include "memory"
+#include "Marabou.h"
 std::map<std::string, long long> CenterStatics::_functionTime;
 std::map<int, int> CenterStatics::_backTrackStatics;
 std::map<std::string, long long> CenterStatics::_static;
@@ -138,9 +139,9 @@ bool Engine::solve(unsigned timeoutInSeconds) {
 
     // Register the boundManager with all the PL constraints
     for (auto &plConstraint: _plConstraints) {
-        String s;
-        plConstraint->dump(s);
-        printf("constraint: %s\n", s.ascii());
+//        String s;
+//        plConstraint->dump(s);
+//        printf("constraint: %s\n", s.ascii());
         plConstraint->registerBoundManager(&_boundManager);
         auto pos = plConstraint->getPosition();
         _positionToConstraint[pos] = plConstraint;
@@ -148,9 +149,9 @@ bool Engine::solve(unsigned timeoutInSeconds) {
     for (auto& plConstraint : _preprocessor.getEliminatedConstraintsList()) {
         auto pos = plConstraint->getPosition();
         // dump plConstraint
-        String s;
-        plConstraint->dump(s);
-        printf("Eliminated constraint: %s\n", s.ascii());
+//        String s;
+//        plConstraint->dump(s);
+//        printf("Eliminated constraint: %s\n", s.ascii());
         CaseSplitType type = CaseSplitType::UNKNOWN;
         if (plConstraint->getPhaseStatus() == RELU_PHASE_ACTIVE) {
             type = CaseSplitType::RELU_ACTIVE;
@@ -320,10 +321,7 @@ bool Engine::solve(unsigned timeoutInSeconds) {
             // If we're at level 0, the whole query is unsat.
             _smtCore.recordStackInfo();
             auto& searchPath = getSearchPath();
-            auto& back = searchPath._paths.back();
-            std::vector<PathElement> new_path;
-
-            searchPath._learnt.push_back(std::move(new_path));
+            _conflictClauseFinderPtr->addTask(searchPath._paths.size() - 1);
             if (!_smtCore.popSplit()) {
                 struct timespec mainLoopEnd = TimeUtils::sampleMicro();
                 _statistics.incLongAttribute
@@ -2288,40 +2286,74 @@ PiecewiseLinearConstraint *Engine::pickSplitPLConstraintBasedOnIntervalWidth() {
     }
 }
 
-PiecewiseLinearConstraint *Engine::pickSplitPLConstraint(DivideStrategy
-                                                         strategy) {
-    ENGINE_LOG(Stringf("Picking a split PLConstraint...").ascii());
+PiecewiseLinearConstraint *Engine::pickSplitPLConstraint( DivideStrategy
+                                                          strategy )
+{
+    ENGINE_LOG( Stringf( "Picking a split PLConstraint..." ).ascii() );
 
     PiecewiseLinearConstraint *candidatePLConstraint = NULL;
-    if (_centerStack.back().getLastDisjunctionImplyNum() > 3) {
-        candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
-        return candidatePLConstraint;
-    }
-
-    if (strategy == DivideStrategy::PseudoImpact) {
-        if (_smtCore.getStackDepth() > 3)
+    if ( strategy == DivideStrategy::PseudoImpact )
+    {
+        if ( _smtCore.getStackDepth() > 3 )
             candidatePLConstraint = _smtCore.getConstraintsWithHighestScore();
-        else if (_preprocessedQuery->getInputVariables().size() <
-                 GlobalConfiguration::INTERVAL_SPLITTING_THRESHOLD)
+        else if ( _preprocessedQuery->getInputVariables().size() <
+                  GlobalConfiguration::INTERVAL_SPLITTING_THRESHOLD )
             candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
         else
             candidatePLConstraint = pickSplitPLConstraintBasedOnPolarity();
-    } else if (strategy == DivideStrategy::Polarity)
+    }
+    else if ( strategy == DivideStrategy::Polarity )
         candidatePLConstraint = pickSplitPLConstraintBasedOnPolarity();
-    else if (strategy == DivideStrategy::EarliestReLU)
+    else if ( strategy == DivideStrategy::EarliestReLU )
         candidatePLConstraint = pickSplitPLConstraintBasedOnTopology();
-    else if (strategy == DivideStrategy::LargestInterval &&
-             ((_smtCore.getStackDepth()) %
-              GlobalConfiguration::INTERVAL_SPLITTING_FREQUENCY == 0)
-            ) {
+    else if ( strategy == DivideStrategy::LargestInterval &&
+              ( _smtCore.getStackDepth() %
+                GlobalConfiguration::INTERVAL_SPLITTING_FREQUENCY == 0 )
+            )
+    {
         // Conduct interval splitting periodically.
         candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
     }
-    ENGINE_LOG(Stringf(( candidatePLConstraint ?
-                       "Picked..." :
-                       "Unable to pick using the current strategy..." )).ascii());
+    ENGINE_LOG( Stringf( ( candidatePLConstraint ?
+                        "Picked..." :
+                        "Unable to pick using the current strategy..." ) ).ascii() );
     return candidatePLConstraint;
 }
+
+//PiecewiseLinearConstraint *Engine::pickSplitPLConstraint(DivideStrategy
+//                                                         strategy) {
+//    ENGINE_LOG(Stringf("Picking a split PLConstraint...").ascii());
+//
+//    PiecewiseLinearConstraint *candidatePLConstraint = NULL;
+////    if (_centerStack.back().getLastDisjunctionImplyNum() > 3) {
+////        candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
+////        return candidatePLConstraint;
+////    }
+//
+//    if (strategy == DivideStrategy::PseudoImpact) {
+//        if (_smtCore.getStackDepth() > 3)
+//            candidatePLConstraint = _smtCore.getConstraintsWithHighestScore();
+//        else if (_preprocessedQuery->getInputVariables().size() <
+//                 GlobalConfiguration::INTERVAL_SPLITTING_THRESHOLD)
+//            candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
+//        else
+//            candidatePLConstraint = pickSplitPLConstraintBasedOnPolarity();
+//    } else if (strategy == DivideStrategy::Polarity)
+//        candidatePLConstraint = pickSplitPLConstraintBasedOnPolarity();
+//    else if (strategy == DivideStrategy::EarliestReLU)
+//        candidatePLConstraint = pickSplitPLConstraintBasedOnTopology();
+//    else if (strategy == DivideStrategy::LargestInterval &&
+//             ((_smtCore.getStackDepth()) %
+//              GlobalConfiguration::INTERVAL_SPLITTING_FREQUENCY == 0)
+//            ) {
+//        // Conduct interval splitting periodically.
+//        candidatePLConstraint = pickSplitPLConstraintBasedOnIntervalWidth();
+//    }
+//    ENGINE_LOG(Stringf(( candidatePLConstraint ?
+//                       "Picked..." :
+//                       "Unable to pick using the current strategy..." )).ascii());
+//    return candidatePLConstraint;
+//}
 
 PiecewiseLinearConstraint *Engine::pickSplitPLConstraintSnC(SnCDivideStrategy strategy) {
     PiecewiseLinearConstraint *candidatePLConstraint = NULL;
@@ -3749,6 +3781,38 @@ void Engine::initEngine() {
     ENGINE_LOG("Encoding convex relaxation into Gurobi - done");
 }
 
+void Engine::simpleInitEngine() {
+    SignalHandler::getInstance()->initialize();
+    SignalHandler::getInstance()->registerClient(this);
+
+
+    // Register the boundManager with all the PL constraints
+    for (auto &plConstraint: _plConstraints) {
+        plConstraint->registerBoundManager(&_boundManager);
+        auto position = plConstraint->getPosition();
+        auto var = Minisat::mkLit(_solver->newVar());
+        _positionToLit[position] = var;
+        _positionToConstraint[plConstraint->getPosition()] = plConstraint;
+    }
+    printf("Init done!\n");
+
+    updateDirections();
+
+    applyAllValidConstraintCaseSplits();
+    storeState(_initial, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE );
+
+    initial_lower.resize(_tableau->getN());
+    initial_upper.resize(_tableau->getN());
+    for (size_t i = 0; i < _tableau->getN(); ++ i) {
+        initial_lower[i] = _tableau->getLowerBound(i);
+        initial_upper[i] = _tableau->getUpperBound(i);
+    }
+
+    ENGINE_LOG("Encoding convex relaxation into Gurobi...");
+    _milpEncoder->encodeInputQuery(*_gurobi, *_preprocessedQuery, true);
+    ENGINE_LOG("Encoding convex relaxation into Gurobi - done");
+}
+
 void Engine::restart() {
     printf("Need restart!\n");
 }
@@ -4246,10 +4310,16 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
         total ++;
     }
 
-//    printf("Origin path:\n");
-//    dumpSearchPath(path);
-//    printf("Learnt path:\n");
-//    dumpSearchPath(learned);
+    printf("Dump Learned path:\n");
+    for (auto& it : cnt) {
+        printf("\nPosition: ");
+        it.first.dump();
+        printf(" Count: %d\n", it.second);
+    }
+    printf("Origin path:\n");
+    dumpSearchPath(path);
+    printf("Learnt path:\n");
+    dumpSearchPath(learned);
 
     learned.clear();
 
@@ -4277,7 +4347,7 @@ unsigned int Engine::analysisBacktrackLevelMarabou(std::vector<PathElement> &pat
         if (!total) break;
     }
     for (auto& item : level_lit_count) {
-        printf("Level %d: %d\n", item.first, item.second);
+        printf("Level lit %d: %d\n", item.first, item.second);
     }
     auto back = level_lit_count.rbegin();
     if (back->second == 1) {
@@ -4510,8 +4580,11 @@ bool Engine::conflictClauseLearning(std::vector<PathElement> &path, std::vector<
                 gurobi.setTimeLimit(FloatUtils::infinity());
                 gurobi.solve();
                 if (gurobi.infeasible()) {
-                    printf("Slack: [input enough] Length from [%zu] to [%d]\n", path.size(), newPath.size());
-                    return true;
+                    printf("Slack: [input enough] Length from [%zu] to [%zu]\n", path.size(), newPath.size());
+                    if (path.size() > newPath.size()) {
+                        return true;
+                    }
+                    return false;
                 }
             }
         }
@@ -4762,8 +4835,8 @@ bool Engine::centerSolve(unsigned int timeoutInSeconds) {
     initEngine();
     updateCenterStack();
     while (true) {
-        dumpCenterStack();
-        _smtCore.printSimpleStackInfo();
+         dumpCenterStack();
+//        _smtCore.printSimpleStackInfo();
         // Perform any SmtCore-initiated case splits
         if (_smtCore.needToSplit()) {
             auto constraint = _smtCore.getConstraintForSplit();
@@ -4819,6 +4892,7 @@ void Engine::dumpCenterStack() {
 }
 
 bool Engine::centerUnSat() {
+    CenterStatics time("centerUnSat");
     _tableau->toggleOptimization(false);
     recordStackInfo();
     auto& searchPath = getSearchPath();
@@ -4828,17 +4902,19 @@ bool Engine::centerUnSat() {
     bool learn = false;
     int level = getDecisionLevel() - 1;
     CaseSplitTypeInfo info;
-    {
+    bool learn_clause = true;
+    if (learn_clause) {
         enforcePushHook();
 //        learn = conflictClauseLearning(back, initial_lower, initial_upper, new_path);
         if (!back.empty())
-            learn = binaryConflictClauseLearning(back, new_path);
+            learn = conflictClauseLearning(back, new_path);
         enforcePopHook();
 
         if (learn) {
+            // level = analysisBacktrackLevelMarabou(back, new_path);
+            level = analysisBacktrackLevelSimple(back, new_path);
             info._position = new_path.back().getPosition();
             info._type = _smtCore.reverseCaseSplitType(new_path.back().getType());
-            level = analysisBacktrackLevelMarabou(back, new_path);
             searchPath._learnt.push_back(std::move(new_path));
         } else {
             if (back.empty())
@@ -4857,6 +4933,9 @@ bool Engine::centerUnSat() {
     backTrack(level);
 
     auto constraint = getConstraintByPosition(info._position);
+    printf("Enforce split pos:");
+    info._position.dump();
+    printf("\n");
     PiecewiseLinearCaseSplit split;
     auto splits = constraint->getCaseSplits();
     for (auto& s : splits) {
@@ -4997,3 +5076,91 @@ Minisat::Lit Engine::getLitByInputPosition(Position &pos, int split_num) {
     return lit;
 }
 
+unsigned int Engine::analysisBacktrackLevelSimple(std::vector<PathElement> &path, std::vector<PathElement> &learned) {
+    std::map<int, int> level_lit_count;
+    std::map<Position, int> cnt;
+    int total = 0;
+    for (auto& element : learned) {
+        cnt[element.getPosition()] ++;
+        total ++;
+    }
+
+    printf("Dump Learned path:\n");
+    for (auto& it : cnt) {
+        printf("\nPosition: ");
+        it.first.dump();
+        printf(" Count: %d\n", it.second);
+    }
+
+
+    learned.clear();
+
+    for (size_t i = 0; i < path.size(); ++ i) {
+        auto& info = path[i]._caseSplit;
+        if (cnt.count(info._position)) {
+            cnt[info._position] --;
+            total --;
+            level_lit_count[i + 1] ++;
+
+            PathElement tmp; tmp._caseSplit = info;
+            learned.push_back(std::move(tmp));
+        }
+        for (auto& imply : path[i]._impliedSplits) {
+            if (cnt.count(imply._position)) {
+                cnt[info._position] --;
+                total --;
+                level_lit_count[i + 1] ++;
+
+                PathElement tmp; tmp._caseSplit = imply;
+                learned.push_back(std::move(tmp));
+            }
+            if (!total) break;
+        }
+        if (!total) break;
+    }
+
+    printf("Origin path:\n");
+    dumpSearchPath(path);
+    printf("Learnt path:\n");
+    dumpSearchPath(learned);
+
+    for (auto& item : level_lit_count) {
+        printf("Level lit %d: %d\n", item.first, item.second);
+    }
+    if (level_lit_count.size() == 1) {
+        printf("Perfect!\n");
+        return level_lit_count.begin()->first - 1;
+    } else {
+        auto back = level_lit_count.rbegin();
+        if (back->second == 1) {
+            printf("Perfect!\n");
+            back ++;
+            return back->first;
+        } else {
+            printf("GG!\n");
+            for (int i = 0; i < back->second; ++ i) {learned.pop_back();}
+            learned.push_back(path.back());
+            return back->first - 1;
+        }
+    }
+    return 0;
+}
+
+void Engine::createConflictClauseFinder() {
+    _conflictClauseFinderPtr = std::make_shared<ConflictClauseFinder>(_smtCore._searchPath);
+}
+
+void Engine::stopConflictClauseFinder() {
+    if (_conflictClauseFinderPtr) {
+        _conflictClauseFinderPtr->stop();
+    }
+}
+
+bool Engine::conflictClauseLearningWithRestore(std::vector<PathElement> &path, std::vector<PathElement> &new_path) {
+    bool learn = false;
+    enforcePushHook();
+    if (!path.empty())
+        learn = conflictClauseLearning(path, new_path);
+    enforcePopHook();
+    return learn;
+}

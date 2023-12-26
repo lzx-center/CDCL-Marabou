@@ -49,6 +49,10 @@
 #include <chrono>
 #include <context/context.h>
 #include <atomic>
+#include <thread>
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 
 #ifdef _WIN32
 #undef ERROR
@@ -60,7 +64,7 @@ class EngineState;
 class InputQuery;
 class PiecewiseLinearConstraint;
 class String;
-
+class ConflictClauseFinder;
 using CVC4::context::Context;
 
 class CenterStatics {
@@ -133,12 +137,15 @@ public:
     int _total_num = 0, _learnt_num = 0;
     std::vector<CenterStackEntry> _centerStack = {CenterStackEntry()};
     std::map<int, int> _inputSplitNum;
-
+    std::shared_ptr<ConflictClauseFinder> _conflictClauseFinderPtr;
     /*
     Get Context reference
     */
     Context &getContext() { return _context; }
 
+    void createConflictClauseFinder();
+
+    void stopConflictClauseFinder();
     /*
        Checks whether the current bounds are consistent. Exposed for the SmtCore.
      */
@@ -171,8 +178,12 @@ public:
     unsigned int analysisBacktrackLevelMarabou(std::vector<PathElement> &path,
                                         std::vector<PathElement> &learned);
 
+    unsigned int analysisBacktrackLevelSimple(std::vector<PathElement> &path,
+                                               std::vector<PathElement> &learned);
+
     unsigned int backtrackAndPerformLearntSplit(unsigned int level, Minisat::Lit lit);
     void initEngine();
+    void simpleInitEngine();
     void restart();
 
     double dumpLearntSuccessRate();
@@ -236,6 +247,8 @@ public:
 
     bool conflictClauseLearning(std::vector<PathElement> &path, std::vector<PathElement> &newPath);
 
+    bool conflictClauseLearningWithRestore(std::vector<PathElement> &path, std::vector<PathElement> &newPath);
+
     bool conflictClauseLearning(Minisat::vec<Minisat::Lit> &trail,
                                 Minisat::vec<Minisat::Lit> &learnt);
 
@@ -244,6 +257,8 @@ public:
     int analyzeBackTrackLevel(Minisat::vec<int>& trail_lim,
                               Minisat::vec<Minisat::Lit>& trail,
                               Minisat::vec<Minisat::Lit>& learnt);
+
+
     /*
       Minimize the cost function with respect to the current set of linear constraints.
     */

@@ -779,8 +779,6 @@ lbool Solver::search(int nof_conflicts)
     for (;;){
         engine_ptr->gurobiPropagate(trail);
         CenterStatics::printStatics();
-//        dumpTrail("Before propagate");
-//        engine_ptr->dumpCenterStack();
         CRef confl = propagate();
         printf("propagate success, result: %d, is undef: %d\n", confl, confl == CRef_Undef);
         if (confl != CRef_Undef){
